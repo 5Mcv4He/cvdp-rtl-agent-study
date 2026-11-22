@@ -78,9 +78,27 @@ def meter_micu(run, result):
     }
 
 
+def meter_dsh_micu(result):
+    turns = result["turns"]
+    usage = [turn["usage"] for turn in turns if turn["usage"]]
+    passing = next((i for i, turn in enumerate(turns, 1) if turn.get("verdict") == "pass"), None)
+    return {
+        "observed_calls": len(turns), "responses_with_usage": len(usage),
+        "error_types": dict(Counter(turn["finish"] for turn in turns if turn["finish"] == "error")),
+        "first_passing_request": passing,
+        "model_configured": result["model"],
+        "uncached_input": sum(u["inputTokens"] + u.get("cacheWriteTokens", 0) for u in usage),
+        "cached_input": sum(u.get("cacheReadTokens", 0) for u in usage),
+        "cache_write": sum(u.get("cacheWriteTokens", 0) for u in usage),
+        "output": sum(u["outputTokens"] for u in usage),
+        "truncated_requests": sum(turn["finish"] == "max-tokens" for turn in turns),
+        "peak_price_estimate_usd": None,
+    }
+
+
 def meter(condition, run, result):
     if condition["model"] in KEY_VARIABLES:
-        return meter_micu(run, result)
+        return meter_micu(run, result) if condition["agent"] == "ace" else meter_dsh_micu(result)
     rates = RATES[condition["model"]]
     if condition["agent"] == "ace":
         billed = []
@@ -123,6 +141,8 @@ def run_condition(job):
             "candidate_sha256": [s["candidate_sha256"] for s in scores],
             "meter": metered, "run": str(run.relative_to(LOCAL)),
         }
+        if metered and c["agent"] == "dsh" and metered.get("error_types"):
+            result["status"] = "transport_error"
     except Exception as error:
         result = {"status": "runner_error", "error_type": type(error).__name__}
     result.update(task=task, condition=condition["id"], repetition=repetition)

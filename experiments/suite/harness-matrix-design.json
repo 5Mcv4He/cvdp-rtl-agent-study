@@ -1,0 +1,58 @@
+{
+  "purpose": "Add Claude and GPT to the no-tool DSH row of the two-harness comparison.",
+  "baseline_designs": [
+    "factorial-design.json",
+    "cross-provider-design.json"
+  ],
+  "task_ids": [
+    "cvdp_copilot_64b66b_encoder_0005",
+    "cvdp_copilot_cdc_pulse_synchronizer_0004",
+    "cvdp_copilot_filo_0033",
+    "cvdp_copilot_fsm_seq_detector_0023",
+    "cvdp_copilot_generic_nbit_counter_0036",
+    "cvdp_copilot_arithmetic_progression_generator_0015",
+    "cvdp_copilot_cache_lru_0022",
+    "cvdp_copilot_coffee_machine_0001",
+    "cvdp_copilot_line_buffer_0003",
+    "cvdp_copilot_modified_booth_mul_0002",
+    "cvdp_copilot_rgb2ycbcr_0001",
+    "cvdp_copilot_swizzler_0014"
+  ],
+  "repetitions": 2,
+  "conditions": [
+    {
+      "id": "dsh-claude",
+      "agent": "dsh",
+      "provider": "micu",
+      "protocol": "anthropic-messages",
+      "model": "claude-opus-5-5",
+      "reasoning_effort": "low",
+      "rounds": 2,
+      "max_calls": 2
+    },
+    {
+      "id": "dsh-gpt",
+      "agent": "dsh",
+      "provider": "micu",
+      "protocol": "openai-responses",
+      "model": "gpt-6.2-astra",
+      "reasoning_effort": "low",
+      "rounds": 2,
+      "max_calls": 2
+    }
+  ],
+  "reservation_rates_usd_per_million": {
+    "claude-opus-5-5": {
+      "miss": 8,
+      "output": 20
+    },
+    "gpt-6.2-astra": {
+      "miss": 20,
+      "output": 40
+    }
+  },
+  "sdk": "deepseek-harness-sdk==0.2.2rc2",
+  "profile": "sdk-minimal with shell, file tools, working-directory tool, automatic retries, and remote session logging disabled",
+  "routing": "Native pi-ai provider plugin, same MiCu groups and protocol families as the Claude and GPT ACE configurations.",
+  "observation": "Model requests and usage observed by DSH SDK; original CVDP tests replay each candidate."
+}

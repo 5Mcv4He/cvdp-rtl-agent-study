@@ -2,9 +2,14 @@
 
 给 AI 一段有缺陷的芯片逻辑，它能找出错误并修好吗？修完以后，仿真测试又能证明什么？这个项目用可复现的 RTL 调试实验回答这些问题。RTL 是描述芯片数字逻辑的代码，本项目从一个 32 位加法器开始。
 
-**当前结果（2026-11-22）**　12 道 CVDP 调试题覆盖两个 Agent 和两个模型的全部四组组合，各重复两次，共 **96 次运行**。最终通过数为 ACE＋Flash 12/24、ACE＋Pro 11/24、DSH＋Flash 10/24、DSH＋Pro 12/24。DSH 两组均关闭工具。 [四组对照报告](experiments/suite/factorial-report.md) · [逐题数据](experiments/suite/factorial-results.json)
+**当前结果（2026-11-22）**　同样的 12 道 CVDP RTL 调试题，每题各跑两次，覆盖 **两个 Agent × 四款模型，共 192 次运行**。DSH 关闭工具。 [八组对照报告和复现](experiments/suite/harness-matrix-report.md) · [逐题数据](experiments/suite/harness-matrix-results.json)
 
-**跨模型对照**　固定 ACE-RTL，用相同的 12 道题新增 48 次运行。Claude Opus 5.5 最终通过 **24/24**，GPT-6.2 Astra 通过 **22/24**。两款模型的差异集中在一道等差数列题的输出位宽检查。新增模型通过米醋调用，DeepSeek 基线走官方接口。 [跨模型报告、逐题数据与复现](experiments/suite/cross-provider-report.md)
+| 模型 | ACE-RTL 最终通过 | DeepSeek Harness 最终通过 |
+|---|---:|---:|
+| DeepSeek Flash | 12/24 | 10/24 |
+| DeepSeek V4 Pro | 11/24 | 12/24 |
+| Claude Opus 5.5 | 24/24 | 21/24 |
+| GPT-6.2 Astra | 22/24 | 20/24 |
 
 **新增：开启工具的 DSH（2026-11-22）**　此前 DSH 成绩全部关闭工具。在 Brent–Kung 加法器单题上，为关闭思考的 DSH＋Flash 新增开启工具的配置：模型在隔离工作区里用 bash 和文件读写编辑工具自查自改，允许的验证命令是 `iverilog`/`vvp`，最终评分仍走同一条 CVDP `local_import` 重放。配对结果：两侧都通过——关闭工具 1 次请求，开启工具 7 次请求（模型自建测试台并在提交前看到 `ALL PASS`）。隔离先用模拟响应验收（12 项断言：哨兵文件不可读、工作区外不可写、外网不可达、真实凭据只在回环中转层），真实运行前必须通过。 [单题配对](experiments/suite/tools-pilot.json) · [报告章节](experiments/suite/report.md)
 
@@ -12,7 +17,7 @@
 
 ## 如何读这些结果
 
-- **首轮和多轮要分开看。** 在相同 Flash 模型下，两次请求内 DSH 通过 10/24，ACE 通过 7/24。ACE 允许更多角色请求后，最终通过 12/24。反思的模型消耗是差异的一部分。
+- **首份候选和多轮要分开看。** DSH＋GPT 首份候选通过 16/24，第二轮多通过 4 次。Flash 模型下，两次请求内 DSH 通过 10/24，ACE 通过 7/24。ACE 允许更多角色请求后最终通过 12/24。 [八组请求口径](experiments/suite/harness-matrix-report.md)
 - **模型切换的结果随流程而异。** 从 Flash 换到 Pro 后，ACE 最终少通过 1 次，DSH 多通过 2 次。第四组是单独补跑的批次，这一差值适用于当前样本。
 - **通过率取决于评分测试覆盖。** 加法器题给出了全部带断言的固定向量，随机向量原本只记录输出。项目为这道题加做了独立检查。12 题对照仍采用 CVDP 原测试。
 - **局限。** 样本来自一个任务类别，DSH 关闭工具，两边采用不同 API 接入和默认采样设置。结果能解释本次通过与失败的轨迹，通用排名需要更广任务和更多重复。
@@ -48,8 +53,8 @@ Flash 在 ACE-RTL 中两轮输出了字节相同的 RTL，第二轮之前还发�
 | P0 · 环境与接口调查 | 完成。已锁定三个上游源码提交、数据集 revision 和首题指纹 |
 | P1 · 首次端到端运行 | 完成原生运行与独立重放。Linux Compose 三项控制全部复现 |
 | 多轮反馈 | 已观测 ACE 的 4 次调用、两轮提交和精简反馈。DSH 已完成受控单题 |
-| 模型对照 | ACE-RTL 已比较四款模型，DSH 已比较 Flash 与 V4 Pro |
-| Agent 对照 | Flash 和 V4 Pro 分别完成 ACE 与关闭工具的 DSH 对照 |
+| 模型对照 | ACE-RTL 和关闭工具的 DSH 均完成四款模型对照 |
+| Agent 对照 | 四款模型均完成 ACE 与关闭工具的 DSH 配对 |
 | 工具对照 | 已完成开启工具的 DSH 单题配对（Brent–Kung，含隔离验收门） |
 
 ## 复现

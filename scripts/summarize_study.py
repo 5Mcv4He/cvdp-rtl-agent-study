@@ -52,7 +52,7 @@ def apply_recovery(rows, corrected):
 
 def summarize(private_rows, conditions=None, comparisons=COMPARISONS):
     fields = ("task", "repetition", "condition", "first", "final", "submissions", "seconds",
-              "meter", "status", "error_type", "candidate_sha256")
+              "meter", "status", "error_type", "candidate_sha256", "offline_replay")
     rows = [{key: row[key] for key in fields if key in row} for row in private_rows]
 
     def pass_by_two(row):
@@ -76,7 +76,7 @@ def summarize(private_rows, conditions=None, comparisons=COMPARISONS):
         final_pass = sum(r.get("final") == "pass" for r in group)
         prices = [r["peak_price_estimate_usd"] for r in observed]
         cost = sum(prices) if all(price is not None for price in prices) else None
-        times = [r["seconds"] for r in group if "seconds" in r]
+        times = [r["seconds"] for r in group if r.get("seconds") is not None]
         metrics[condition] = {
             "allocated": len(group),
             "first_pass": first_pass, "final_pass": final_pass,
@@ -165,6 +165,42 @@ def summarize_cross_provider(baseline, added):
     return result
 
 
+def summarize_harness_matrix(deepseek_baseline, ace_baseline, added):
+    """Complete the two-harness matrix without reassigning published trials."""
+    models = ("flash", "pro", "claude", "gpt")
+    ace_ids = tuple(f"ace-{model}" for model in models)
+    dsh_ids = tuple(f"dsh-{model}" for model in models)
+    def trial_key(row):
+        return row["task"], row["repetition"], row["condition"]
+
+    frozen = {trial_key(row): row for row in deepseek_baseline["trials"]}
+    for row in ace_baseline["trials"]:
+        key = trial_key(row)
+        if key in frozen and frozen[key] != row:
+            raise ValueError("conflicting baseline values")
+        frozen[key] = row
+    expected = {(r["task"], r["repetition"]) for r in frozen.values() if r["condition"] == ace_ids[0]}
+    conditions = ace_ids + dsh_ids
+    for row in added:
+        key = trial_key(row)
+        if row["condition"] not in dsh_ids[2:] or key in frozen:
+            raise ValueError("unexpected or duplicate follow-up trial")
+        frozen[key] = row
+    if frozen.keys() != {(task, run, condition) for task, run in expected for condition in conditions}:
+        raise ValueError("the matrix must contain one run for every allocated trial")
+    comparisons = tuple(
+        (left, right) for group in (ace_ids, dsh_ids)
+        for index, left in enumerate(group) for right in group[index + 1:]
+    ) + tuple(zip(ace_ids, dsh_ids))
+    result = summarize(list(frozen.values()), conditions, comparisons)
+    result["batching"] = {
+        "deepseek_factorial": list(CONDITIONS),
+        "ace_external_models": list(ace_ids[2:]),
+        "dsh_external_models": list(dsh_ids[2:]),
+    }
+    return result
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("results", type=Path)
@@ -172,12 +208,16 @@ if __name__ == "__main__":
     modes.add_argument("--recover-expanded-inputs", type=Path)
     modes.add_argument("--complete-factorial-with", type=Path)
     modes.add_argument("--cross-provider-with", type=Path)
+    modes.add_argument("--harness-matrix-with", type=Path, nargs=2, metavar=("ACE_BASELINE", "DSH_ADDED"))
     args = parser.parse_args()
     rows = json.loads(args.results.read_text())
     if args.complete_factorial_with:
         result = summarize_completion(rows, json.loads(args.complete_factorial_with.read_text()))
     elif args.cross_provider_with:
         result = summarize_cross_provider(rows, json.loads(args.cross_provider_with.read_text()))
+    elif args.harness_matrix_with:
+        ace, dsh = (json.loads(path.read_text()) for path in args.harness_matrix_with)
+        result = summarize_harness_matrix(rows, ace, dsh)
     else:
         audit = None
         if args.recover_expanded_inputs:
