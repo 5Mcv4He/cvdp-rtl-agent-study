@@ -1,0 +1,611 @@
+{
+  "model_requests": 0,
+  "cases": [
+    {
+      "case": "C1",
+      "trials": [
+        [
+          "cvdp_copilot_64b66b_encoder_0005",
+          "ace-claude",
+          1
+        ]
+      ],
+      "observation": "首份候选通过原测试。",
+      "hypothesis": "该实现是否覆盖更广泛的复位与控制组合仍未知。",
+      "next_check": "用规格驱动的独立时序测试复核候选。",
+      "verified_runs": [
+        {
+          "schema_version": "behavior-v2-d0/1",
+          "run_id": "v1/matrix/1/cvdp_copilot_64b66b_encoder_0005/ace-claude",
+          "task": "cvdp_copilot_64b66b_encoder_0005",
+          "condition": "ace-claude",
+          "target": "rtl/encoder_64b66b.sv",
+          "events": {
+            "candidate": 1,
+            "extraction": 1,
+            "feedback_generated": 1,
+            "grade": 1,
+            "harness_evaluation": 1,
+            "postprocess": 1,
+            "request": 1,
+            "response": 1,
+            "termination": 1
+          },
+          "candidate_records": [
+            {
+              "candidate_id": "v1/matrix/1/cvdp_copilot_64b66b_encoder_0005/ace-claude/candidate-1",
+              "sha256": "5558fee567cf75addece0a559e5cff3c2394d13c1114efe832f15103d098ef9c",
+              "origin": "completed_submission"
+            }
+          ],
+          "grades": [
+            "pass"
+          ],
+          "feedback_delivery": [],
+          "termination": [
+            "passed"
+          ],
+          "tool_diagnostics": [],
+          "missing": [],
+          "checks": "verified_in_scope"
+        }
+      ]
+    },
+    {
+      "case": "C2",
+      "trials": [
+        [
+          "cvdp_copilot_64b66b_encoder_0005",
+          "ace-flash",
+          1
+        ]
+      ],
+      "observation": "首轮复位检查失败，随后改为高有效复位并通过。精简失败反馈出现在后续请求中。",
+      "hypothesis": "类别反馈、角色建议与自然重复生成均可能促成修正。",
+      "next_check": "固定失败候选，分别给予无新增证据、类别反馈和独立反例。",
+      "verified_runs": [
+        {
+          "schema_version": "behavior-v2-d0/1",
+          "run_id": "v1/matrix/1/cvdp_copilot_64b66b_encoder_0005/ace-flash",
+          "task": "cvdp_copilot_64b66b_encoder_0005",
+          "condition": "ace-flash",
+          "target": "rtl/encoder_64b66b.sv",
+          "events": {
+            "candidate": 2,
+            "extraction": 2,
+            "feedback_generated": 2,
+            "feedback_received": 2,
+            "grade": 2,
+            "harness_evaluation": 2,
+            "postprocess": 2,
+            "request": 4,
+            "response": 4,
+            "termination": 1
+          },
+          "candidate_records": [
+            {
+              "candidate_id": "v1/matrix/1/cvdp_copilot_64b66b_encoder_0005/ace-flash/candidate-1",
+              "sha256": "4405da850a170e94834153d0a7f954665797257671473c6bd3f52d536aebcb93",
+              "origin": "completed_submission"
+            },
+            {
+              "candidate_id": "v1/matrix/1/cvdp_copilot_64b66b_encoder_0005/ace-flash/candidate-2",
+              "sha256": "5558fee567cf75addece0a559e5cff3c2394d13c1114efe832f15103d098ef9c",
+              "origin": "completed_submission"
+            }
+          ],
+          "grades": [
+            "functional",
+            "pass"
+          ],
+          "feedback_delivery": [
+            "provider_payload",
+            "provider_payload"
+          ],
+          "termination": [
+            "passed"
+          ],
+          "tool_diagnostics": [],
+          "missing": [],
+          "checks": "verified_in_scope"
+        }
+      ]
+    },
+    {
+      "case": "C3",
+      "trials": [
+        [
+          "cvdp_copilot_32_bit_Brent_Kung_PP_adder_0001",
+          "ace-flash",
+          "p2"
+        ]
+      ],
+      "observation": "四次模型请求，两份候选字节相同，两次都在原进位检查失败。",
+      "hypothesis": "反馈包含的信息、反思建议是否指出根因，以及建议能否落实需要分别检验。",
+      "next_check": "结合 Reflector 原始输出与第二次 Generator 实际输入，检查是否送达可执行的根因线索。",
+      "verified_runs": [
+        {
+          "schema_version": "behavior-v2-d0/1",
+          "run_id": "v1/p2/cvdp_copilot_32_bit_Brent_Kung_PP_adder_0001/ace-flash",
+          "task": "cvdp_copilot_32_bit_Brent_Kung_PP_adder_0001",
+          "condition": "ace-flash",
+          "target": "rtl/brent_kung_adder.sv",
+          "events": {
+            "candidate": 2,
+            "extraction": 2,
+            "feedback_generated": 2,
+            "feedback_received": 2,
+            "grade": 2,
+            "harness_evaluation": 2,
+            "postprocess": 2,
+            "request": 4,
+            "response": 4,
+            "termination": 1
+          },
+          "candidate_records": [
+            {
+              "candidate_id": "v1/p2/cvdp_copilot_32_bit_Brent_Kung_PP_adder_0001/ace-flash/candidate-1",
+              "sha256": "f7de4b799a284907db2a7cfa8e8093768bc8b4da3f5d7c580532b986e6ed6871",
+              "origin": "completed_submission"
+            },
+            {
+              "candidate_id": "v1/p2/cvdp_copilot_32_bit_Brent_Kung_PP_adder_0001/ace-flash/candidate-2",
+              "sha256": "f7de4b799a284907db2a7cfa8e8093768bc8b4da3f5d7c580532b986e6ed6871",
+              "origin": "completed_submission"
+            }
+          ],
+          "grades": [
+            "functional",
+            "functional"
+          ],
+          "feedback_delivery": [
+            "provider_payload",
+            "provider_payload"
+          ],
+          "termination": [
+            "failed"
+          ],
+          "tool_diagnostics": [],
+          "missing": [],
+          "checks": "verified_in_scope"
+        }
+      ]
+    },
+    {
+      "case": "C4",
+      "trials": [
+        [
+          "cvdp_copilot_arithmetic_progression_generator_0015",
+          "ace-gpt",
+          1
+        ],
+        [
+          "cvdp_copilot_arithmetic_progression_generator_0015",
+          "ace-gpt",
+          2
+        ]
+      ],
+      "observation": "两次重复均连续失败，一次只重排条件，另一次两轮候选字节相同。",
+      "hypothesis": "输出最小宽度的预期可能未在公开接口契约中充分说明；这是能力归因的替代解释。",
+      "next_check": "核对公开参数域、允许改动的接口及宽度语义，再决定能否用于能力诊断。",
+      "verified_runs": [
+        {
+          "schema_version": "behavior-v2-d0/1",
+          "run_id": "v1/matrix/1/cvdp_copilot_arithmetic_progression_generator_0015/ace-gpt",
+          "task": "cvdp_copilot_arithmetic_progression_generator_0015",
+          "condition": "ace-gpt",
+          "target": "rtl/arithmetic_progression_generator.sv",
+          "events": {
+            "candidate": 2,
+            "extraction": 2,
+            "feedback_generated": 2,
+            "feedback_received": 2,
+            "grade": 2,
+            "harness_evaluation": 2,
+            "postprocess": 2,
+            "request": 4,
+            "response": 4,
+            "termination": 1
+          },
+          "candidate_records": [
+            {
+              "candidate_id": "v1/matrix/1/cvdp_copilot_arithmetic_progression_generator_0015/ace-gpt/candidate-1",
+              "sha256": "52f71315f4d8543bffd829abac50cc6890793ea9ba9ba43964d200d500537e8c",
+              "origin": "completed_submission"
+            },
+            {
+              "candidate_id": "v1/matrix/1/cvdp_copilot_arithmetic_progression_generator_0015/ace-gpt/candidate-2",
+              "sha256": "d19537f3f4e3db08aa1ef753c2235eefcf91e559696a9e9d95f9981acb4a5db5",
+              "origin": "completed_submission"
+            }
+          ],
+          "grades": [
+            "functional",
+            "functional"
+          ],
+          "feedback_delivery": [
+            "provider_payload",
+            "provider_payload"
+          ],
+          "termination": [
+            "failed"
+          ],
+          "tool_diagnostics": [],
+          "missing": [],
+          "checks": "verified_in_scope"
+        },
+        {
+          "schema_version": "behavior-v2-d0/1",
+          "run_id": "v1/matrix/2/cvdp_copilot_arithmetic_progression_generator_0015/ace-gpt",
+          "task": "cvdp_copilot_arithmetic_progression_generator_0015",
+          "condition": "ace-gpt",
+          "target": "rtl/arithmetic_progression_generator.sv",
+          "events": {
+            "candidate": 2,
+            "extraction": 2,
+            "feedback_generated": 2,
+            "feedback_received": 2,
+            "grade": 2,
+            "harness_evaluation": 2,
+            "postprocess": 2,
+            "request": 4,
+            "response": 4,
+            "termination": 1
+          },
+          "candidate_records": [
+            {
+              "candidate_id": "v1/matrix/2/cvdp_copilot_arithmetic_progression_generator_0015/ace-gpt/candidate-1",
+              "sha256": "98de7a405dfbc7cdc8bea9df23d87841c2f474a8a07b16938a3cbc67a0e53892",
+              "origin": "completed_submission"
+            },
+            {
+              "candidate_id": "v1/matrix/2/cvdp_copilot_arithmetic_progression_generator_0015/ace-gpt/candidate-2",
+              "sha256": "98de7a405dfbc7cdc8bea9df23d87841c2f474a8a07b16938a3cbc67a0e53892",
+              "origin": "completed_submission"
+            }
+          ],
+          "grades": [
+            "functional",
+            "functional"
+          ],
+          "feedback_delivery": [
+            "provider_payload",
+            "provider_payload"
+          ],
+          "termination": [
+            "failed"
+          ],
+          "tool_diagnostics": [],
+          "missing": [],
+          "checks": "verified_in_scope"
+        }
+      ]
+    },
+    {
+      "case": "C5",
+      "trials": [
+        [
+          "cvdp_copilot_fsm_seq_detector_0023",
+          "ace-gpt",
+          1
+        ],
+        [
+          "cvdp_copilot_fsm_seq_detector_0023",
+          "dsh-gpt",
+          1
+        ]
+      ],
+      "observation": "ACE 首轮通过并有兼容性转换；DSH 首轮遇到显式类型转换错误，第二轮候选通过离线恢复评分。",
+      "hypothesis": "候选生成差异、类型表达与处理路径均需逐项检查。",
+      "next_check": "在同一固定输出上只改变 always_comb 转换，再比较编译和原测试结果。",
+      "verified_runs": [
+        {
+          "schema_version": "behavior-v2-d0/1",
+          "run_id": "v1/matrix/1/cvdp_copilot_fsm_seq_detector_0023/ace-gpt",
+          "task": "cvdp_copilot_fsm_seq_detector_0023",
+          "condition": "ace-gpt",
+          "target": "rtl/fsm_seq_detector.sv",
+          "events": {
+            "candidate": 1,
+            "extraction": 1,
+            "feedback_generated": 1,
+            "grade": 1,
+            "harness_evaluation": 1,
+            "postprocess": 1,
+            "request": 1,
+            "response": 1,
+            "termination": 1
+          },
+          "candidate_records": [
+            {
+              "candidate_id": "v1/matrix/1/cvdp_copilot_fsm_seq_detector_0023/ace-gpt/candidate-1",
+              "sha256": "c49c41c065527b0bf99fd4ca568d2715c3cf39c566bd2b5b147d9949cd3fdb47",
+              "origin": "completed_submission"
+            }
+          ],
+          "grades": [
+            "pass"
+          ],
+          "feedback_delivery": [],
+          "termination": [
+            "passed"
+          ],
+          "tool_diagnostics": [],
+          "missing": [],
+          "checks": "verified_in_scope"
+        },
+        {
+          "schema_version": "behavior-v2-d0/1",
+          "run_id": "v1/matrix/1/cvdp_copilot_fsm_seq_detector_0023/dsh-gpt",
+          "task": "cvdp_copilot_fsm_seq_detector_0023",
+          "condition": "dsh-gpt",
+          "target": "rtl/fsm_seq_detector.sv",
+          "events": {
+            "candidate": 2,
+            "extraction": 2,
+            "feedback_received": 1,
+            "grade": 2,
+            "missing": 3,
+            "request_observed": 2,
+            "response": 2,
+            "termination": 1
+          },
+          "candidate_records": [
+            {
+              "candidate_id": "v1/matrix/1/cvdp_copilot_fsm_seq_detector_0023/dsh-gpt/candidate-1",
+              "sha256": "8816880410c14457f8780a5598023ea57f1b3ddf1446b99c81ef51e4b4a19035",
+              "origin": "completed_submission"
+            },
+            {
+              "candidate_id": "v1/matrix/1/cvdp_copilot_fsm_seq_detector_0023/dsh-gpt/candidate-2",
+              "sha256": "61592bf0485ae7a863999df7258603b0a406a3780fe936107ae282e65d0e0414",
+              "origin": "offline_recovery"
+            }
+          ],
+          "grades": [
+            "compile",
+            "pass"
+          ],
+          "feedback_delivery": [
+            "sdk"
+          ],
+          "termination": [
+            "completed"
+          ],
+          "tool_diagnostics": [],
+          "missing": [
+            "provider_request_body",
+            "provider_request_body",
+            "original_run_termination_detail"
+          ],
+          "checks": "verified_with_gaps"
+        }
+      ]
+    },
+    {
+      "case": "C6",
+      "trials": [
+        [
+          "cvdp_copilot_generic_nbit_counter_0036",
+          "tools-on",
+          1
+        ]
+      ],
+      "observation": "预算用尽时未完成提交，工作区快照通过原测试。",
+      "hypothesis": "交付流程导致主指标失败；首次获得可通过版本的时刻缺乏逐动作证据。",
+      "next_check": "未来记录逐动作候选哈希，区分首次正确与最终交付。",
+      "verified_runs": [
+        {
+          "schema_version": "behavior-v2-d0/1",
+          "run_id": "v1/tools/1/cvdp_copilot_generic_nbit_counter_0036/tools-on",
+          "task": "cvdp_copilot_generic_nbit_counter_0036",
+          "condition": "tools-on",
+          "target": "rtl/generic_counter.sv",
+          "events": {
+            "candidate": 1,
+            "grade": 1,
+            "missing": 2,
+            "request": 8,
+            "request_rejected": 1,
+            "response": 8,
+            "runtime_error": 1,
+            "termination": 1,
+            "tool_call": 8,
+            "tool_result": 8
+          },
+          "candidate_records": [
+            {
+              "candidate_id": "v1/tools/1/cvdp_copilot_generic_nbit_counter_0036/tools-on/candidate-1",
+              "sha256": "f4ffb27e548f2367f6348589b339eda17cc37bf81d787f22b3e517e68b85cf19",
+              "origin": "workspace_snapshot"
+            }
+          ],
+          "grades": [
+            "pass"
+          ],
+          "feedback_delivery": [],
+          "termination": [
+            "budget_exhausted"
+          ],
+          "tool_diagnostics": [],
+          "missing": [
+            "per_action_workspace_bytes",
+            "exact_upstream_serialized_body"
+          ],
+          "checks": "verified_with_gaps"
+        }
+      ]
+    },
+    {
+      "case": "C7",
+      "trials": [
+        [
+          "cvdp_copilot_rgb2ycbcr_0001",
+          "tools-on",
+          2
+        ]
+      ],
+      "observation": "自建仿真曾超时，后续命令还遇到工具缺失；最终因请求预算停止，快照通过原测试。",
+      "hypothesis": "自建测试的终止条件、握手与本地工具环境可能共同影响过程。",
+      "next_check": "将自建仿真的超时与候选功能和最终交付分别复核。",
+      "verified_runs": [
+        {
+          "schema_version": "behavior-v2-d0/1",
+          "run_id": "v1/tools/2/cvdp_copilot_rgb2ycbcr_0001/tools-on",
+          "task": "cvdp_copilot_rgb2ycbcr_0001",
+          "condition": "tools-on",
+          "target": "rtl/axis_rgb2ycbcr.sv",
+          "events": {
+            "candidate": 1,
+            "grade": 1,
+            "missing": 2,
+            "request": 8,
+            "request_rejected": 1,
+            "response": 8,
+            "runtime_error": 1,
+            "termination": 1,
+            "tool_call": 9,
+            "tool_result": 9
+          },
+          "candidate_records": [
+            {
+              "candidate_id": "v1/tools/2/cvdp_copilot_rgb2ycbcr_0001/tools-on/candidate-1",
+              "sha256": "3466be979f83badc5111d58fde91f95f2ebf47a319b919b282fea71361cd6836",
+              "origin": "workspace_snapshot"
+            }
+          ],
+          "grades": [
+            "pass"
+          ],
+          "feedback_delivery": [],
+          "termination": [
+            "budget_exhausted"
+          ],
+          "tool_diagnostics": [
+            "tool_timeout",
+            "timeout_command_missing"
+          ],
+          "missing": [
+            "per_action_workspace_bytes",
+            "exact_upstream_serialized_body"
+          ],
+          "checks": "verified_with_gaps"
+        }
+      ]
+    },
+    {
+      "case": "C8",
+      "trials": [
+        [
+          "cvdp_copilot_coffee_machine_0001",
+          "dsh-claude",
+          1
+        ],
+        [
+          "cvdp_copilot_coffee_machine_0001",
+          "dsh-claude",
+          2
+        ],
+        [
+          "cvdp_copilot_coffee_machine_0001",
+          "tools-on",
+          1
+        ]
+      ],
+      "observation": "两次无工具回复因输出截断未形成候选，工具分支遇到单次输入字节限制。",
+      "hypothesis": "输出截断和输入膨胀触发不同瓶颈，仍需对各请求组成做诊断。",
+      "next_check": "按消息和工具结果计算输入组成，检查两个预算触点。",
+      "verified_runs": [
+        {
+          "schema_version": "behavior-v2-d0/1",
+          "run_id": "v1/matrix/1/cvdp_copilot_coffee_machine_0001/dsh-claude",
+          "task": "cvdp_copilot_coffee_machine_0001",
+          "condition": "dsh-claude",
+          "target": "rtl/coffee_machine.sv",
+          "events": {
+            "extraction": 1,
+            "missing": 1,
+            "request_observed": 1,
+            "response": 1,
+            "termination": 1
+          },
+          "candidate_records": [],
+          "grades": [],
+          "feedback_delivery": [],
+          "termination": [
+            "no_extractable_rtl"
+          ],
+          "tool_diagnostics": [],
+          "missing": [
+            "provider_request_body"
+          ],
+          "checks": "verified_with_gaps"
+        },
+        {
+          "schema_version": "behavior-v2-d0/1",
+          "run_id": "v1/matrix/2/cvdp_copilot_coffee_machine_0001/dsh-claude",
+          "task": "cvdp_copilot_coffee_machine_0001",
+          "condition": "dsh-claude",
+          "target": "rtl/coffee_machine.sv",
+          "events": {
+            "extraction": 1,
+            "missing": 1,
+            "request_observed": 1,
+            "response": 1,
+            "termination": 1
+          },
+          "candidate_records": [],
+          "grades": [],
+          "feedback_delivery": [],
+          "termination": [
+            "no_extractable_rtl"
+          ],
+          "tool_diagnostics": [],
+          "missing": [
+            "provider_request_body"
+          ],
+          "checks": "verified_with_gaps"
+        },
+        {
+          "schema_version": "behavior-v2-d0/1",
+          "run_id": "v1/tools/1/cvdp_copilot_coffee_machine_0001/tools-on",
+          "task": "cvdp_copilot_coffee_machine_0001",
+          "condition": "tools-on",
+          "target": "rtl/coffee_machine.sv",
+          "events": {
+            "candidate": 1,
+            "grade": 1,
+            "missing": 2,
+            "request": 4,
+            "request_rejected": 1,
+            "response": 4,
+            "runtime_error": 1,
+            "termination": 1,
+            "tool_call": 7,
+            "tool_result": 7
+          },
+          "candidate_records": [
+            {
+              "candidate_id": "v1/tools/1/cvdp_copilot_coffee_machine_0001/tools-on/candidate-1",
+              "sha256": "acc4445c286748fac1ff41bee9418383a2abe5c3ee6db43ec0562a2086d86fb5",
+              "origin": "workspace_snapshot"
+            }
+          ],
+          "grades": [
+            "functional"
+          ],
+          "feedback_delivery": [],
+          "termination": [
+            "input_limit"
+          ],
+          "tool_diagnostics": [],
+          "missing": [
+            "per_action_workspace_bytes",
+            "exact_upstream_serialized_body"
+          ],
+          "checks": "verified_with_gaps"
+        }
+      ]
+    }
+  ]
+}

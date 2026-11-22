@@ -4,7 +4,7 @@
 
 ACE-RTL 与 DeepSeek Harness 是观察模型行为的实验系统。后续修改服务于测量、变量控制、原因检验和环境复现。项目以诊断证据与训练任务质量衡量进展，不以优化 Agent 成功率或 Benchmark 排名作为主要目标。
 
-当前阶段是 [Methodology V2 Audit](docs/methodology-v2.md)：已完成代码与本地原始记录审查、八类案例分析、数据结构及最小实验设计。规划功能尚未实施；新付费实验、关键条件改变及系统安装需要先确认。V1 历史数据和评分保持不变。
+当前已完成 V2 的 D0 行为证据转换和 D1 后处理对照。新付费实验、关键条件改变及系统安装需要先确认。V1 历史数据和评分保持不变。 [实测报告](docs/d0-d1-report.md) · [方法审计](docs/methodology-v2.md)
 
 V1 八组对照覆盖 ACE-RTL 与 DeepSeek Harness 分别使用 DeepSeek Flash、DeepSeek V4 Pro、Claude Opus 5.5 和 GPT-6.2 Astra 的组合，共 192 次运行。DSH 采用关闭工具的配置。另有 48 次 DSH＋Flash 工具开关实验，两侧同为八次请求上限。各配置的预算、后处理和信息差异见 V2 审计，不能直接归因为模型能力。
 

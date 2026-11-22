@@ -1,0 +1,62 @@
+[
+  {
+    "case": "C1",
+    "trials": [["cvdp_copilot_64b66b_encoder_0005", "ace-claude", 1]],
+    "observation": "首份候选通过原测试。",
+    "hypothesis": "该实现是否覆盖更广泛的复位与控制组合仍未知。",
+    "next_check": "用规格驱动的独立时序测试复核候选。"
+  },
+  {
+    "case": "C2",
+    "trials": [["cvdp_copilot_64b66b_encoder_0005", "ace-flash", 1]],
+    "observation": "首轮复位检查失败，随后改为高有效复位并通过。精简失败反馈出现在后续请求中。",
+    "hypothesis": "类别反馈、角色建议与自然重复生成均可能促成修正。",
+    "next_check": "固定失败候选，分别给予无新增证据、类别反馈和独立反例。"
+  },
+  {
+    "case": "C3",
+    "trials": [["cvdp_copilot_32_bit_Brent_Kung_PP_adder_0001", "ace-flash", "p2"]],
+    "observation": "四次模型请求，两份候选字节相同，两次都在原进位检查失败。",
+    "hypothesis": "反馈包含的信息、反思建议是否指出根因，以及建议能否落实需要分别检验。",
+    "next_check": "结合 Reflector 原始输出与第二次 Generator 实际输入，检查是否送达可执行的根因线索。"
+  },
+  {
+    "case": "C4",
+    "trials": [["cvdp_copilot_arithmetic_progression_generator_0015", "ace-gpt", 1],
+               ["cvdp_copilot_arithmetic_progression_generator_0015", "ace-gpt", 2]],
+    "observation": "两次重复均连续失败，一次只重排条件，另一次两轮候选字节相同。",
+    "hypothesis": "输出最小宽度的预期可能未在公开接口契约中充分说明；这是能力归因的替代解释。",
+    "next_check": "核对公开参数域、允许改动的接口及宽度语义，再决定能否用于能力诊断。"
+  },
+  {
+    "case": "C5",
+    "trials": [["cvdp_copilot_fsm_seq_detector_0023", "ace-gpt", 1],
+               ["cvdp_copilot_fsm_seq_detector_0023", "dsh-gpt", 1]],
+    "observation": "ACE 首轮通过并有兼容性转换；DSH 首轮遇到显式类型转换错误，第二轮候选通过离线恢复评分。",
+    "hypothesis": "候选生成差异、类型表达与处理路径均需逐项检查。",
+    "next_check": "在同一固定输出上只改变 always_comb 转换，再比较编译和原测试结果。"
+  },
+  {
+    "case": "C6",
+    "trials": [["cvdp_copilot_generic_nbit_counter_0036", "tools-on", 1]],
+    "observation": "预算用尽时未完成提交，工作区快照通过原测试。",
+    "hypothesis": "交付流程导致主指标失败；首次获得可通过版本的时刻缺乏逐动作证据。",
+    "next_check": "未来记录逐动作候选哈希，区分首次正确与最终交付。"
+  },
+  {
+    "case": "C7",
+    "trials": [["cvdp_copilot_rgb2ycbcr_0001", "tools-on", 2]],
+    "observation": "自建仿真曾超时，后续命令还遇到工具缺失；最终因请求预算停止，快照通过原测试。",
+    "hypothesis": "自建测试的终止条件、握手与本地工具环境可能共同影响过程。",
+    "next_check": "将自建仿真的超时与候选功能和最终交付分别复核。"
+  },
+  {
+    "case": "C8",
+    "trials": [["cvdp_copilot_coffee_machine_0001", "dsh-claude", 1],
+               ["cvdp_copilot_coffee_machine_0001", "dsh-claude", 2],
+               ["cvdp_copilot_coffee_machine_0001", "tools-on", 1]],
+    "observation": "两次无工具回复因输出截断未形成候选，工具分支遇到单次输入字节限制。",
+    "hypothesis": "输出截断和输入膨胀触发不同瓶颈，仍需对各请求组成做诊断。",
+    "next_check": "按消息和工具结果计算输入组成，检查两个预算触点。"
+  }
+]

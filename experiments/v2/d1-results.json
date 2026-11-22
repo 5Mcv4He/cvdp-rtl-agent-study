@@ -1,0 +1,136 @@
+{
+  "dataset": "CVDP v1.1.0",
+  "scorer": "native local_import",
+  "seed": "20261122",
+  "iverilog_sha256": "9ef7463c91ae7045fe1a1f93e9a9a57c37bde96b9501ed962e4acad5a923011a",
+  "model_requests": 0,
+  "cases": [
+    {
+      "case": "fsm-always-comb",
+      "task": "cvdp_copilot_fsm_seq_detector_0023",
+      "condition": "ace-gpt",
+      "repetition": 1,
+      "round": 1,
+      "factor": "always_comb",
+      "response_text_sha256": "5ca5e4fc56ecac17fa5b07703aa798ada0fdae5214836f9d5963b94b1c0fb8a8",
+      "historic_path": "ace_extract_then_lower",
+      "historic_candidate_sha256": "c49c41c065527b0bf99fd4ca568d2715c3cf39c566bd2b5b147d9949cd3fdb47",
+      "historic_verdict": "pass",
+      "always_comb_replacements": 1,
+      "candidate_bytes_changed": true,
+      "scoring_admission_changed": false,
+      "scored_verdict_changed": false,
+      "measurements": [
+        {
+          "path": "ace_extract",
+          "task_id": "cvdp_copilot_fsm_seq_detector_0023",
+          "verdict": "pass",
+          "candidate_sha256": "b325e880aa574b6ea3e9bead87699a3ffab8451793a6ce81d245c2819f4e05ed",
+          "cocotb_tests": 6
+        },
+        {
+          "path": "ace_extract_then_lower",
+          "task_id": "cvdp_copilot_fsm_seq_detector_0023",
+          "verdict": "pass",
+          "candidate_sha256": "c49c41c065527b0bf99fd4ca568d2715c3cf39c566bd2b5b147d9949cd3fdb47",
+          "cocotb_tests": 6
+        }
+      ]
+    },
+    {
+      "case": "fsm-cast-control",
+      "task": "cvdp_copilot_fsm_seq_detector_0023",
+      "condition": "dsh-gpt",
+      "repetition": 1,
+      "round": 1,
+      "factor": "always_comb",
+      "response_text_sha256": "162f38cc8b601231da4e4d10d57bb06256cd46b53d7114b70d5a34cceb75d88a",
+      "historic_path": "dsh_extract",
+      "historic_candidate_sha256": "8816880410c14457f8780a5598023ea57f1b3ddf1446b99c81ef51e4b4a19035",
+      "historic_verdict": "compile",
+      "always_comb_replacements": 1,
+      "candidate_bytes_changed": true,
+      "scoring_admission_changed": false,
+      "scored_verdict_changed": false,
+      "measurements": [
+        {
+          "path": "dsh_extract",
+          "task_id": "cvdp_copilot_fsm_seq_detector_0023",
+          "verdict": "compile",
+          "candidate_sha256": "8816880410c14457f8780a5598023ea57f1b3ddf1446b99c81ef51e4b4a19035",
+          "cocotb_tests": null
+        },
+        {
+          "path": "dsh_extract_then_lower",
+          "task_id": "cvdp_copilot_fsm_seq_detector_0023",
+          "verdict": "compile",
+          "candidate_sha256": "eb50996463bf58d701ff0beaa0f2abc62d3161d18261c9f28fe5a8882079e663",
+          "cocotb_tests": null
+        }
+      ]
+    },
+    {
+      "case": "swizzler-extraction",
+      "task": "cvdp_copilot_swizzler_0014",
+      "condition": "ace-gpt",
+      "repetition": 1,
+      "round": 1,
+      "factor": "extraction",
+      "response_text_sha256": "187dcd8a84c48516b443262129f0afb09d94a4fe32cc74c4ec17fce5d66dc4c2",
+      "historic_path": "ace_extract",
+      "historic_candidate_sha256": "65b46163f8763a116fc124a7aa91488cf44fa82e1cae6c9c707038113f50039a",
+      "historic_verdict": "pass",
+      "always_comb_replacements": null,
+      "candidate_bytes_changed": true,
+      "scoring_admission_changed": false,
+      "scored_verdict_changed": false,
+      "measurements": [
+        {
+          "path": "ace_extract",
+          "task_id": "cvdp_copilot_swizzler_0014",
+          "verdict": "pass",
+          "candidate_sha256": "65b46163f8763a116fc124a7aa91488cf44fa82e1cae6c9c707038113f50039a",
+          "cocotb_tests": 9
+        },
+        {
+          "path": "dsh_extract",
+          "task_id": "cvdp_copilot_swizzler_0014",
+          "verdict": "pass",
+          "candidate_sha256": "2df7b93cc58cd995af5a7644992c2cac639aa229c736126b90fee0109924a051",
+          "cocotb_tests": 9
+        }
+      ]
+    },
+    {
+      "case": "counter-extraction",
+      "task": "cvdp_copilot_generic_nbit_counter_0036",
+      "condition": "dsh-flash",
+      "repetition": 1,
+      "round": 2,
+      "factor": "extraction",
+      "response_text_sha256": "47a1f5e532483c12ec75c6a401cba866a60837cdcb4818324f32beaa95f6911d",
+      "historic_path": "dsh_extract",
+      "historic_candidate_sha256": null,
+      "historic_verdict": "no_candidate",
+      "always_comb_replacements": null,
+      "candidate_bytes_changed": null,
+      "scoring_admission_changed": true,
+      "scored_verdict_changed": null,
+      "measurements": [
+        {
+          "path": "dsh_extract",
+          "verdict": "no_candidate",
+          "candidate_sha256": null,
+          "cocotb_tests": null
+        },
+        {
+          "path": "ace_extract",
+          "task_id": "cvdp_copilot_generic_nbit_counter_0036",
+          "verdict": "functional",
+          "candidate_sha256": "02cb9c474c363041f9714cf3d9270fa249c8d658154d374a1999a22e67c71ef8",
+          "cocotb_tests": 8
+        }
+      ]
+    }
+  ]
+}
