@@ -7,4 +7,4 @@
 - Linux Compose 三项控制与本地判定一致，见 [校准结果](experiments/suite/compose-calibration.json)。四组共 96 次运行，使用统一的 macOS 原生评分。
 - 长输入补充诊断复现了 8 次原先未发送的第二轮请求。8 份候选均在功能测试失败，补发结果与主实验分别保留。
 - 已补齐 DSH＋V4 Pro。24 次首轮中有 10 次通过，最终通过 12 次。见 [四组对照报告](experiments/suite/factorial-report.md)。
-- ACE-RTL 接入 Claude Opus 5.5 与 GPT-6.2 Astra。两组均首轮通过加法器原测试及独立算术检查，12 题各两次的批次正在采集。 [跨模型报告](experiments/suite/cross-provider-report.md)
+- ACE-RTL 已完成 Claude Opus 5.5 与 GPT-6.2 Astra 的两组单题验证和 48 次配对运行。Claude 通过 24/24，GPT 通过 22/24，后者的两次失败均出现在等差数列题。 [跨模型报告](experiments/suite/cross-provider-report.md)

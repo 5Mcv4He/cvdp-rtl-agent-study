@@ -4,9 +4,9 @@
 
 **当前结果（2026-11-22）**　12 道 CVDP 调试题覆盖两个 Agent 和两个模型的全部四组组合，各重复两次，共 **96 次运行**。最终通过数为 ACE＋Flash 12/24、ACE＋Pro 11/24、DSH＋Flash 10/24、DSH＋Pro 12/24。DSH 两组均关闭工具。 [四组对照报告](experiments/suite/factorial-report.md) · [逐题数据](experiments/suite/factorial-results.json)
 
-**跨模型对照**　固定 ACE-RTL 后，Claude Opus 5.5 与 GPT-6.2 Astra 均在首轮修好加法器，并通过额外 4,128 组算术输入。两组的完整 12 题对照正在采集。 [跨模型实验与单题结果](experiments/suite/cross-provider-report.md)
+**跨模型对照**　固定 ACE-RTL，用相同的 12 道题新增 48 次运行。Claude Opus 5.5 最终通过 **24/24**，GPT-6.2 Astra 通过 **22/24**。两款模型的差异集中在一道等差数列题的输出位宽检查。新增模型通过米醋调用，DeepSeek 基线走官方接口。 [跨模型报告、逐题数据与复现](experiments/suite/cross-provider-report.md)
 
-一次实验由三部分组成。CVDP 提供题目、已有 RTL 和评分测试，ACE-RTL 组织模型生成代码和接收仿真反馈，DeepSeek Flash 是本次生成代码的模型。后续会换入通用 Agent DeepSeek Harness，在同题、同模型下比较求解过程。 [CVDP](https://github.com/NVlabs/cvdp_benchmark) · [ACE-RTL](https://github.com/NVlabs/ACE-RTL) · [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)
+一次实验由三部分组成。CVDP 提供题目、已有 RTL 和评分测试，Agent 组织生成代码与仿真反馈，底层模型给出修改。项目也对比了 ACE-RTL 和关闭工具的 DeepSeek Harness 在同题、同模型下的表现。 [CVDP](https://github.com/NVlabs/cvdp_benchmark) · [ACE-RTL](https://github.com/NVlabs/ACE-RTL) · [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)
 
 ## 如何读这些结果
 
@@ -46,7 +46,7 @@ Flash 在 ACE-RTL 中两轮输出了字节相同的 RTL，第二轮之前还发�
 | P0 · 环境与接口调查 | 完成。已锁定三个上游源码提交、数据集 revision 和首题指纹 |
 | P1 · 首次端到端运行 | 完成原生运行与独立重放。Linux Compose 三项控制全部复现 |
 | 多轮反馈 | 已观测 ACE 的 4 次调用、两轮提交和精简反馈。DSH 已完成受控单题 |
-| 模型对照 | ACE 和 DSH 两种配置均已比较 Flash 与 V4 Pro |
+| 模型对照 | ACE-RTL 已比较四款模型，DSH 已比较 Flash 与 V4 Pro |
 | Agent 对照 | Flash 和 V4 Pro 分别完成 ACE 与关闭工具的 DSH 对照 |
 
 ## 复现

@@ -1,5 +1,6 @@
 """Run a predeclared paired study under a confirmed spending limit."""
 import argparse
+from collections import Counter
 from concurrent.futures import ProcessPoolExecutor
 import json
 import multiprocessing
@@ -7,6 +8,7 @@ import os
 from pathlib import Path
 import tempfile
 
+from micu_api import KEY_VARIABLES, normalize
 from model_budget import record
 from run_ace_study import run_ace
 from run_dsh_study import run_dsh
@@ -24,32 +26,72 @@ def reservation(condition, rates):
     ) / 1e6
 
 
+def meter_micu(run, result):
+    calls = sorted((run / "api").glob("*/request.json"))
+    replies = []
+    generator_replies = []
+    errors = Counter()
+    for path in calls:
+        summary = path.with_name("summary.json")
+        if not summary.exists():
+            error = path.with_name("error.json")
+            detail = json.loads(error.read_text()) if error.exists() else {}
+            errors[detail.get("error_type", "MissingResponse")] += 1
+            continue
+        reply = json.loads(summary.read_text())
+        replies.append(reply)
+        if json.loads(path.read_text())["role"] == "generator":
+            raw = json.loads(path.with_name("provider-response").read_text())
+            choice = normalize(result["model"], raw)["choices"][0]
+            generator_replies.append(
+                (int(path.parent.name), choice["message"]["content"].strip(), choice["finish_reason"])
+            )
+    scores = result["scores"]
+    accepted = sorted(run.glob("*/datapoints/*/attempt_1/iter_*/generator.response.json"))
+    if len(accepted) != len(scores) or any(reply["model"] != result["model"] for reply in replies):
+        raise ValueError("model ledger does not match the score record")
+    remaining = iter(generator_replies)
+    generator_calls = []
+    for path in accepted:
+        reply = json.loads(path.read_text())
+        content = reply["content"].strip()
+        # The runner can retry a failed or truncated response within the same iteration.
+        call = next((index for index, text, finish in remaining
+                     if text == content and finish == reply["finish_reason"]), None)
+        if call is None:
+            raise ValueError("the scorer's generator response is absent from the model ledger")
+        generator_calls.append(call)
+    first_pass = next((call for call, score in zip(generator_calls, scores) if score["verdict"] == "pass"), None)
+    usage = [reply["usage"] for reply in replies]
+    reasoning = [u.get("reasoning_tokens") for u in usage]
+    return {
+        "observed_calls": len(calls), "responses_with_usage": len(usage),
+        "error_types": dict(errors), "first_passing_request": first_pass,
+        "model_reported": result["model"] if replies else None,
+        "uncached_input": sum(u["prompt_cache_miss_tokens"] for u in usage),
+        "cached_input": sum(u["prompt_cache_hit_tokens"] for u in usage),
+        "cache_write": sum(u["prompt_cache_write_tokens"] for u in usage),
+        "output": sum(u["completion_tokens"] for u in usage),
+        "reasoning": sum(reasoning) if all(n is not None for n in reasoning) else None,
+        "truncated_requests": sum(s["finish_reason"] == "length" for s in replies),
+        "peak_price_estimate_usd": None,
+    }
+
+
 def meter(condition, run, result):
-    rates = RATES.get(condition["model"])
-    extra = {}
+    if condition["model"] in KEY_VARIABLES:
+        return meter_micu(run, result)
+    rates = RATES[condition["model"]]
     if condition["agent"] == "ace":
         billed = []
-        summaries = []
         for path in sorted((run / "api").glob("*/request.json")):
             summary = path.with_name("summary.json")
             if not summary.exists():
                 return None
-            reply = json.loads(summary.read_text())
-            u = reply["usage"]
+            u = json.loads(summary.read_text())["usage"]
             if u is None:
                 return None
             billed.append((u["prompt_cache_miss_tokens"], u["prompt_cache_hit_tokens"], u["completion_tokens"]))
-            summaries.append(reply)
-        if rates is None:
-            if not summaries:
-                return None
-            reasoning = [s["usage"].get("reasoning_tokens") for s in summaries]
-            extra = {
-                "model_reported": condition["model"],
-                "cache_write": sum(s["usage"]["prompt_cache_write_tokens"] for s in summaries),
-                "reasoning": sum(reasoning) if all(n is not None for n in reasoning) else None,
-                "truncated_requests": sum(s["finish_reason"] == "length" for s in summaries),
-            }
     else:
         if not result.get("usage") or any(u is None for u in result["usage"]):
             return None
@@ -60,8 +102,7 @@ def meter(condition, run, result):
         "uncached_input": sum(x for x, _, _ in billed), "cached_input": sum(y for _, y, _ in billed),
         "output": sum(z for _, _, z in billed),
         "peak_price_estimate_usd": round(sum(x*rates["miss"] + y*rates["hit"] + z*rates["output"]
-                                            for x, y, z in billed) / 1e6, 8) if rates else None,
-        **extra,
+                                            for x, y, z in billed) / 1e6, 8),
     }
 
 

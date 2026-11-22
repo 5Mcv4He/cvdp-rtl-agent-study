@@ -57,6 +57,9 @@ def summarize(private_rows, conditions=None, comparisons=COMPARISONS):
 
     def pass_by_two(row):
         meter = row.get("meter")
+        if meter and "first_passing_request" in meter:
+            request = meter["first_passing_request"]
+            return request is not None and request <= 2
         return row.get("first") == "pass" or bool(
             meter and meter["observed_calls"] <= 2 and row.get("final") == "pass"
         )
@@ -90,6 +93,11 @@ def summarize(private_rows, conditions=None, comparisons=COMPARISONS):
             "peak_cost_per_success_usd": round(cost / final_pass, 8)
             if cost is not None and final_pass and len(observed) == len(group) else None,
         }
+        if observed and "responses_with_usage" in observed[0]:
+            metrics[condition].update(
+                responses_with_usage=sum(r["responses_with_usage"] for r in observed),
+                truncated_requests=sum(r["truncated_requests"] for r in observed),
+            )
     pairs = {}
     for outcome in ("first", "by_two_calls", "final"):
         for left, right in comparisons:
