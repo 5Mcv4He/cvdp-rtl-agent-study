@@ -1,8 +1,12 @@
 # 研究目标
 
-这个项目研究 AI 如何调试数字芯片的 RTL 代码。我们观察首次生成的代码、仿真反馈、后续修复和失败原因，同时记录模型调用与验证成本。
+这个项目研究如何从真实 RTL 工程任务中发现大模型的能力问题，并将经过诊断的问题转化为可执行的训练任务、交互环境和可靠奖励。当前交付范围是训练前的行为记录、能力诊断、任务构造与 Reward 验证，尚未开展模型参数训练。
 
-八组对照覆盖 ACE-RTL 与 DeepSeek Harness 分别使用 DeepSeek Flash、DeepSeek V4 Pro、Claude Opus 5.5 和 GPT-6.2 Astra 的组合。分别固定 Agent 或模型比较另一项，并记录验证反馈、交付和请求预算。DSH 采用关闭工具的配置。
+ACE-RTL 与 DeepSeek Harness 是观察模型行为的实验系统。后续修改服务于测量、变量控制、原因检验和环境复现。项目以诊断证据与训练任务质量衡量进展，不以优化 Agent 成功率或 Benchmark 排名作为主要目标。
+
+当前阶段是 [Methodology V2 Audit](docs/methodology-v2.md)：已完成代码与本地原始记录审查、八类案例分析、数据结构及最小实验设计。规划功能尚未实施；新付费实验、关键条件改变及系统安装需要先确认。V1 历史数据和评分保持不变。
+
+V1 八组对照覆盖 ACE-RTL 与 DeepSeek Harness 分别使用 DeepSeek Flash、DeepSeek V4 Pro、Claude Opus 5.5 和 GPT-6.2 Astra 的组合，共 192 次运行。DSH 采用关闭工具的配置。另有 48 次 DSH＋Flash 工具开关实验，两侧同为八次请求上限。各配置的预算、后处理和信息差异见 V2 审计，不能直接归因为模型能力。
 
 首批任务来自 CVDP v1.1.0 的 Non-Agentic Code Generation / No Commercial 分区，优先选 `cid016` RTL 调试题。这里的 Non-Agentic 描述题目和交付格式，两种 Agent 都可以多轮求解。每次运行固定题目、源码版本和评分条件，记录具体的候选、诊断与判定。
 
