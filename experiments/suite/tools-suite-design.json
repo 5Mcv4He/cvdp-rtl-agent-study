@@ -1,0 +1,14 @@
+{
+  "cohort": "factorial-design.json",
+  "model": "deepseek-flash",
+  "reasoning": "off",
+  "repetitions": 2,
+  "max_rounds": 2,
+  "max_requests": 8,
+  "conditions": [
+    {"id": "tools-off", "tools_enabled": false},
+    {"id": "tools-on", "tools_enabled": true}
+  ],
+  "feedback": "Only the CVDP outcome class is returned between rounds.",
+  "scorer": "CVDP local_import with the original task tests"
+}

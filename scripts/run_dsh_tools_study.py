@@ -31,6 +31,7 @@ from unittest.mock import patch
 
 from dsh_tools_relay import Relay, text_message, tool_call_message
 from model_budget import record
+from run_dsh_study import TOOL_FREE_PATCH, rtl_from_response
 from study_common import FEEDBACK, LOCAL, PILOT_ID, ROOT, score, task_row
 
 MODEL = "deepseek-flash"
@@ -143,13 +144,16 @@ def fingerprint():
     digest.update(f"layout={LAYOUT_VERSION}\n".encode())
     digest.update(seatbelt_profile_text("<SOLVE>").encode())
     digest.update(tools_patch_text("<SOLVE>").encode())
+    digest.update(json.dumps(TOOL_FREE_PATCH).encode())
     digest.update(f"runtime={runtime_dir()}\nicarus={ICARUS_ROOT}\n".encode())
     digest.update((ROOT / "scripts/dsh_tools_relay.py").read_bytes())
     digest.update((ROOT / "scripts/run_dsh_tools_study.py").read_bytes())
     return digest.hexdigest()
 
 
-def contract_text(target):
+def contract_text(target, tools_enabled=True):
+    if not tools_enabled:
+        return f"Return the complete corrected contents of {target}. Preserve the module interface. Return only SystemVerilog."
     return (f"The file {target} in your workspace is the submission. Edit that file in place with "
             "your tools; final grading reads exactly those bytes. Preserve the module interface. "
             f"For local checks you may run: iverilog -g2012 -o sim.vvp {target} your_testbench.sv "
@@ -157,10 +161,10 @@ def contract_text(target):
             "runs outside your workspace; its per-round feedback states only the result category.")
 
 
-def build_prompt(row, target):
+def build_prompt(row, target, tools_enabled=True):
     context = "\n".join(f"File: {name}\n```systemverilog\n{source}\n```"
                         for name, source in row["input"]["context"].items())
-    prompt = "\n\n".join((row["input"]["prompt"], context, contract_text(target)))
+    prompt = "\n\n".join((row["input"]["prompt"], context, contract_text(target, tools_enabled)))
     if len(prompt.encode()) > 24000:
         raise ValueError("public task exceeds the DSH tools study input limit")
     return prompt
@@ -328,7 +332,7 @@ def evaluate_acceptance(run, solve, sentinel_paths, canaries, escape_path,
     }
 
 
-def open_harness(solve, config_dir, relay):
+def open_harness(solve, config_dir, relay, tools_enabled=True):
     """Launch the runtime under the outer seatbelt.
 
     The seatbelt profile and the tools patch live in ``config_dir`` outside the
@@ -340,8 +344,8 @@ def open_harness(solve, config_dir, relay):
     profile_path = config_dir / "seatbelt.sbpl"
     profile_text = seatbelt_profile_text(solve, relay.port)
     profile_path.write_text(profile_text)
-    patch_path = config_dir / "tools-on.yml"
-    patch_path.write_text(tools_patch_text(solve))
+    patch_path = config_dir / "tools-profile.yml"
+    patch_path.write_text(tools_patch_text(solve) if tools_enabled else json.dumps(TOOL_FREE_PATCH))
     runtime_exe = runtime_dir() / "deepseek-harness-sdk-runtime-macos-arm64"
     env = {
         "PATH": "/usr/bin:/bin:" + str(ICARUS_ROOT / "bin"),
@@ -391,7 +395,7 @@ def classify_turn_error(meta, served):
     return "model_turn_error"
 
 
-def run_session_flow(run, solve, meta, relay, row, target, initial_prompt, rounds):
+def run_session_flow(run, solve, meta, relay, row, target, initial_prompt, rounds, tools_enabled=True):
     """Drive prompt rounds, snapshot the workspace candidate, and score after each round."""
     scores = []
     turns = []
@@ -404,7 +408,9 @@ def run_session_flow(run, solve, meta, relay, row, target, initial_prompt, round
     outcome = None
     prompt = initial_prompt
     config_dir = Path(tempfile.mkdtemp(prefix="dsh-study-config-"))
-    harness, env = open_harness(solve, config_dir, relay)
+    completed_scores = []
+    candidate_origins = []
+    harness, env = open_harness(solve, config_dir, relay, tools_enabled)
     try:
         with patch.dict(os.environ, env, clear=True):
             with harness as active:
@@ -419,12 +425,23 @@ def run_session_flow(run, solve, meta, relay, row, target, initial_prompt, round
                     usage.extend(digested["usage"])
                     tool_calls.extend(digested["tool_calls"])
                     finish_reasons.append(response.finish_reason)
+                    if not tools_enabled and digested["tool_calls"]:
+                        raise ValueError("the tools-off configuration observed a tool call")
+                    completed = response.finish_reason == "completed"
                     candidate_path = solve / target
-                    if not candidate_path.exists():
-                        outcome = "no_submission"
-                        break
                     snapshot = meta / f"candidate-{index}.sv"
-                    snapshot.write_bytes(candidate_path.read_bytes())
+                    if tools_enabled:
+                        if not candidate_path.exists() or candidate_path.is_symlink():
+                            outcome = "no_submission"
+                            break
+                        snapshot.write_bytes(candidate_path.read_bytes())
+                    else:
+                        rtl = rtl_from_response(response.final_response) if completed else None
+                        if rtl is None or not re.search(r"\bendmodule\b", rtl):
+                            outcome = "no_submission"
+                            break
+                        snapshot.write_text(rtl)
+                    candidate_origins.append("completed_submission" if completed else "workspace_snapshot")
                     try:
                         verdict = score(row, snapshot, meta / f"replay-{index}")
                     except ValueError as error:
@@ -435,24 +452,33 @@ def run_session_flow(run, solve, meta, relay, row, target, initial_prompt, round
                                {"error_type": type(error).__name__})
                         break
                     scores.append(verdict)
+                    if completed:
+                        completed_scores.append(verdict)
+                    else:
+                        break
                     if index == rounds or verdict["verdict"] not in RETRYABLE:
                         break
-                    if relay.served >= relay.max_requests:
+                    if relay.admitted >= relay.max_requests:
                         outcome = "budget_exhausted"
                         break
                     feedback = FEEDBACK[verdict["verdict"]]
                     feedback_given.append(verdict["verdict"])
-                    prompt = feedback + " " + contract_text(target)
+                    prompt = feedback + " " + contract_text(target, tools_enabled)
     finally:
-        for name in ("seatbelt.sbpl", "tools-on.yml"):
+        for name in ("seatbelt.sbpl", "tools-profile.yml"):
             source = config_dir / name
             if source.exists():
                 (meta / name).write_bytes(source.read_bytes())
         shutil.rmtree(config_dir, ignore_errors=True)
-    if outcome is None and any(reason == "error" for reason in finish_reasons):
+    if "request_budget" in relay.rejections:
+        outcome = "budget_exhausted"
+    elif "input_limit" in relay.rejections:
+        outcome = "input_limit"
+    elif outcome is None and any(reason == "error" for reason in finish_reasons):
         outcome = classify_turn_error(meta, relay.served)
     return {
-        "scores": scores, "turns": turns, "usage": usage, "tool_calls": tool_calls,
+        "scores": scores, "completed_scores": completed_scores, "candidate_origins": candidate_origins,
+        "turns": turns, "usage": usage, "tool_calls": tool_calls,
         "finish_reasons": finish_reasons, "feedback_given": feedback_given,
         "outcome": outcome, "seconds": round(time.monotonic() - start, 3),
         "initial_sha256": hashlib.sha256(initial).hexdigest(),
@@ -534,7 +560,7 @@ def check_gate():
     return gate
 
 
-def run_tools(task, rounds, max_requests):
+def run_tools(task, rounds, max_requests, tools_enabled=True):
     gate = check_gate()
     if "DEEPSEEK_API_KEY" not in os.environ:
         raise SystemExit(
@@ -558,11 +584,12 @@ def run_tools(task, rounds, max_requests):
     print(run, flush=True)
     try:
         flow = run_session_flow(run, solve, meta, relay, row, target,
-                                build_prompt(row, target), rounds)
+                                build_prompt(row, target, tools_enabled), rounds, tools_enabled)
     finally:
         relay.shutdown()
         remove_sentinels(sentinel_paths)
     patterns = list(canaries) + [real_key, "cvdp_copilot_64b66b_encoder_0005"]
+    patterns = [pattern for pattern in patterns if pattern != task]
     leaks = scan_model_reachable(run, patterns)
     scan_clean = all(not paths for paths in leaks.values())
     record(meta / "post-run-scan.json", {
@@ -580,14 +607,17 @@ def run_tools(task, rounds, max_requests):
         for path in sorted(api.glob("*/summary.json")):
             relay_usage.append(json.loads(path.read_text()))
     result = {
-        "task_id": task, "agent": "dsh-tools", "model": MODEL, "tools_enabled": True,
+        "task_id": task, "agent": "dsh-tools", "model": MODEL, "tools_enabled": tools_enabled,
         "compact_feedback": True, "seconds": flow["seconds"],
         "scores": scores,
+        "completed_scores": flow["completed_scores"],
+        "candidate_origins": flow["candidate_origins"],
         "candidate_sha256": candidate_hashes,
         "candidate_changed": [h != flow["initial_sha256"] for h in candidate_hashes],
         "sdk_events": {"requests_with_usage": len(flow["usage"]), "usage": flow["usage"],
                        "source": "DeepSeek Harness SDK assistant/message events"},
         "api_relay": {"requests": len(relay_usage), "mode": "forward",
+                      "forwarded_requests": relay.forwarded,
                       "upstream_fixed": "api.deepseek.com/anthropic",
                       "caps": {"max_requests": max_requests,
                                "max_request_bytes": MAX_REQUEST_BYTES,
@@ -625,6 +655,7 @@ if __name__ == "__main__":
     parser.add_argument("--task", default=PILOT_ID)
     parser.add_argument("--rounds", choices=(1, 2), type=int, default=2)
     parser.add_argument("--max-requests", type=int, default=8)
+    parser.add_argument("--tools-off", action="store_true", help="disable tools while retaining the relay and sandbox")
     parser.add_argument("--probe", action="store_true",
                         help="run the offline mock-driven isolation acceptance; no paid requests")
     args = parser.parse_args()
@@ -633,4 +664,4 @@ if __name__ == "__main__":
         run, acceptance = probe()
         print(json.dumps(acceptance, ensure_ascii=False, indent=2))
         raise SystemExit(0 if acceptance["passed"] and acceptance["relay_matches_sdk"] else 1)
-    run_tools(args.task, args.rounds, args.max_requests)
+    run_tools(args.task, args.rounds, args.max_requests, tools_enabled=not args.tools_off)

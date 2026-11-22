@@ -109,8 +109,10 @@ class Relay:
         self.server = None
         self.thread = None
         self.served = 0
+        self.admitted = 0
         self.forwarded = 0
         self.rejections = []
+        self.lock = threading.Lock()
 
     @property
     def base_url(self):
@@ -193,16 +195,22 @@ class Relay:
                 self._reject(handler, payload, "unexpected_model",
                              "study allows only deepseek-flash")
                 return
-        if self.served >= self.max_requests:
-            self._reject(handler, payload, "request_budget",
-                         f"study request budget of {self.max_requests} is exhausted")
-            return
         if len(body) > self.max_request_bytes:
             self._reject(handler, payload, "input_limit",
                          f"request of {len(body)} bytes exceeds the {self.max_request_bytes}-byte study cap")
             return
 
-        call = self._next_call_dir()
+        with self.lock:
+            call = None
+            if self.admitted < self.max_requests:
+                call = self._next_call_dir()
+                self.admitted += 1
+                if self.mock_script is None:
+                    self.forwarded += 1
+        if call is None:
+            self._reject(handler, payload, "request_budget",
+                         f"study request budget of {self.max_requests} is exhausted")
+            return
         clamped = dict(payload)
         if isinstance(payload.get("max_tokens"), int):
             clamped["max_tokens"] = min(self.max_output_tokens, payload["max_tokens"])
@@ -211,11 +219,10 @@ class Relay:
         self._record_request(call, body)
         started = time.monotonic()
         if self.mock_script is not None:
-            response = self.mock_script.respond(self.served, payload)
+            response = self.mock_script.respond(int(call.name), payload)
             (call / "mock-response").write_bytes(response)
             parsed = parse_sse_usage(response)
         else:
-            self.forwarded += 1
             try:
                 response, status = self._forward(clamped)
             except Exception as error:
@@ -242,8 +249,8 @@ class Relay:
         handler.wfile.write(response)
 
     def _reject(self, handler, payload, reason, message):
-        self.served += 1
-        call = self._next_call_dir()
+        with self.lock:
+            call = self._next_call_dir()
         if reason == "credential_in_body":
             # Never persist a body that carried the credential; keep only its size.
             body = json.dumps({"redacted": "request body carried the credential",

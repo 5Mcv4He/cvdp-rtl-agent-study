@@ -15,6 +15,8 @@
 
 **状态机题工具试跑**　工具运行器已进入正式题集的一道状态机调试题。两次请求的开关对照均未通过。开启工具的两次运行均触及各自请求上限，评分器重放了当时的工作区快照。 [结果与预算口径](experiments/suite/report.md#工具试跑扩展到正式题)
 
+**12 题工具开关对照**　固定 DSH＋Flash，两组共用 8 次模型请求上限，共跑 48 次。关闭工具通过 12/24，开启工具通过 6/24。工具组另有 5 次在预算耗尽时留下了通过原测试的快照。 [通过率、预算耗尽率和完成提交率](experiments/suite/tools-suite-report.md)
+
 一次实验由三部分组成。CVDP 提供题目、已有 RTL 和评分测试，Agent 组织生成代码与仿真反馈，底层模型给出修改。项目也对比了 ACE-RTL 和关闭工具的 DeepSeek Harness 在同题、同模型下的表现。 [CVDP](https://github.com/NVlabs/cvdp_benchmark) · [ACE-RTL](https://github.com/NVlabs/ACE-RTL) · [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)
 
 ## 如何读这些结果

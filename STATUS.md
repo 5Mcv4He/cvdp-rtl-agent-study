@@ -11,3 +11,4 @@
 - 已补齐关闭工具的 DSH＋Claude 和 DSH＋GPT，共新增 48 次正式运行。最终分别通过 21/24 和 20/24。两类 Agent 配置和四款模型共 192 次运行。 [八组对照报告](experiments/suite/harness-matrix-report.md)
 - 已为 DSH 新增开启工具的单题配对（Brent–Kung，Flash、关闭思考）。隔离用模拟响应验收 12 项断言，真实运行前强制通过验收门。两侧均一次提交通过：关闭工具 1 次请求，开启工具 7 次请求（含自建测试台验证）。见 [配对结果](experiments/suite/tools-pilot.json) 与 [报告章节](experiments/suite/report.md)。
 - 工具运行器已通过 12 道正式题的输入预检。已修复离线隔离验收的刷新问题，并实跑状态机题的开关对照和八次请求的工具探索。 [状态机题数据](experiments/suite/tools-fsm-pilot.json)
+- DSH＋Flash 工具开关正式对照已完成 48 次运行。关组通过 12/24、预算耗尽 0/24、完成提交 22/24。开组通过 6/24、预算耗尽 15/24、完成提交 10/24。 [工具开关报告](experiments/suite/tools-suite-report.md)
