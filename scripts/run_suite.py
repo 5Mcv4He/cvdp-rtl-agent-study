@@ -77,9 +77,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--confirmed-budget-usd", required=True, type=float)
     parser.add_argument("--design", type=Path, help="Optional task list and repetition count")
+    parser.add_argument("--condition", choices=[c["id"] for c in PLAN["conditions"]],
+                        help="Run only this condition on the selected design")
     parser.add_argument("--workers", type=int, choices=(1, 2, 3, 4), default=1)
     args = parser.parse_args()
-    conditions = PLAN["conditions"]
+    conditions = [c for c in PLAN["conditions"] if args.condition in (None, c["id"])]
     design = json.loads(args.design.read_text()) if args.design else PLAN
     tasks = design["task_ids"]
     repetitions = design.get("repetitions", 1)
@@ -100,7 +102,7 @@ def main():
     for replication in range(1, repetitions + 1):
         for index, task in enumerate(tasks):
             # Rotate condition order across tasks and repetitions.
-            offset = (index + replication - 1) % 3
+            offset = (index + replication - 1) % len(conditions)
             for c in conditions[offset:] + conditions[:offset]:
                 jobs.append((len(jobs) + 1, task, replication, c))
 

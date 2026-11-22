@@ -42,7 +42,7 @@ def run_dsh(task, rounds):
                         for name, source in row["input"]["context"].items())
     output_contract = f"Return the complete corrected contents of {target}. Preserve the module interface. Return only SystemVerilog."
     prompt = "\n\n".join((row["input"]["prompt"], context, output_contract))
-    if len(prompt.encode()) > 14000:
+    if len(prompt.encode()) > 24000:
         raise ValueError("public task exceeds the DSH study input limit")
     settings = run / "tool-free.yml"
     settings.write_text(

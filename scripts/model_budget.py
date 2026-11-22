@@ -15,7 +15,7 @@ def record(path, obj):
         json.dump(obj, file, ensure_ascii=False, indent=2)
 
 
-def request(trace, key, model, cap, payload, role):
+def request(trace, key, model, cap, payload, role, max_request_bytes=MAX_REQUEST_BYTES):
     if model not in MODELS or payload.get("model") != model:
         raise ValueError("unexpected model")
     payload = {**payload, "thinking": {"type": "disabled"}}
@@ -24,7 +24,7 @@ def request(trace, key, model, cap, payload, role):
         raise ValueError("invalid output budget")
     endpoint = "https://api.deepseek.com/chat/completions"
     body = json.dumps(payload, ensure_ascii=False).encode()
-    if len(body) > MAX_REQUEST_BYTES or key.encode() in body:
+    if len(body) > max_request_bytes or key.encode() in body:
         raise ValueError("input exceeds budget or contains the credential")
 
     trace.mkdir(mode=0o700, exist_ok=True)
