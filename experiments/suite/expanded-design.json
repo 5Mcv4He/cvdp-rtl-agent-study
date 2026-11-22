@@ -1,0 +1,81 @@
+{
+  "task_selection": "The five pilot tasks plus seven additional calibrated single-target tasks covering arithmetic, control, buffering, and data-path behavior. Selection used the unmodified RTL and observed assertion failure. The Brent\u2013Kung development task is excluded.",
+  "comparative_conditions": "design.json",
+  "task_ids": [
+    "cvdp_copilot_64b66b_encoder_0005",
+    "cvdp_copilot_cdc_pulse_synchronizer_0004",
+    "cvdp_copilot_filo_0033",
+    "cvdp_copilot_fsm_seq_detector_0023",
+    "cvdp_copilot_generic_nbit_counter_0036",
+    "cvdp_copilot_arithmetic_progression_generator_0015",
+    "cvdp_copilot_cache_lru_0022",
+    "cvdp_copilot_coffee_machine_0001",
+    "cvdp_copilot_line_buffer_0003",
+    "cvdp_copilot_modified_booth_mul_0002",
+    "cvdp_copilot_rgb2ycbcr_0001",
+    "cvdp_copilot_swizzler_0014"
+  ],
+  "repetitions": 2,
+  "calibration": {
+    "cvdp_copilot_64b66b_encoder_0005": {
+      "row_sha256_without_newline": "85f34af265b8d6cc2e53302a721e2d543f76e4c3a385a451a3a3936415d74e8a",
+      "original_verdict": "functional",
+      "original_cocotb_tests": 10
+    },
+    "cvdp_copilot_arithmetic_progression_generator_0015": {
+      "row_sha256_without_newline": "40e7fcb3b72cad35b701f47bba18dcb5fb03f3598cf54ea3d6e0baca8899305d",
+      "original_verdict": "functional",
+      "original_cocotb_tests": 1
+    },
+    "cvdp_copilot_cache_lru_0022": {
+      "row_sha256_without_newline": "0e2568172485b711b15083e06a328d52c6e251add6cd9e78e9494c7a31432caf",
+      "original_verdict": "functional",
+      "original_cocotb_tests": 1
+    },
+    "cvdp_copilot_cdc_pulse_synchronizer_0004": {
+      "row_sha256_without_newline": "7b9388d92ac6dd77d285a9574df251519541463ccd2f92a0ba08aaa527f197dd",
+      "original_verdict": "functional",
+      "original_cocotb_tests": 11
+    },
+    "cvdp_copilot_coffee_machine_0001": {
+      "row_sha256_without_newline": "736c71eee05f0edf6d3b8a328b9dda3186d91c35c1b1793ee9e565c66c85616d",
+      "original_verdict": "functional",
+      "original_cocotb_tests": 1
+    },
+    "cvdp_copilot_filo_0033": {
+      "row_sha256_without_newline": "0855e828a01621c8e85c4b1ed80a273a4df7c9563b330b0c6be44a56c54578af",
+      "original_verdict": "functional",
+      "original_cocotb_tests": 1
+    },
+    "cvdp_copilot_fsm_seq_detector_0023": {
+      "row_sha256_without_newline": "6a96d1022d1eb1c7458b0787d347ea3b8c6620b1fce3e130abb3b5f6412d63b3",
+      "original_verdict": "functional",
+      "original_cocotb_tests": 6
+    },
+    "cvdp_copilot_generic_nbit_counter_0036": {
+      "row_sha256_without_newline": "b88d33f062ee7eaa25ff5dd43c8b67507d908a42710510910f805624cfc3b279",
+      "original_verdict": "functional",
+      "original_cocotb_tests": 8
+    },
+    "cvdp_copilot_line_buffer_0003": {
+      "row_sha256_without_newline": "c1c70812a89b80b4f40301acfad9302fe7837b379aed7f630c41d48c13e31472",
+      "original_verdict": "functional",
+      "original_cocotb_tests": 1
+    },
+    "cvdp_copilot_modified_booth_mul_0002": {
+      "row_sha256_without_newline": "dd2037448e8bb0237e0fedd8f23285b2b3b95786dab3c0c4737403152ccaa96d",
+      "original_verdict": "functional",
+      "original_cocotb_tests": 2
+    },
+    "cvdp_copilot_rgb2ycbcr_0001": {
+      "row_sha256_without_newline": "33e45abc52f743368472985deb5d9b541148ef0f1622cabad318170132dbec01",
+      "original_verdict": "functional",
+      "original_cocotb_tests": 1
+    },
+    "cvdp_copilot_swizzler_0014": {
+      "row_sha256_without_newline": "54dedbcfbfad06b782ef732860ce28edf497370f02fbc7c06f3fe31018193867",
+      "original_verdict": "functional",
+      "original_cocotb_tests": 9
+    }
+  }
+}

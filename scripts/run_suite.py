@@ -1,6 +1,8 @@
-"""Run the predeclared five-task paired study under a confirmed spending limit."""
+"""Run a predeclared paired study under a confirmed spending limit."""
 import argparse
+from concurrent.futures import ProcessPoolExecutor
 import json
+import multiprocessing
 import os
 from pathlib import Path
 import tempfile
@@ -48,13 +50,42 @@ def meter(condition, run, result):
     }
 
 
+def run_condition(job):
+    index, task, repetition, condition = job
+    print(f"{task} {condition['id']} repeat {repetition}", flush=True)
+    try:
+        c = condition
+        run = (run_ace(task, c["model"], c["rounds"], c["max_calls"], True)
+               if c["agent"] == "ace" else run_dsh(task, c["rounds"]))
+        result = json.loads((run / "result.json").read_text())
+        scores = result["scores"]
+        metered = meter(c, run, result)
+        result = {
+            "first": scores[0]["verdict"] if scores else "no_candidate",
+            "final": scores[-1]["verdict"] if scores else "no_candidate",
+            "submissions": len(scores), "seconds": result["seconds"],
+            "candidate_sha256": [s["candidate_sha256"] for s in scores],
+            "meter": metered, "run": str(run.relative_to(LOCAL)),
+        }
+    except Exception as error:
+        result = {"status": "runner_error", "error_type": type(error).__name__}
+    result.update(task=task, condition=condition["id"], repetition=repetition)
+    return index, result
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--confirmed-budget-usd", required=True, type=float)
+    parser.add_argument("--design", type=Path, help="Optional task list and repetition count")
+    parser.add_argument("--workers", type=int, choices=(1, 2, 3, 4), default=1)
     args = parser.parse_args()
     conditions = PLAN["conditions"]
-    tasks = PLAN["task_ids"]
-    total = len(tasks) * sum(reservation(c) for c in conditions)
+    design = json.loads(args.design.read_text()) if args.design else PLAN
+    tasks = design["task_ids"]
+    repetitions = design.get("repetitions", 1)
+    if len(set(tasks)) != len(tasks) or repetitions not in (1, 2, 3):
+        raise SystemExit("Expected unique tasks and one to three repetitions.")
+    total = len(tasks) * repetitions * sum(reservation(c) for c in conditions)
     if not total <= args.confirmed_budget_usd:
         raise SystemExit(f"Full-plan reservation: ${total:.2f}; budget is insufficient.")
     for task in tasks:
@@ -63,28 +94,21 @@ def main():
     os.umask(0o077)
     directory = Path(tempfile.mkdtemp(prefix="suite-", dir=LOCAL))
     print(f"Study directory: {directory}", flush=True)
+    record(directory / "design.json", {"tasks": tasks, "repetitions": repetitions,
+                                      "workers": args.workers, "conditions": conditions})
+    jobs = []
+    for replication in range(1, repetitions + 1):
+        for index, task in enumerate(tasks):
+            # Rotate condition order across tasks and repetitions.
+            offset = (index + replication - 1) % 3
+            for c in conditions[offset:] + conditions[:offset]:
+                jobs.append((len(jobs) + 1, task, replication, c))
+
     results = []
-    for index, task in enumerate(tasks):
-        # Rotate the order to reduce systematic cache and time-order effects.
-        for c in conditions[index % 3:] + conditions[:index % 3]:
-            print(f"{task} {c['id']}", flush=True)
-            try:
-                run = (run_ace(task, c["model"], c["rounds"], c["max_calls"], True)
-                       if c["agent"] == "ace" else run_dsh(task, c["rounds"]))
-                result = json.loads((run / "result.json").read_text())
-                scores = result["scores"]
-                metered = meter(c, run, result)
-                result = {
-                    "first": scores[0]["verdict"] if scores else "no_candidate",
-                    "final": scores[-1]["verdict"] if scores else "no_candidate",
-                    "submissions": len(scores), "seconds": result["seconds"],
-                    "meter": metered,
-                }
-            except Exception as error:
-                result = {"status": "runner_error", "error_type": type(error).__name__}
-            result.update(task=task, condition=c["id"])
+    with ProcessPoolExecutor(args.workers, mp_context=multiprocessing.get_context("spawn")) as pool:
+        for index, result in pool.map(run_condition, jobs):
             results.append(result)
-            record(directory / f"{len(results):02d}.json", result)
+            record(directory / f"{index:02d}.json", result)
     record(directory / "results.json", results)
 
 

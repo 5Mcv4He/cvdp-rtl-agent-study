@@ -1,0 +1,303 @@
+{
+  "aggregate": {
+    "ace-flash": {
+      "allocated": 5,
+      "first_pass": 2,
+      "final_pass": 4,
+      "first_compiled_and_ran": 5,
+      "final_outcomes": {
+        "pass": 4,
+        "functional": 1
+      },
+      "runs_with_usage": 5,
+      "median_seconds": 13.607,
+      "observed_requests": 14,
+      "uncached_input": 36834,
+      "cached_input": 6272,
+      "output": 6995,
+      "peak_price_estimate_usd": 0.01948183,
+      "peak_cost_per_success_usd": 0.00487046
+    },
+    "ace-pro": {
+      "allocated": 5,
+      "first_pass": 2,
+      "final_pass": 3,
+      "first_compiled_and_ran": 5,
+      "final_outcomes": {
+        "pass": 3,
+        "functional": 2
+      },
+      "runs_with_usage": 5,
+      "median_seconds": 18.284,
+      "observed_requests": 14,
+      "uncached_input": 37127,
+      "cached_input": 4608,
+      "output": 6511,
+      "peak_price_estimate_usd": 0.07499395,
+      "peak_cost_per_success_usd": 0.02499798
+    },
+    "dsh-flash": {
+      "allocated": 5,
+      "first_pass": 3,
+      "final_pass": 3,
+      "first_compiled_and_ran": 4,
+      "final_outcomes": {
+        "pass": 3,
+        "functional": 1,
+        "runner_error": 1
+      },
+      "runs_with_usage": 4,
+      "median_seconds": 4.519,
+      "observed_requests": 5,
+      "uncached_input": 4801,
+      "cached_input": 2304,
+      "output": 3449,
+      "peak_price_estimate_usd": 0.00559292,
+      "peak_cost_per_success_usd": null
+    }
+  },
+  "paired_counts": {
+    "ace-flash vs ace-pro (first)": {
+      "left_only": 0,
+      "right_only": 0,
+      "both_pass": 2,
+      "neither": 3
+    },
+    "ace-flash vs dsh-flash (first)": {
+      "left_only": 0,
+      "right_only": 1,
+      "both_pass": 2,
+      "neither": 2
+    },
+    "ace-flash vs ace-pro (final)": {
+      "left_only": 1,
+      "right_only": 0,
+      "both_pass": 3,
+      "neither": 1
+    },
+    "ace-flash vs dsh-flash (final)": {
+      "left_only": 1,
+      "right_only": 0,
+      "both_pass": 3,
+      "neither": 1
+    }
+  },
+  "trials": [
+    {
+      "task": "cvdp_copilot_64b66b_encoder_0005",
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 13.607,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 9816,
+        "cached_input": 1664,
+        "output": 1591,
+        "peak_price_estimate_usd": 0.00486398
+      }
+    },
+    {
+      "task": "cvdp_copilot_64b66b_encoder_0005",
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 18.284,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 10632,
+        "cached_input": 0,
+        "output": 1398,
+        "peak_price_estimate_usd": 0.01957032
+      }
+    },
+    {
+      "task": "cvdp_copilot_64b66b_encoder_0005",
+      "condition": "dsh-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 3.994,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 1169,
+        "cached_input": 0,
+        "output": 341,
+        "peak_price_estimate_usd": 0.0007599
+      }
+    },
+    {
+      "task": "cvdp_copilot_cdc_pulse_synchronizer_0004",
+      "condition": "ace-pro",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 4.524,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 1770,
+        "cached_input": 0,
+        "output": 434,
+        "peak_price_estimate_usd": 0.00405504
+      }
+    },
+    {
+      "task": "cvdp_copilot_cdc_pulse_synchronizer_0004",
+      "condition": "dsh-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 4.527,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 976,
+        "cached_input": 0,
+        "output": 449,
+        "peak_price_estimate_usd": 0.0008316
+      }
+    },
+    {
+      "task": "cvdp_copilot_cdc_pulse_synchronizer_0004",
+      "condition": "ace-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 3.023,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 1771,
+        "cached_input": 0,
+        "output": 399,
+        "peak_price_estimate_usd": 0.0010101
+      }
+    },
+    {
+      "task": "cvdp_copilot_filo_0033",
+      "condition": "dsh-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 4.511,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 1073,
+        "cached_input": 0,
+        "output": 461,
+        "peak_price_estimate_usd": 0.0008751
+      }
+    },
+    {
+      "task": "cvdp_copilot_filo_0033",
+      "condition": "ace-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 4.189,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 1865,
+        "cached_input": 0,
+        "output": 401,
+        "peak_price_estimate_usd": 0.0010407
+      }
+    },
+    {
+      "task": "cvdp_copilot_filo_0033",
+      "condition": "ace-pro",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 8.549,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 1864,
+        "cached_input": 0,
+        "output": 728,
+        "peak_price_estimate_usd": 0.00534336
+      }
+    },
+    {
+      "task": "cvdp_copilot_fsm_seq_detector_0023",
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 19.735,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 11196,
+        "cached_input": 2048,
+        "output": 2873,
+        "peak_price_estimate_usd": 0.00681869
+      }
+    },
+    {
+      "task": "cvdp_copilot_fsm_seq_detector_0023",
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 22.746,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 10683,
+        "cached_input": 2048,
+        "output": 2212,
+        "peak_price_estimate_usd": 0.02295119
+      }
+    },
+    {
+      "task": "cvdp_copilot_fsm_seq_detector_0023",
+      "condition": "dsh-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 12.887,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 1583,
+        "cached_input": 2304,
+        "output": 2198,
+        "peak_price_estimate_usd": 0.00312632
+      }
+    },
+    {
+      "task": "cvdp_copilot_generic_nbit_counter_0036",
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 19.829,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 12178,
+        "cached_input": 2560,
+        "output": 1739,
+        "peak_price_estimate_usd": 0.02307404
+      }
+    },
+    {
+      "task": "cvdp_copilot_generic_nbit_counter_0036",
+      "condition": "dsh-flash",
+      "status": "runner_error",
+      "error_type": "ValueError"
+    },
+    {
+      "task": "cvdp_copilot_generic_nbit_counter_0036",
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 14.101,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 12186,
+        "cached_input": 2560,
+        "output": 1731,
+        "peak_price_estimate_usd": 0.00574836
+      }
+    }
+  ]
+}

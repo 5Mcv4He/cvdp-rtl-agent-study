@@ -2,7 +2,7 @@
 
 给 AI 一段有缺陷的芯片逻辑，它能找出错误并修好吗？修完以后，仿真测试又能证明什么？这个项目用可复现的 RTL 调试实验回答这些问题。RTL 是描述芯片数字逻辑的代码，本项目从一个 32 位加法器开始。
 
-**当前进度（2026-11-22）**　已完成一个 32 位加法器的端到端试验和三组配置的单题对照。ACE＋DeepSeek Flash 两轮均编译通过但功能失败，ACE＋V4 Pro 和关闭工具的 DSH＋Flash 在这次首轮通过。五题配对已有预设方案。 [多轮试验](experiments/P2/log.md)
+**当前进度（2026-11-22）**　已完成一个 32 位加法器的端到端试验和三组配置的单题对照。ACE＋DeepSeek Flash 两轮均编译通过但功能失败，ACE＋V4 Pro 和关闭工具的 DSH＋Flash 在这次首轮通过。五题配对试跑已完成，正在扩展到 12 题、每条件两次。 [多轮试验](experiments/P2/log.md) · [五题配对](experiments/suite/pilot.md)
 
 一次实验由三部分组成。CVDP 提供题目、已有 RTL 和评分测试，ACE-RTL 组织模型生成代码和接收仿真反馈，DeepSeek Flash 是本次生成代码的模型。后续会换入通用 Agent DeepSeek Harness，在同题、同模型下比较求解过程。 [CVDP](https://github.com/NVlabs/cvdp_benchmark) · [ACE-RTL](https://github.com/NVlabs/ACE-RTL) · [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)
 
@@ -37,8 +37,8 @@ Flash 在 ACE-RTL 中两轮输出了字节相同的 RTL，第二轮之前还发�
 | P0 · 环境与接口调查 | 完成。已锁定三个上游源码提交、数据集 revision 和首题指纹 |
 | P1 · 首次端到端运行 | 完成原生运行与独立重放。Linux Compose 判定一致性待验证 |
 | 多轮反馈 | 已观测 ACE 的 4 次调用、两轮提交和精简反馈。DSH 已完成受控单题 |
-| 模型对照 | 已完成 Flash／Pro 的加法器试跑。五题配对已预设 |
-| Agent 对照 | 已完成同模型的 ACE／DSH 单题试跑。五题配对已预设 |
+| 模型对照 | 已完成 Flash／Pro 的加法器试跑。五题试跑已完成，12 题扩展中 |
+| Agent 对照 | 已完成同模型的 ACE／DSH 单题试跑。五题试跑已完成，12 题扩展中 |
 
 ## 复现
 

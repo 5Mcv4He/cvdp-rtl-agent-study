@@ -36,6 +36,7 @@ def task_row(task_id):
 
 
 def score(row, src, work):
+    work = work.resolve()
     work.mkdir(mode=0o700)
     completion = work / "completion.jsonl"
     code = src.read_bytes()

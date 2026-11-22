@@ -17,9 +17,11 @@ MODEL = "deepseek-flash"
 
 def rtl_from_response(response):
     text = response.strip()
-    fenced = re.fullmatch(r"```(?:systemverilog|verilog|sv)?\s*\n(.*?)```", text, re.DOTALL)
-    if fenced:
-        text = fenced[1].strip()
+    if "```" in text:
+        blocks = re.findall(r"```(?:systemverilog|verilog|sv)?[ \t]*\n(.*?)```", text, re.DOTALL | re.IGNORECASE)
+        if len(blocks) != 1:
+            return None
+        text = blocks[0].strip()
     if not text or not re.search(r"\bmodule\s+\w+", text):
         return None
     return text + "\n"
