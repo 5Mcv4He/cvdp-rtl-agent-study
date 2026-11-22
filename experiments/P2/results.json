@@ -1,0 +1,166 @@
+[
+  {
+    "task_id": "cvdp_copilot_32_bit_Brent_Kung_PP_adder_0001",
+    "agent": "ace",
+    "model": "deepseek-flash",
+    "compact_feedback": true,
+    "seconds": 17.627,
+    "scores": [
+      {
+        "task_id": "cvdp_copilot_32_bit_Brent_Kung_PP_adder_0001",
+        "verdict": "functional",
+        "candidate_sha256": "f7de4b799a284907db2a7cfa8e8093768bc8b4da3f5d7c580532b986e6ed6871",
+        "cocotb_tests": 1,
+        "assertion": "AssertionError: Test Case 2: Large positive numbers with no carry - Carry Out Mismatch: Expected 0, Got 1"
+      },
+      {
+        "task_id": "cvdp_copilot_32_bit_Brent_Kung_PP_adder_0001",
+        "verdict": "functional",
+        "candidate_sha256": "f7de4b799a284907db2a7cfa8e8093768bc8b4da3f5d7c580532b986e6ed6871",
+        "cocotb_tests": 1,
+        "assertion": "AssertionError: Test Case 2: Large positive numbers with no carry - Carry Out Mismatch: Expected 0, Got 1"
+      }
+    ],
+    "condition": "ace-flash",
+    "calls": [
+      {
+        "usage": {
+          "prompt_tokens": 2840,
+          "completion_tokens": 1328,
+          "total_tokens": 4168,
+          "prompt_tokens_details": {
+            "cached_tokens": 2688
+          },
+          "prompt_cache_hit_tokens": 2688,
+          "prompt_cache_miss_tokens": 152
+        },
+        "model": "deepseek-flash",
+        "finish_reason": "stop",
+        "seconds": 5.591339,
+        "role": "generator"
+      },
+      {
+        "usage": {
+          "prompt_tokens": 2610,
+          "completion_tokens": 9,
+          "total_tokens": 2619,
+          "prompt_tokens_details": {
+            "cached_tokens": 2432
+          },
+          "prompt_cache_hit_tokens": 2432,
+          "prompt_cache_miss_tokens": 178
+        },
+        "model": "deepseek-flash",
+        "finish_reason": "stop",
+        "seconds": 0.543581,
+        "role": "reflector"
+      },
+      {
+        "usage": {
+          "prompt_tokens": 3593,
+          "completion_tokens": 525,
+          "total_tokens": 4118,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 3593
+        },
+        "model": "deepseek-flash",
+        "finish_reason": "stop",
+        "seconds": 4.34513,
+        "role": "reflector"
+      },
+      {
+        "usage": {
+          "prompt_tokens": 8653,
+          "completion_tokens": 1328,
+          "total_tokens": 9981,
+          "prompt_tokens_details": {
+            "cached_tokens": 2688
+          },
+          "prompt_cache_hit_tokens": 2688,
+          "prompt_cache_miss_tokens": 5965
+        },
+        "model": "deepseek-flash",
+        "finish_reason": "stop",
+        "seconds": 5.568219,
+        "role": "generator"
+      }
+    ],
+    "independent_arithmetic": {
+      "vectors": 4128,
+      "mismatches": 4075
+    }
+  },
+  {
+    "task_id": "cvdp_copilot_32_bit_Brent_Kung_PP_adder_0001",
+    "agent": "ace",
+    "model": "deepseek-v4-pro",
+    "compact_feedback": true,
+    "seconds": 10.038,
+    "scores": [
+      {
+        "task_id": "cvdp_copilot_32_bit_Brent_Kung_PP_adder_0001",
+        "verdict": "pass",
+        "candidate_sha256": "fd67441ec974e44348448a3d503b956caeff3911855711cf50e91e08bd257908",
+        "cocotb_tests": 1,
+        "assertion": null
+      }
+    ],
+    "condition": "ace-pro",
+    "calls": [
+      {
+        "usage": {
+          "prompt_tokens": 2839,
+          "completion_tokens": 1314,
+          "total_tokens": 4153,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 2839
+        },
+        "model": "deepseek-v4-pro",
+        "finish_reason": "stop",
+        "seconds": 8.52748,
+        "role": "generator"
+      }
+    ],
+    "independent_arithmetic": {
+      "vectors": 4128,
+      "mismatches": 0
+    }
+  },
+  {
+    "task_id": "cvdp_copilot_32_bit_Brent_Kung_PP_adder_0001",
+    "agent": "dsh",
+    "model": "deepseek-flash",
+    "compact_feedback": true,
+    "seconds": 8.087,
+    "scores": [
+      {
+        "task_id": "cvdp_copilot_32_bit_Brent_Kung_PP_adder_0001",
+        "verdict": "pass",
+        "candidate_sha256": "fd67441ec974e44348448a3d503b956caeff3911855711cf50e91e08bd257908",
+        "cocotb_tests": 1,
+        "assertion": null
+      }
+    ],
+    "usage": [
+      {
+        "inputTokens": 254,
+        "outputTokens": 1305,
+        "cacheReadTokens": 1792,
+        "cacheWriteTokens": 0,
+        "totalTokens": 3351
+      }
+    ],
+    "condition": "dsh-flash",
+    "independent_arithmetic": {
+      "vectors": 4128,
+      "mismatches": 0
+    },
+    "sdk_version": "0.2.2rc2"
+  }
+]

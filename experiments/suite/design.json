@@ -1,0 +1,31 @@
+{
+  "task_selection": "Five single-target cid016 RTL tasks with different circuit types. On macOS Icarus, each supplied RTL compiled and failed a functional assertion before any study condition was run on these five tasks.",
+  "dataset_lock": "../P0/lock.json",
+  "task_ids": [
+    "cvdp_copilot_64b66b_encoder_0005",
+    "cvdp_copilot_cdc_pulse_synchronizer_0004",
+    "cvdp_copilot_filo_0033",
+    "cvdp_copilot_fsm_seq_detector_0023",
+    "cvdp_copilot_generic_nbit_counter_0036"
+  ],
+  "conditions": [
+    {"id": "ace-flash", "agent": "ace", "model": "deepseek-flash", "rounds": 2, "max_calls": 4},
+    {"id": "ace-pro", "agent": "ace", "model": "deepseek-v4-pro", "rounds": 2, "max_calls": 4},
+    {"id": "dsh-flash", "agent": "dsh", "model": "deepseek-flash", "rounds": 2, "max_calls": 2}
+  ],
+  "pricing": {
+    "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "as_of": "2026-11-22",
+    "peak_usd_per_million": {
+      "deepseek-flash": {"miss": 0.30, "hit": 0.006, "output": 1.20},
+      "deepseek-v4-pro": {"miss": 1.32, "hit": 0.044, "output": 3.96}
+    },
+    "reservation_input_tokens_per_call": 48000,
+    "max_output_tokens_per_call": 4096
+  },
+  "cocotb_random_seed": 20261122,
+  "thinking": "disabled",
+  "attempts_per_task_condition": 1,
+  "scorer": "CVDP local_import, original task tests, project-local ACE native executor",
+  "feedback": "Compile or simulation outcome class only. No hidden evaluator source or raw assertions are sent as repair feedback."
+}

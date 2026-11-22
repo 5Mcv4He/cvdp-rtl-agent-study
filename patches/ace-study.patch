@@ -1,0 +1,72 @@
+--- a/skills/ace-rtl/scripts/ace_cvdp_native/cli.py
++++ b/skills/ace-rtl/scripts/ace_cvdp_native/cli.py
+@@ -172,11 +172,14 @@
+         if prepared_id != task_id:
+             raise RuntimeError(f"unexpected prepared id {prepared_id} for {task_id}")
+         prepared_harness_dir = Path(getattr(repo, "issue_path", "") or (work_prefix / task_id))
+-        fresh_start_coordinator.set_harness_directory(prepared_harness_dir)
+-        reflector_harness_context = build_reflector_harness_context(
+-            prepared_harness_dir,
+-            target_file,
+-        )
++        compact_feedback = os.environ.get("CVDP_COMPACT_FEEDBACK") == "1"
++        reflector_harness_context = None
++        if not compact_feedback:
++            fresh_start_coordinator.set_harness_directory(prepared_harness_dir)
++            reflector_harness_context = build_reflector_harness_context(
++                prepared_harness_dir,
++                target_file,
++            )
+
+         if model.preflight_issues:
+             result = make_preflight_result(model.preflight_issues, model.postprocess_actions)
+@@ -243,6 +246,13 @@
+         summary = summarize_result(result)
+         primary_failure = primary_failure_from_summary(result, summary)
+         error_report = build_evaluator_error_report(result, summary)
++        if compact_feedback:
++            feedback = {
++                "PASS": "The CVDP test passed.",
++                "CANDIDATE_FUNCTIONAL": "The CVDP test compiled and ran, then failed a functional check. Review your RTL and the public task specification.",
++                "CANDIDATE_COMPILE": "The CVDP test could not compile or elaborate the candidate. Review syntax, declarations, and module interfaces.",
++            }
++            error_report = feedback.get(primary_failure["stage"], "No usable verifier feedback.")
+         (iteration_dir / "evaluator_error_report.txt").write_text(
+             error_report, encoding="utf-8", errors="replace"
+         )
+@@ -300,6 +310,7 @@
+                 "history": history,
+             }
+
++        os.environ["ACE_RTL_COMPONENT"] = "coordinator"
+         coordinator, fresh_start_hint = call_coordinator(
+             fresh_start_coordinator,
+             iteration_dir,
+@@ -337,6 +348,7 @@
+         if fresh_start_hint:
+             continue
+
++        os.environ["ACE_RTL_COMPONENT"] = "reflector"
+         reflection, reflection_metadata = call_reflector(
+             focused_debugger,
+             iteration_dir,
+--- a/skills/ace-rtl/scripts/ace_cvdp_native/harness.py
++++ b/skills/ace-rtl/scripts/ace_cvdp_native/harness.py
+@@ -74,7 +74,7 @@
+
+
+ def compose_env(service_env: Any, service_env_file: Any, issue_path: Path) -> Dict[str, str]:
+-    env = {key: os.environ[key] for key in ("PATH", "LANG", "LC_ALL", "TMPDIR") if key in os.environ}
++    env = {key: os.environ[key] for key in ("PATH", "LANG", "LC_ALL", "TMPDIR", "COCOTB_RANDOM_SEED") if key in os.environ}
+     env["HOME"] = str(issue_path / "rundir")
+     env["XDG_CACHE_HOME"] = str(issue_path / "rundir" / ".cache")
+     env["PYTHONNOUSERSITE"] = "1"
+@@ -511,5 +511,6 @@
+ def result_passed(result: Dict[str, Any]) -> bool:
+     if result.get("errors", 1) != 0:
+         return False
+-    return all(test.get("result", 1) == 0 for test in result.get("tests", []))
+-
++    tests = result.get("tests", [])
++    return bool(tests) and all(test.get("result", 1) == 0 for test in tests)
++

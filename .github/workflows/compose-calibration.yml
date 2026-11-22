@@ -1,0 +1,39 @@
+name: CVDP Linux Compose calibration
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  calibration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.13'
+      - name: Fetch the pinned upstream and prepare three controls
+        run: |
+          mkdir -p .local/compose
+          python3 scripts/prepare_compose_controls.py .local/compose
+          git init .local/compose/cvdp
+          git -C .local/compose/cvdp remote add origin https://github.com/NVlabs/cvdp_benchmark.git
+          git -C .local/compose/cvdp fetch --depth=1 origin 8e894cf74414ab1eaea1e2b4e80a02f123df07b6
+          git -C .local/compose/cvdp checkout --detach FETCH_HEAD
+          python3 -m pip install -r .local/compose/cvdp/requirements.txt
+      - name: Build the official image
+        working-directory: .local/compose/cvdp
+        run: docker build -f docker/Dockerfile.sim -t nvidia/cvdp-sim:v1.0.0 .
+      - name: Check reference, buggy RTL, and independent behavior
+        working-directory: .local/compose/cvdp
+        env:
+          OSS_SIM_IMAGE: nvidia/cvdp-sim:v1.0.0
+        run: |
+          set -eu
+          task=cvdp_copilot_32_bit_Brent_Kung_PP_adder_0001
+          python3 run_benchmark.py -f example_dataset/cvdp_v1.1.0_example_nonagentic_code_generation_no_commercial_with_solutions.jsonl -i cvdp_copilot_lfsr_0001 -t 1 -p ../golden > ../golden-console.log 2>&1
+          for variant in original behavior; do
+            python3 run_benchmark.py -f ../task.jsonl -i "$task" -l -m local_import --prompts-responses-file "../$variant.jsonl" -t 1 -p "../$variant" > "../$variant-console.log" 2>&1
+          done
+          python3 ../../../scripts/check_compose_controls.py ..
+          docker image inspect nvidia/cvdp-sim:v1.0.0 --format '{{.Id}}'
