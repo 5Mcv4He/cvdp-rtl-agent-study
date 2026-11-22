@@ -1,5 +1,7 @@
 # 12 道 RTL 调试题的配对结果
 
+本文保留原三组结果。后续已经补跑 DSH ＋ V4 Pro，四组汇总见 [Agent × 模型对照](factorial-report.md)。
+
 ## 实验回答的问题
 
 在固定 ACE-RTL 调试流程时，把 Flash 换成 V4 Pro 会带来什么变化？在固定 Flash 时，把专业流程换成通用的 DeepSeek Harness 会带来什么变化？本次用同一批 CVDP 题目观察首次提交、有限反馈后的结果、调用次数和费用估算。

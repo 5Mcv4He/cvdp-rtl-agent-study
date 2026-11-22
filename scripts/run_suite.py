@@ -56,7 +56,7 @@ def run_condition(job):
     try:
         c = condition
         run = (run_ace(task, c["model"], c["rounds"], c["max_calls"], True)
-               if c["agent"] == "ace" else run_dsh(task, c["rounds"]))
+               if c["agent"] == "ace" else run_dsh(task, c["rounds"], c["model"]))
         result = json.loads((run / "result.json").read_text())
         scores = result["scores"]
         metered = meter(c, run, result)
@@ -77,12 +77,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--confirmed-budget-usd", required=True, type=float)
     parser.add_argument("--design", type=Path, help="Optional task list and repetition count")
-    parser.add_argument("--condition", choices=[c["id"] for c in PLAN["conditions"]],
-                        help="Run only this condition on the selected design")
+    parser.add_argument("--condition", help="Run only this condition on the selected design")
     parser.add_argument("--workers", type=int, choices=(1, 2, 3, 4), default=1)
     args = parser.parse_args()
-    conditions = [c for c in PLAN["conditions"] if args.condition in (None, c["id"])]
     design = json.loads(args.design.read_text()) if args.design else PLAN
+    conditions = [c for c in design.get("conditions", PLAN["conditions"]) if args.condition in (None, c["id"])]
+    if not conditions:
+        parser.error(f"condition {args.condition!r} is absent from the selected design")
     tasks = design["task_ids"]
     repetitions = design.get("repetitions", 1)
     if len(set(tasks)) != len(tasks) or repetitions not in (1, 2, 3):

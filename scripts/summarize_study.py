@@ -5,6 +5,14 @@ import json
 from pathlib import Path
 from statistics import median
 
+CONDITIONS = ("ace-flash", "ace-pro", "dsh-flash", "dsh-pro")
+COMPARISONS = (
+    ("ace-flash", "ace-pro"),
+    ("ace-flash", "dsh-flash"),
+    ("dsh-flash", "dsh-pro"),
+    ("ace-pro", "dsh-pro"),
+)
+
 
 def apply_recovery(rows, corrected):
     """Complete a trial that stopped before requesting a model."""
@@ -53,8 +61,9 @@ def summarize(private_rows):
             meter and meter["observed_calls"] <= 2 and row.get("final") == "pass"
         )
 
+    conditions = CONDITIONS if any(r["condition"] == "dsh-pro" for r in rows) else CONDITIONS[:3]
     metrics = {}
-    for condition in ("ace-flash", "ace-pro", "dsh-flash"):
+    for condition in conditions:
         group = [r for r in rows if r["condition"] == condition]
         if not group:
             raise ValueError(f"missing condition {condition}")
@@ -80,7 +89,9 @@ def summarize(private_rows):
         }
     pairs = {}
     for outcome in ("first", "by_two_calls", "final"):
-        for left, right in (("ace-flash", "ace-pro"), ("ace-flash", "dsh-flash")):
+        for left, right in COMPARISONS:
+            if left not in metrics or right not in metrics:
+                continue
             by_key = {}
             for r in rows:
                 key = r["task"], r.get("repetition", 1)
@@ -98,16 +109,47 @@ def summarize(private_rows):
     return {"aggregate": metrics, "paired_counts": pairs, "trials": rows}
 
 
+def summarize_completion(baseline, extra):
+    """Compare the fourth configuration against the three frozen conditions."""
+    base_rows = baseline["trials"]
+    expected = {(r["task"], r["repetition"]) for r in base_rows if r["condition"] == "dsh-flash"}
+    seen = {(r["task"], r["repetition"]) for r in extra}
+    if seen != expected or len(seen) != len(extra) or any(r["condition"] != "dsh-pro" for r in extra):
+        raise ValueError("the follow-up must match every baseline task and repetition exactly once")
+    result = summarize(base_rows + extra)
+    if "pre_request_recovery" in baseline:
+        result["pre_request_recovery"] = baseline["pre_request_recovery"]
+    result["batching"] = {"original": list(CONDITIONS[:3]), "follow_up": ["dsh-pro"]}
+    interaction = {}
+    for metric in ("first_pass", "pass_by_two_observed_calls", "final_pass"):
+        agg = result["aggregate"]
+        ace_gain = agg["ace-pro"][metric] - agg["ace-flash"][metric]
+        dsh_gain = agg["dsh-pro"][metric] - agg["dsh-flash"][metric]
+        interaction[metric] = {
+            "ace_pro_minus_flash": ace_gain,
+            "dsh_pro_minus_flash": dsh_gain,
+            "difference_of_gains": dsh_gain - ace_gain,
+            "allocated_per_condition": len(expected),
+        }
+    result["descriptive_interaction"] = interaction
+    return result
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("results", type=Path)
-    parser.add_argument("--recover-expanded-inputs", type=Path)
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument("--recover-expanded-inputs", type=Path)
+    modes.add_argument("--complete-factorial-with", type=Path)
     args = parser.parse_args()
     rows = json.loads(args.results.read_text())
-    audit = None
-    if args.recover_expanded_inputs:
-        rows, audit = apply_recovery(rows, json.loads(args.recover_expanded_inputs.read_text()))
-    result = summarize(rows)
-    if audit is not None:
-        result["pre_request_recovery"] = audit
+    if args.complete_factorial_with:
+        result = summarize_completion(rows, json.loads(args.complete_factorial_with.read_text()))
+    else:
+        audit = None
+        if args.recover_expanded_inputs:
+            rows, audit = apply_recovery(rows, json.loads(args.recover_expanded_inputs.read_text()))
+        result = summarize(rows)
+        if audit is not None:
+            result["pre_request_recovery"] = audit
     print(json.dumps(result, ensure_ascii=False, indent=2))

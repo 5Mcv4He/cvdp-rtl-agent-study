@@ -1,0 +1,2097 @@
+{
+  "aggregate": {
+    "ace-flash": {
+      "allocated": 24,
+      "first_pass": 7,
+      "final_pass": 12,
+      "pass_by_two_observed_calls": 7,
+      "first_compiled_and_ran": 23,
+      "final_outcomes": {
+        "pass": 12,
+        "functional": 11,
+        "compile": 1
+      },
+      "runs_with_usage": 24,
+      "median_seconds": 15.876,
+      "observed_requests": 71,
+      "uncached_input": 173317,
+      "cached_input": 111744,
+      "output": 45413,
+      "peak_price_estimate_usd": 0.10716117,
+      "peak_cost_per_success_usd": 0.0089301
+    },
+    "ace-pro": {
+      "allocated": 24,
+      "first_pass": 5,
+      "final_pass": 11,
+      "pass_by_two_observed_calls": 5,
+      "first_compiled_and_ran": 24,
+      "final_outcomes": {
+        "pass": 11,
+        "functional": 13
+      },
+      "runs_with_usage": 24,
+      "median_seconds": 21.117,
+      "observed_requests": 77,
+      "uncached_input": 166038,
+      "cached_input": 128512,
+      "output": 44638,
+      "peak_price_estimate_usd": 0.40159117,
+      "peak_cost_per_success_usd": 0.03650829
+    },
+    "dsh-flash": {
+      "allocated": 24,
+      "first_pass": 7,
+      "final_pass": 10,
+      "pass_by_two_observed_calls": 10,
+      "first_compiled_and_ran": 21,
+      "final_outcomes": {
+        "pass": 10,
+        "functional": 11,
+        "compile": 3
+      },
+      "runs_with_usage": 24,
+      "median_seconds": 10.39,
+      "observed_requests": 41,
+      "uncached_input": 25185,
+      "cached_input": 85504,
+      "output": 48692,
+      "peak_price_estimate_usd": 0.06649893,
+      "peak_cost_per_success_usd": 0.00664989
+    },
+    "dsh-pro": {
+      "allocated": 24,
+      "first_pass": 10,
+      "final_pass": 12,
+      "pass_by_two_observed_calls": 12,
+      "first_compiled_and_ran": 23,
+      "final_outcomes": {
+        "pass": 12,
+        "functional": 12
+      },
+      "runs_with_usage": 24,
+      "median_seconds": 12.738,
+      "observed_requests": 38,
+      "uncached_input": 33476,
+      "cached_input": 63744,
+      "output": 35982,
+      "peak_price_estimate_usd": 0.18948177,
+      "peak_cost_per_success_usd": 0.01579015
+    }
+  },
+  "paired_counts": {
+    "ace-flash vs ace-pro (first)": {
+      "left_only": 3,
+      "right_only": 1,
+      "both_pass": 4,
+      "neither": 16
+    },
+    "ace-flash vs dsh-flash (first)": {
+      "left_only": 1,
+      "right_only": 1,
+      "both_pass": 6,
+      "neither": 16
+    },
+    "dsh-flash vs dsh-pro (first)": {
+      "left_only": 3,
+      "right_only": 6,
+      "both_pass": 4,
+      "neither": 11
+    },
+    "ace-pro vs dsh-pro (first)": {
+      "left_only": 1,
+      "right_only": 6,
+      "both_pass": 4,
+      "neither": 13
+    },
+    "ace-flash vs ace-pro (by_two_calls)": {
+      "left_only": 3,
+      "right_only": 1,
+      "both_pass": 4,
+      "neither": 16
+    },
+    "ace-flash vs dsh-flash (by_two_calls)": {
+      "left_only": 0,
+      "right_only": 3,
+      "both_pass": 7,
+      "neither": 14
+    },
+    "dsh-flash vs dsh-pro (by_two_calls)": {
+      "left_only": 4,
+      "right_only": 6,
+      "both_pass": 6,
+      "neither": 8
+    },
+    "ace-pro vs dsh-pro (by_two_calls)": {
+      "left_only": 1,
+      "right_only": 8,
+      "both_pass": 4,
+      "neither": 11
+    },
+    "ace-flash vs ace-pro (final)": {
+      "left_only": 4,
+      "right_only": 3,
+      "both_pass": 8,
+      "neither": 9
+    },
+    "ace-flash vs dsh-flash (final)": {
+      "left_only": 3,
+      "right_only": 1,
+      "both_pass": 9,
+      "neither": 11
+    },
+    "dsh-flash vs dsh-pro (final)": {
+      "left_only": 4,
+      "right_only": 6,
+      "both_pass": 6,
+      "neither": 8
+    },
+    "ace-pro vs dsh-pro (final)": {
+      "left_only": 4,
+      "right_only": 5,
+      "both_pass": 7,
+      "neither": 8
+    }
+  },
+  "trials": [
+    {
+      "task": "cvdp_copilot_64b66b_encoder_0005",
+      "repetition": 1,
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 13.068,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 4962,
+        "cached_input": 6400,
+        "output": 1533,
+        "peak_price_estimate_usd": 0.0033666
+      },
+      "candidate_sha256": [
+        "4405da850a170e94834153d0a7f954665797257671473c6bd3f52d536aebcb93",
+        "5558fee567cf75addece0a559e5cff3c2394d13c1114efe832f15103d098ef9c"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_64b66b_encoder_0005",
+      "repetition": 1,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 15.211,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 3363,
+        "cached_input": 7040,
+        "output": 1269,
+        "peak_price_estimate_usd": 0.00977416
+      },
+      "candidate_sha256": [
+        "c49caa4681f3c6b2fb39c8f9ecf31eb0f0e96bf2978e170d24265181a91f7255",
+        "5558fee567cf75addece0a559e5cff3c2394d13c1114efe832f15103d098ef9c"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_64b66b_encoder_0005",
+      "repetition": 1,
+      "condition": "dsh-flash",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 8.072,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 300,
+        "cached_input": 2432,
+        "output": 889,
+        "peak_price_estimate_usd": 0.00117139
+      },
+      "candidate_sha256": [
+        "31340fc491a4f8e156900065cbe6aac3b4d642197a427408712df60ee4fb4d16",
+        "487683d246c884350b1e61c1b1a998b48e1960a757e941732ef6b09dbaaf7e97"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_cdc_pulse_synchronizer_0004",
+      "repetition": 1,
+      "condition": "ace-pro",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 4.028,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 106,
+        "cached_input": 1664,
+        "output": 434,
+        "peak_price_estimate_usd": 0.00193178
+      },
+      "candidate_sha256": [
+        "b04fb42b4a84fb1cac4850b18266629c15450337ee8777a06f611d02b46348dc"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_cdc_pulse_synchronizer_0004",
+      "repetition": 1,
+      "condition": "dsh-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 3.985,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 209,
+        "cached_input": 768,
+        "output": 408,
+        "peak_price_estimate_usd": 0.00055691
+      },
+      "candidate_sha256": [
+        "70ddee516124e51c14e61760e24f0c55ff74eced82064c7ea4c6cf1ca860de65"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_cdc_pulse_synchronizer_0004",
+      "repetition": 1,
+      "condition": "ace-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 3.713,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 235,
+        "cached_input": 1536,
+        "output": 399,
+        "peak_price_estimate_usd": 0.00055852
+      },
+      "candidate_sha256": [
+        "0e98c34ec6c78009200140f85e4acf8169bf992d626f8ccf7513a1ee12c385ff"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_filo_0033",
+      "repetition": 1,
+      "condition": "dsh-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 4.172,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 176,
+        "cached_input": 896,
+        "output": 392,
+        "peak_price_estimate_usd": 0.00052858
+      },
+      "candidate_sha256": [
+        "a840e23700ebe123cb25f0edce10480740be4291e030fe43e76aa4f5ec7dcdf1"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_filo_0033",
+      "repetition": 1,
+      "condition": "ace-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 3.631,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 201,
+        "cached_input": 1664,
+        "output": 401,
+        "peak_price_estimate_usd": 0.00055148
+      },
+      "candidate_sha256": [
+        "ea872df3423803601ceb28251e2d20e9a1147d6ccdf65b4d59a2b250fad2b8d6"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_filo_0033",
+      "repetition": 1,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 20.256,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 6969,
+        "cached_input": 3584,
+        "output": 1734,
+        "peak_price_estimate_usd": 0.01622342
+      },
+      "candidate_sha256": [
+        "27d885416975fca227f7a6a67a902541dd0dfba0388ea109134e73ef9343b7f6",
+        "be313b037c4a068a82cd79f94344b507df9cdcc4be5f983581444490f1513eac"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_fsm_seq_detector_0023",
+      "repetition": 1,
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 15.419,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 4985,
+        "cached_input": 7936,
+        "output": 2311,
+        "peak_price_estimate_usd": 0.00431632
+      },
+      "candidate_sha256": [
+        "8fbda2ae4069f22b072820cb05372b6e35b52fb6e4b93e28143a4baeeccd5898",
+        "19ca05df59b7a85352f8034b4a4c24b06940e3d78cb79170750bef6c51d67dac"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_fsm_seq_detector_0023",
+      "repetition": 1,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 22.588,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 4687,
+        "cached_input": 8320,
+        "output": 2354,
+        "peak_price_estimate_usd": 0.01587476
+      },
+      "candidate_sha256": [
+        "0d2474d42ba823167498dacd9b9ef9d0e9709f7e040ab5bb721b37c0c18351b0",
+        "7afb9e9b072db21384b5a10c32fd09d8943c3d3ab04f95db21156af69b9deccc"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_fsm_seq_detector_0023",
+      "repetition": 1,
+      "condition": "dsh-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 1,
+      "seconds": 29.984,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 387,
+        "cached_input": 3456,
+        "output": 5153,
+        "peak_price_estimate_usd": 0.00632044
+      },
+      "candidate_sha256": [
+        "79c7d78debba767d13d5190db05a8455611dea25ff58aa9eccaf10717bf92ff9"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_generic_nbit_counter_0036",
+      "repetition": 1,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 19.313,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 6965,
+        "cached_input": 7552,
+        "output": 1631,
+        "peak_price_estimate_usd": 0.01598485
+      },
+      "candidate_sha256": [
+        "65c48beafeaebee39882b6143460eae396d4c4d73ab1ac0182921dd89f34731f",
+        "65c48beafeaebee39882b6143460eae396d4c4d73ab1ac0182921dd89f34731f"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_generic_nbit_counter_0036",
+      "repetition": 1,
+      "condition": "dsh-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 1,
+      "seconds": 16.739,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 405,
+        "cached_input": 3968,
+        "output": 2443,
+        "peak_price_estimate_usd": 0.00307691
+      },
+      "candidate_sha256": [
+        "34accab48af4d99e987d0e4483f0527355aacdae7c433fda4c69136c5ba7cb8a"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_generic_nbit_counter_0036",
+      "repetition": 1,
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 16.332,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 7388,
+        "cached_input": 7296,
+        "output": 2068,
+        "peak_price_estimate_usd": 0.00474178
+      },
+      "candidate_sha256": [
+        "18e4756eab46a8c460f230ed491bf1a10cffd7e4d6b059ae486388bb148d9873",
+        "18e4756eab46a8c460f230ed491bf1a10cffd7e4d6b059ae486388bb148d9873"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_arithmetic_progression_generator_0015",
+      "repetition": 1,
+      "condition": "dsh-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 11.5,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 1387,
+        "cached_input": 1792,
+        "output": 1365,
+        "peak_price_estimate_usd": 0.00206485
+      },
+      "candidate_sha256": [
+        "85ad22e10e8a2a56ad1532e90823517b55a0c1fa2e320b0a7363a7f49d93c942",
+        "fd64ca79032d9ae46789a414894176cb366c705c262420674f5ff5793dd2ce29"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_arithmetic_progression_generator_0015",
+      "repetition": 1,
+      "condition": "ace-flash",
+      "first": "compile",
+      "final": "compile",
+      "submissions": 2,
+      "seconds": 12.27,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 9197,
+        "cached_input": 1920,
+        "output": 1573,
+        "peak_price_estimate_usd": 0.00465822
+      },
+      "candidate_sha256": [
+        "2c0ea34e228b9dc1e9d18858df20a778e47fed625a9062ebf1f3b72dd5e5a6f3",
+        "2c0ea34e228b9dc1e9d18858df20a778e47fed625a9062ebf1f3b72dd5e5a6f3"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_arithmetic_progression_generator_0015",
+      "repetition": 1,
+      "condition": "ace-pro",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 6.509,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 2013,
+        "cached_input": 0,
+        "output": 627,
+        "peak_price_estimate_usd": 0.00514008
+      },
+      "candidate_sha256": [
+        "e76626b4f57dadb7c7ce640414a4960247ea9e8f28deda90ced689d5f105eb32"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_cache_lru_0022",
+      "repetition": 1,
+      "condition": "ace-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 3.361,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 1976,
+        "cached_input": 0,
+        "output": 298,
+        "peak_price_estimate_usd": 0.0009504
+      },
+      "candidate_sha256": [
+        "c6b86324b61bd29706595bfa8715193f17dbf473f72825a7f67ad6348dca3fcd"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_cache_lru_0022",
+      "repetition": 1,
+      "condition": "ace-pro",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 4.121,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 1975,
+        "cached_input": 0,
+        "output": 302,
+        "peak_price_estimate_usd": 0.00380292
+      },
+      "candidate_sha256": [
+        "660a0ea9a47a54a7cf6a8f78c7128ba3a712f27e61c38dee8ab791e697c854d8"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_cache_lru_0022",
+      "repetition": 1,
+      "condition": "dsh-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 4.036,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 1185,
+        "cached_input": 0,
+        "output": 320,
+        "peak_price_estimate_usd": 0.0007395
+      },
+      "candidate_sha256": [
+        "a3402911f8d013780aee07b43a7593882940f8ab2d6e4ca8a04997bb923cb540"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_coffee_machine_0001",
+      "repetition": 1,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 1,
+      "seconds": 29.913,
+      "meter": {
+        "observed_calls": 3,
+        "uncached_input": 18586,
+        "cached_input": 0,
+        "output": 3128,
+        "peak_price_estimate_usd": 0.0369204
+      },
+      "candidate_sha256": [
+        "f6989fb503f1ee702b186cb8d72e1167071b366d6bc95337d4fe90c147c39d59"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_coffee_machine_0001",
+      "repetition": 1,
+      "condition": "dsh-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 27.02,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 5158,
+        "cached_input": 7040,
+        "output": 4519,
+        "peak_price_estimate_usd": 0.00701244
+      },
+      "candidate_sha256": [
+        "223156af7970278f2f298e4892ee303b1f18b03ebec667e59516b04ef850e9ff",
+        "5ed413ad93a627cf742b6703209ba7f35507d244ad66ab7407429130e1b41c1a"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_coffee_machine_0001",
+      "repetition": 1,
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 1,
+      "seconds": 21.386,
+      "meter": {
+        "observed_calls": 3,
+        "uncached_input": 19003,
+        "cached_input": 0,
+        "output": 3009,
+        "peak_price_estimate_usd": 0.0093117
+      },
+      "candidate_sha256": [
+        "a09f57b0a0589d8c8676b0f83151f3f521f743d4d4118660c7cbad126ec3ca69"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_line_buffer_0003",
+      "repetition": 1,
+      "condition": "dsh-flash",
+      "first": "compile",
+      "final": "compile",
+      "submissions": 2,
+      "seconds": 21.729,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 4690,
+        "cached_input": 6144,
+        "output": 3590,
+        "peak_price_estimate_usd": 0.00575186
+      },
+      "candidate_sha256": [
+        "fb0f2948850056fb8abd6a63f33fe719c42042533e45d1cc17e5215c7613969e",
+        "4ae07ada53ea9a9ecd8c3437755b835d99f3423735642daa5886b59154ffd1c2"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_line_buffer_0003",
+      "repetition": 1,
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 1,
+      "seconds": 25.078,
+      "meter": {
+        "observed_calls": 3,
+        "uncached_input": 17642,
+        "cached_input": 0,
+        "output": 2460,
+        "peak_price_estimate_usd": 0.0082446
+      },
+      "candidate_sha256": [
+        "fb9822735181d618d50a3354a4daeb059c5801bb4f79d9b75eaaaedae1eb3f08"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_line_buffer_0003",
+      "repetition": 1,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 1,
+      "seconds": 32.264,
+      "meter": {
+        "observed_calls": 3,
+        "uncached_input": 16959,
+        "cached_input": 0,
+        "output": 2584,
+        "peak_price_estimate_usd": 0.03261852
+      },
+      "candidate_sha256": [
+        "3aa6909cce0fe6808485de39acbcb7c2a992cdfd4ce7415c0e9c495f5488991e"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_modified_booth_mul_0002",
+      "repetition": 1,
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 26.018,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 19600,
+        "cached_input": 3328,
+        "output": 3803,
+        "peak_price_estimate_usd": 0.01046357
+      },
+      "candidate_sha256": [
+        "91d80560f383ad05f1d12bad08b9d4b60c613673f2936ae114025298252fdd71",
+        "be31db899344800409e63f009a3192c9f32e5ec592b0023d1751fd8146d6d88f"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_modified_booth_mul_0002",
+      "repetition": 1,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 25.397,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 17365,
+        "cached_input": 3328,
+        "output": 2652,
+        "peak_price_estimate_usd": 0.03357015
+      },
+      "candidate_sha256": [
+        "a3bc480e9d00623ef034626d1da5cba154dbf3216e1aae6841cfa4d099c33bc2",
+        "a70a919c5c24f919448881fad03f41623af422dd4472eebdc9f0a19cee1d13f4"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_modified_booth_mul_0002",
+      "repetition": 1,
+      "condition": "dsh-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 13.527,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 3161,
+        "cached_input": 3840,
+        "output": 2236,
+        "peak_price_estimate_usd": 0.00365454
+      },
+      "candidate_sha256": [
+        "d7c6fdf47b8049c620f97a5cc2b7d1c61677b6c1420aa4ccbf4c1239949b6267",
+        "657bab12163bcfed125fec984c0ac5838f6df403a09d422f647f20c4f37ab6da"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_rgb2ycbcr_0001",
+      "repetition": 1,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 26.147,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 14199,
+        "cached_input": 2688,
+        "output": 2736,
+        "peak_price_estimate_usd": 0.02969551
+      },
+      "candidate_sha256": [
+        "27fdb054990996ec7d36227af7e442b35a633928fea75efff8990d3fa1c6bb63",
+        "bba0c1d850a3df2eaf9004ec3b14e9af3e7c632cedd9a55b2f5aa8d9230d1782"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_rgb2ycbcr_0001",
+      "repetition": 1,
+      "condition": "dsh-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 7.21,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 1993,
+        "cached_input": 0,
+        "output": 987,
+        "peak_price_estimate_usd": 0.0017823
+      },
+      "candidate_sha256": [
+        "71276f6eac286a47daa855dad58ae8dc99823259ac1e622110cb1e624f5c1cb2"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_rgb2ycbcr_0001",
+      "repetition": 1,
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 20.07,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 14808,
+        "cached_input": 2688,
+        "output": 3118,
+        "peak_price_estimate_usd": 0.00820013
+      },
+      "candidate_sha256": [
+        "11b5a7ca213179a6418e55d1bf48e9bd85b716411acd9fabe9e3686e2f52127d",
+        "733e71995c8c7e6a2697c3f466b16bb444068d9d2447fb3131bb0b475b854caa"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_swizzler_0014",
+      "repetition": 1,
+      "condition": "dsh-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 9.679,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 1931,
+        "cached_input": 2560,
+        "output": 1686,
+        "peak_price_estimate_usd": 0.00261786
+      },
+      "candidate_sha256": [
+        "08fdb45e95c6dfd451ab65a842fa2a5a5205d69190e40f7ba9906c72400d60c4",
+        "08fdb45e95c6dfd451ab65a842fa2a5a5205d69190e40f7ba9906c72400d60c4"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_swizzler_0014",
+      "repetition": 1,
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 17.261,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 12728,
+        "cached_input": 2304,
+        "output": 2634,
+        "peak_price_estimate_usd": 0.00699302
+      },
+      "candidate_sha256": [
+        "72629dde00341eeba406fb61154c5f7221acf6954ba8545a9f6adeb3adb44022",
+        "72629dde00341eeba406fb61154c5f7221acf6954ba8545a9f6adeb3adb44022"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_swizzler_0014",
+      "repetition": 1,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 20.966,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 14879,
+        "cached_input": 0,
+        "output": 2207,
+        "peak_price_estimate_usd": 0.02838
+      },
+      "candidate_sha256": [
+        "b689e7ad249f39586ae5bad7514d3e9ee5f2ca83c7e0f6a169adcd7d7a883eca",
+        "b689e7ad249f39586ae5bad7514d3e9ee5f2ca83c7e0f6a169adcd7d7a883eca"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_64b66b_encoder_0005",
+      "repetition": 2,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 15.942,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 3254,
+        "cached_input": 7168,
+        "output": 1290,
+        "peak_price_estimate_usd": 0.00971907
+      },
+      "candidate_sha256": [
+        "c49caa4681f3c6b2fb39c8f9ecf31eb0f0e96bf2978e170d24265181a91f7255",
+        "5558fee567cf75addece0a559e5cff3c2394d13c1114efe832f15103d098ef9c"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_64b66b_encoder_0005",
+      "repetition": 2,
+      "condition": "dsh-flash",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 7.252,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 298,
+        "cached_input": 2432,
+        "output": 668,
+        "peak_price_estimate_usd": 0.00090559
+      },
+      "candidate_sha256": [
+        "31340fc491a4f8e156900065cbe6aac3b4d642197a427408712df60ee4fb4d16",
+        "487683d246c884350b1e61c1b1a998b48e1960a757e941732ef6b09dbaaf7e97"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_64b66b_encoder_0005",
+      "repetition": 2,
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 12.838,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 4942,
+        "cached_input": 6400,
+        "output": 1480,
+        "peak_price_estimate_usd": 0.003297
+      },
+      "candidate_sha256": [
+        "4405da850a170e94834153d0a7f954665797257671473c6bd3f52d536aebcb93",
+        "5bb3fabb99935f3805cd6c445ebc1241a56282cfeb0769aefc6f37541f15018c"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_cdc_pulse_synchronizer_0004",
+      "repetition": 2,
+      "condition": "dsh-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 4.328,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 211,
+        "cached_input": 768,
+        "output": 408,
+        "peak_price_estimate_usd": 0.00055751
+      },
+      "candidate_sha256": [
+        "70ddee516124e51c14e61760e24f0c55ff74eced82064c7ea4c6cf1ca860de65"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_cdc_pulse_synchronizer_0004",
+      "repetition": 2,
+      "condition": "ace-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 3.466,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 235,
+        "cached_input": 1536,
+        "output": 399,
+        "peak_price_estimate_usd": 0.00055852
+      },
+      "candidate_sha256": [
+        "0e98c34ec6c78009200140f85e4acf8169bf992d626f8ccf7513a1ee12c385ff"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_cdc_pulse_synchronizer_0004",
+      "repetition": 2,
+      "condition": "ace-pro",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 4.59,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 106,
+        "cached_input": 1664,
+        "output": 434,
+        "peak_price_estimate_usd": 0.00193178
+      },
+      "candidate_sha256": [
+        "b04fb42b4a84fb1cac4850b18266629c15450337ee8777a06f611d02b46348dc"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_filo_0033",
+      "repetition": 2,
+      "condition": "ace-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 3.833,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 201,
+        "cached_input": 1664,
+        "output": 401,
+        "peak_price_estimate_usd": 0.00055148
+      },
+      "candidate_sha256": [
+        "ea872df3423803601ceb28251e2d20e9a1147d6ccdf65b4d59a2b250fad2b8d6"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_filo_0033",
+      "repetition": 2,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 22.987,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 5827,
+        "cached_input": 5120,
+        "output": 1872,
+        "peak_price_estimate_usd": 0.01533004
+      },
+      "candidate_sha256": [
+        "33ea5fb556b4a0d32fae749e26d012cf535b154e00f41904d2b9093338b9247a",
+        "753c0dcbce93afe3b192133c568e3db5f59a8bee815d4cf75024bb909f809aaf"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_filo_0033",
+      "repetition": 2,
+      "condition": "dsh-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 4.919,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 178,
+        "cached_input": 896,
+        "output": 480,
+        "peak_price_estimate_usd": 0.00063478
+      },
+      "candidate_sha256": [
+        "60d12e0e6d431c94af15713faa95ee0dce0b78960c434fd0b933773ce2c367ee"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_fsm_seq_detector_0023",
+      "repetition": 2,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 23.369,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 4762,
+        "cached_input": 8320,
+        "output": 2387,
+        "peak_price_estimate_usd": 0.01610444
+      },
+      "candidate_sha256": [
+        "0d2474d42ba823167498dacd9b9ef9d0e9709f7e040ab5bb721b37c0c18351b0",
+        "8faaa7125b497b15189000339d1254648ced1438a4d498efb83a78c58a034b4c"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_fsm_seq_detector_0023",
+      "repetition": 2,
+      "condition": "dsh-flash",
+      "first": "compile",
+      "final": "compile",
+      "submissions": 2,
+      "seconds": 8.481,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 469,
+        "cached_input": 2944,
+        "output": 1245,
+        "peak_price_estimate_usd": 0.00165236
+      },
+      "candidate_sha256": [
+        "52f445bda7a7e49a558d15e4a588e04ca3f8b6d18418829d84d446a2149092c5",
+        "0ce782496ee02782c03582049fa0cb7169404f04077b7df45f322c6e094feeee"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_fsm_seq_detector_0023",
+      "repetition": 2,
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 19.554,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 5184,
+        "cached_input": 7936,
+        "output": 2841,
+        "peak_price_estimate_usd": 0.00501202
+      },
+      "candidate_sha256": [
+        "8fbda2ae4069f22b072820cb05372b6e35b52fb6e4b93e28143a4baeeccd5898",
+        "e21ed326d2eaf903def13ef43513dba7c3bc97211ab29f992d7e47d5dbda3db2"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_generic_nbit_counter_0036",
+      "repetition": 2,
+      "condition": "dsh-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 7.699,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 399,
+        "cached_input": 3968,
+        "output": 1035,
+        "peak_price_estimate_usd": 0.00138551
+      },
+      "candidate_sha256": [
+        "eda4755daa9188cdabd80e2810fd57347e64ebefcfab30145763391468f59c1a",
+        "c112c20cd8c78d8d0289949a007cc911cf4cae61fe10a5ac7e75c07ede496e35"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_generic_nbit_counter_0036",
+      "repetition": 2,
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 16.535,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 4866,
+        "cached_input": 9728,
+        "output": 1992,
+        "peak_price_estimate_usd": 0.00390857
+      },
+      "candidate_sha256": [
+        "2c1c61258dbb00656bd4a2adfb774a35e6b4e4336dd46088df5703c0a5eed197",
+        "2c1c61258dbb00656bd4a2adfb774a35e6b4e4336dd46088df5703c0a5eed197"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_generic_nbit_counter_0036",
+      "repetition": 2,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 18.394,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 4576,
+        "cached_input": 10112,
+        "output": 1724,
+        "peak_price_estimate_usd": 0.01331229
+      },
+      "candidate_sha256": [
+        "65c48beafeaebee39882b6143460eae396d4c4d73ab1ac0182921dd89f34731f",
+        "65c48beafeaebee39882b6143460eae396d4c4d73ab1ac0182921dd89f34731f"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_arithmetic_progression_generator_0015",
+      "repetition": 2,
+      "condition": "ace-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 4.363,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 222,
+        "cached_input": 1792,
+        "output": 570,
+        "peak_price_estimate_usd": 0.00076135
+      },
+      "candidate_sha256": [
+        "cb5b3f5ebd6d9359ed9466b3f225abce15e51dfdd191ad7020fae82a37e9cd5d"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_arithmetic_progression_generator_0015",
+      "repetition": 2,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 19.401,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 7454,
+        "cached_input": 3840,
+        "output": 1739,
+        "peak_price_estimate_usd": 0.01689468
+      },
+      "candidate_sha256": [
+        "3a9ede05bf0aa850e4a19351592490e4b690935341beb39f745189eca8e0f235",
+        "f1b02b9a00536414de93fb1874a5a1b38ff7f7d1ca142b83ca6a2c6abbaa3965"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_arithmetic_progression_generator_0015",
+      "repetition": 2,
+      "condition": "dsh-flash",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 12.941,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 372,
+        "cached_input": 2816,
+        "output": 1773,
+        "peak_price_estimate_usd": 0.0022561
+      },
+      "candidate_sha256": [
+        "b69d218e0de80ab853b604d4d7c842c99dc657696b420b2830783a0c042aa039",
+        "ed7b264dd79091e62bcc7230673d9553aa5e818983382e05e642c8d2805bd2ef"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_cache_lru_0022",
+      "repetition": 2,
+      "condition": "ace-pro",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 4.126,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 55,
+        "cached_input": 1920,
+        "output": 301,
+        "peak_price_estimate_usd": 0.00134904
+      },
+      "candidate_sha256": [
+        "f514db938afcfde947dc4ef5f95a33da62ee91ee5d2d0ac94ed61a2ad80f4e95"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_cache_lru_0022",
+      "repetition": 2,
+      "condition": "dsh-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 3.743,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 162,
+        "cached_input": 1024,
+        "output": 310,
+        "peak_price_estimate_usd": 0.00042674
+      },
+      "candidate_sha256": [
+        "d8da6ea381358b976986a325984896fb8742b2a22122bbdf70502719be0defb0"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_cache_lru_0022",
+      "repetition": 2,
+      "condition": "ace-flash",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 3.27,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 184,
+        "cached_input": 1792,
+        "output": 287,
+        "peak_price_estimate_usd": 0.00041035
+      },
+      "candidate_sha256": [
+        "cb7fa3f381d1372082ab3a53d8f6bc670a12e71524334db131698d4ea36c0066"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_coffee_machine_0001",
+      "repetition": 2,
+      "condition": "dsh-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 27.551,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 357,
+        "cached_input": 11648,
+        "output": 4345,
+        "peak_price_estimate_usd": 0.00539099
+      },
+      "candidate_sha256": [
+        "886113e53d99d59694291dfc592a5a56f016ca32b414a82a1c74ab81a492aefe",
+        "2e657e63ff7044957a69e386bf2196036d8b8e092a1c5263c96d7ce7baad578f"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_coffee_machine_0001",
+      "repetition": 2,
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 1,
+      "seconds": 21.218,
+      "meter": {
+        "observed_calls": 3,
+        "uncached_input": 8090,
+        "cached_input": 10880,
+        "output": 2906,
+        "peak_price_estimate_usd": 0.00597948
+      },
+      "candidate_sha256": [
+        "30924da810f5e05bebdf0b356447e0a4c7e7eebff5d812009af38532210c8dab"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_coffee_machine_0001",
+      "repetition": 2,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 1,
+      "seconds": 30.811,
+      "meter": {
+        "observed_calls": 3,
+        "uncached_input": 7831,
+        "cached_input": 11008,
+        "output": 3290,
+        "peak_price_estimate_usd": 0.02384967
+      },
+      "candidate_sha256": [
+        "94a5c784b1d56d1c7fdcf261520649fac6fbaddf04b9cf7e328201205aa016e5"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_line_buffer_0003",
+      "repetition": 2,
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 1,
+      "seconds": 25.409,
+      "meter": {
+        "observed_calls": 3,
+        "uncached_input": 7180,
+        "cached_input": 10240,
+        "output": 2464,
+        "peak_price_estimate_usd": 0.00517224
+      },
+      "candidate_sha256": [
+        "18f7a3ef3e763b4f6a8a6fe2a118b7466f4dfd239124f86e0553b66e508a4db3"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_line_buffer_0003",
+      "repetition": 2,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 1,
+      "seconds": 30.625,
+      "meter": {
+        "observed_calls": 3,
+        "uncached_input": 191,
+        "cached_input": 16768,
+        "output": 2486,
+        "peak_price_estimate_usd": 0.01083447
+      },
+      "candidate_sha256": [
+        "3aa6909cce0fe6808485de39acbcb7c2a992cdfd4ce7415c0e9c495f5488991e"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_line_buffer_0003",
+      "repetition": 2,
+      "condition": "dsh-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 1,
+      "seconds": 51.089,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 499,
+        "cached_input": 10752,
+        "output": 6307,
+        "peak_price_estimate_usd": 0.00778261
+      },
+      "candidate_sha256": [
+        "17b31d855a1936680bce8213be4f207a9236ffdc476206b21004dfd247c58d76"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_modified_booth_mul_0002",
+      "repetition": 2,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 25.522,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 10361,
+        "cached_input": 10112,
+        "output": 2488,
+        "peak_price_estimate_usd": 0.02397393
+      },
+      "candidate_sha256": [
+        "4c770076689430f04ed086f0d84197d6638f565b1a11180882d336387e89dcec",
+        "4c770076689430f04ed086f0d84197d6638f565b1a11180882d336387e89dcec"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_modified_booth_mul_0002",
+      "repetition": 2,
+      "condition": "dsh-flash",
+      "first": "compile",
+      "final": "compile",
+      "submissions": 2,
+      "seconds": 11.101,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 422,
+        "cached_input": 6400,
+        "output": 1885,
+        "peak_price_estimate_usd": 0.002427
+      },
+      "candidate_sha256": [
+        "547c2a5990171befa2adf08c3070a93c3060a70405bbb05708e8d56cb12d56f4",
+        "952f9df99facba1d71fad442db7104afb966e2068479a56de407cc9792b9379d"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_modified_booth_mul_0002",
+      "repetition": 2,
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 22.707,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 12031,
+        "cached_input": 9984,
+        "output": 3299,
+        "peak_price_estimate_usd": 0.007628
+      },
+      "candidate_sha256": [
+        "78795a7b2dc5c402813a7153cf14ea47e1838e78e111d4acb2b979164c6b4b4d",
+        "d8d5a6522d776d303aada2f0a8e32815d8ea6572659aedbbc5b056bce329bf2a"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_rgb2ycbcr_0001",
+      "repetition": 2,
+      "condition": "dsh-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 13.625,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 408,
+        "cached_input": 4864,
+        "output": 2175,
+        "peak_price_estimate_usd": 0.00276158
+      },
+      "candidate_sha256": [
+        "b8c76ca4fff48c22c14bfff2801b0f84f56782ed0c50c8bc8cb1710a7e99736d",
+        "75ca708d6b617d4a861df14830c6bf93acbed4c7b0f5702db09e39f29005be70"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_rgb2ycbcr_0001",
+      "repetition": 2,
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 18.281,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 9447,
+        "cached_input": 7552,
+        "output": 2790,
+        "peak_price_estimate_usd": 0.00622741
+      },
+      "candidate_sha256": [
+        "27fdb054990996ec7d36227af7e442b35a633928fea75efff8990d3fa1c6bb63",
+        "e498ec6c1057c0f05352f11a2e54262720f953cb0b730743ddfd8c7e5617c602"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_rgb2ycbcr_0001",
+      "repetition": 2,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 25.205,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 5925,
+        "cached_input": 11008,
+        "output": 2735,
+        "peak_price_estimate_usd": 0.01913595
+      },
+      "candidate_sha256": [
+        "27fdb054990996ec7d36227af7e442b35a633928fea75efff8990d3fa1c6bb63",
+        "e2702caf8282cbe2e03a4c812d774b311d12f96dfa9012bb3452a7477c0a246a"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_swizzler_0014",
+      "repetition": 2,
+      "condition": "ace-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 14.907,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 8010,
+        "cached_input": 7168,
+        "output": 2377,
+        "peak_price_estimate_usd": 0.00529841
+      },
+      "candidate_sha256": [
+        "836f3c81f7f24875f99e96b8211f1560fe975a556427d211bb6dbe069ea2089a",
+        "836f3c81f7f24875f99e96b8211f1560fe975a556427d211bb6dbe069ea2089a"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_swizzler_0014",
+      "repetition": 2,
+      "condition": "ace-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 21.268,
+      "meter": {
+        "observed_calls": 4,
+        "uncached_input": 7630,
+        "cached_input": 7296,
+        "output": 2234,
+        "peak_price_estimate_usd": 0.01923926
+      },
+      "candidate_sha256": [
+        "246fddfdf630d533a706739f9b8d696aa20e7006b263127c508d2fc79a32a403",
+        "b689e7ad249f39586ae5bad7514d3e9ee5f2ca83c7e0f6a169adcd7d7a883eca"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_swizzler_0014",
+      "repetition": 2,
+      "condition": "dsh-flash",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 1,
+      "seconds": 25.045,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 428,
+        "cached_input": 4096,
+        "output": 4073,
+        "peak_price_estimate_usd": 0.00504058
+      },
+      "candidate_sha256": [
+        "e8d89a0a0a7818bbac99684505647497549dce66bed53758ff9ba4f35449e2ad"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_64b66b_encoder_0005",
+      "repetition": 1,
+      "condition": "dsh-pro",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 6.262,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 1169,
+        "cached_input": 0,
+        "output": 341,
+        "peak_price_estimate_usd": 0.00289344
+      },
+      "candidate_sha256": [
+        "5558fee567cf75addece0a559e5cff3c2394d13c1114efe832f15103d098ef9c"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_cdc_pulse_synchronizer_0004",
+      "repetition": 1,
+      "condition": "dsh-pro",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 6.238,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 976,
+        "cached_input": 0,
+        "output": 408,
+        "peak_price_estimate_usd": 0.002904
+      },
+      "candidate_sha256": [
+        "70ddee516124e51c14e61760e24f0c55ff74eced82064c7ea4c6cf1ca860de65"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_filo_0033",
+      "repetition": 1,
+      "condition": "dsh-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 14.33,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 1169,
+        "cached_input": 1536,
+        "output": 1108,
+        "peak_price_estimate_usd": 0.00599834
+      },
+      "candidate_sha256": [
+        "96af853233b22ef42741e9a6943df3f0489f36b9dd6b118d944cc9a5e49cfbeb",
+        "c534af4a29583cf1c86880a9322a44fcc61d20a177ee35def930866d806b631e"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_fsm_seq_detector_0023",
+      "repetition": 1,
+      "condition": "dsh-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 23.527,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 1535,
+        "cached_input": 2688,
+        "output": 2868,
+        "peak_price_estimate_usd": 0.01350175
+      },
+      "candidate_sha256": [
+        "358360882ab25b3a6704fd209ef0fb28441bd2800a2354c2794d13a549ee8516",
+        "4bf3c206c0f474e38523dea1314fbf96fa32d560bbfc5c7e36cf68660fb1c8a8"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_generic_nbit_counter_0036",
+      "repetition": 1,
+      "condition": "dsh-pro",
+      "first": "functional",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 10.943,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 2017,
+        "cached_input": 2304,
+        "output": 1060,
+        "peak_price_estimate_usd": 0.00696142
+      },
+      "candidate_sha256": [
+        "a1306b54467ea0495f2f642a3c092bed219cddeec7d8bdaa6198ea04ac73d941",
+        "2160fd4a7dbec7e4f44e9b412d1cfc5bb83986ce094be6f2d0c59163cffde4b8"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_arithmetic_progression_generator_0015",
+      "repetition": 1,
+      "condition": "dsh-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 14.472,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 1341,
+        "cached_input": 1792,
+        "output": 1275,
+        "peak_price_estimate_usd": 0.00689797
+      },
+      "candidate_sha256": [
+        "28b896c5f7e7361d26d8f7225faf06cc973bfce9cbb8ab9bee3a0a5f0b77f863",
+        "3430480a4be9f0f6b77f2ed9b0f42767f73e4ae50a41b6efa422b4cffd5ef750"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_cache_lru_0022",
+      "repetition": 1,
+      "condition": "dsh-pro",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 4.959,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 1184,
+        "cached_input": 0,
+        "output": 291,
+        "peak_price_estimate_usd": 0.00271524
+      },
+      "candidate_sha256": [
+        "218293233933b7231881eb97acbebfea0c8baf90850ca8bd10be78d9a3ba1482"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_coffee_machine_0001",
+      "repetition": 1,
+      "condition": "dsh-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 36.652,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 4994,
+        "cached_input": 7040,
+        "output": 4334,
+        "peak_price_estimate_usd": 0.02406448
+      },
+      "candidate_sha256": [
+        "47f02691121ea10bdd23d81a2b51fb8a0e202e93ae6775c091800e04a712b071",
+        "7b7f3142a3999e5bb9f4220ac10acd06200d66f2b92e772983fd1e199ceb9243"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_line_buffer_0003",
+      "repetition": 1,
+      "condition": "dsh-pro",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 33.506,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 4491,
+        "cached_input": 0,
+        "output": 2215,
+        "peak_price_estimate_usd": 0.01469952
+      },
+      "candidate_sha256": [
+        "4cf78f94514ff637de61736c11f9b5ca30da362885b5fbe285b57d605d441a9d"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_modified_booth_mul_0002",
+      "repetition": 1,
+      "condition": "dsh-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 18.771,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 3021,
+        "cached_input": 3968,
+        "output": 2216,
+        "peak_price_estimate_usd": 0.01293767
+      },
+      "candidate_sha256": [
+        "df5b32c6db759939b2073e36da7b34a82ca4e1bd75c709d8e74e8c95d91e1b9d",
+        "df5b32c6db759939b2073e36da7b34a82ca4e1bd75c709d8e74e8c95d91e1b9d"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_rgb2ycbcr_0001",
+      "repetition": 1,
+      "condition": "dsh-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 17.704,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 2068,
+        "cached_input": 3072,
+        "output": 2065,
+        "peak_price_estimate_usd": 0.01104233
+      },
+      "candidate_sha256": [
+        "3a97a8194e4225c225384c714657938fc4ab2bc83702fa184da8c577c67829ef",
+        "a65cbe258f4f443afd6fde7fa283dda551ca2acc65486c63ce80e33b4a78b870"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_swizzler_0014",
+      "repetition": 1,
+      "condition": "dsh-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 14.451,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 1943,
+        "cached_input": 2560,
+        "output": 1711,
+        "peak_price_estimate_usd": 0.00945296
+      },
+      "candidate_sha256": [
+        "4769dec87817d52b56752d52c830bc699a52568b11e750d884927dd8ce41111d",
+        "e210e842b1da98306ea8f358689be9c61aa868ea8db29eb6f707c5ba85a43701"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_64b66b_encoder_0005",
+      "repetition": 2,
+      "condition": "dsh-pro",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 4.247,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 18,
+        "cached_input": 1152,
+        "output": 341,
+        "peak_price_estimate_usd": 0.00142481
+      },
+      "candidate_sha256": [
+        "5558fee567cf75addece0a559e5cff3c2394d13c1114efe832f15103d098ef9c"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_cdc_pulse_synchronizer_0004",
+      "repetition": 2,
+      "condition": "dsh-pro",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 5.139,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 80,
+        "cached_input": 896,
+        "output": 408,
+        "peak_price_estimate_usd": 0.0017607
+      },
+      "candidate_sha256": [
+        "70ddee516124e51c14e61760e24f0c55ff74eced82064c7ea4c6cf1ca860de65"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_filo_0033",
+      "repetition": 2,
+      "condition": "dsh-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 10.159,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 120,
+        "cached_input": 2432,
+        "output": 752,
+        "peak_price_estimate_usd": 0.00324333
+      },
+      "candidate_sha256": [
+        "772a1591d7e82fe6134ef18c4bc7434870a14c897385588c62b67990627d5900",
+        "95f3174777281ff0e32d8688c7bdcc049b2dbf0cebda09ea74f650f3d7ffdf4b"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_fsm_seq_detector_0023",
+      "repetition": 2,
+      "condition": "dsh-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 12.835,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 175,
+        "cached_input": 3456,
+        "output": 1426,
+        "peak_price_estimate_usd": 0.00603002
+      },
+      "candidate_sha256": [
+        "39aec54dddadacee45cb1bd10ffc7606bb41290017c54b89f7da2bc5a825a7fd",
+        "b4485d44b116382bd9d2847ea20754489270957b9c777d27bdb089d1fae1a510"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_generic_nbit_counter_0036",
+      "repetition": 2,
+      "condition": "dsh-pro",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 5.841,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 96,
+        "cached_input": 1792,
+        "output": 507,
+        "peak_price_estimate_usd": 0.00221329
+      },
+      "candidate_sha256": [
+        "d94c9f3c7303260dfa995acce37541e3195c65f3b32c4d8f0cf3d687c2069631"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_arithmetic_progression_generator_0015",
+      "repetition": 2,
+      "condition": "dsh-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 12.64,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 130,
+        "cached_input": 2944,
+        "output": 1164,
+        "peak_price_estimate_usd": 0.00491058
+      },
+      "candidate_sha256": [
+        "8d586ad247845df5bc43eb56a4789c4d118e6e126ec1e25b52d70a6a4344e4e5",
+        "8d586ad247845df5bc43eb56a4789c4d118e6e126ec1e25b52d70a6a4344e4e5"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_cache_lru_0022",
+      "repetition": 2,
+      "condition": "dsh-pro",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 4.57,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 33,
+        "cached_input": 1152,
+        "output": 291,
+        "peak_price_estimate_usd": 0.00124661
+      },
+      "candidate_sha256": [
+        "a62cd46683b0e49a2b3b5ebbc7f8d45d2ce66aaf92789fd6b3e7fa58f011dc2d"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_coffee_machine_0001",
+      "repetition": 2,
+      "condition": "dsh-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 38.058,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 228,
+        "cached_input": 11776,
+        "output": 4525,
+        "peak_price_estimate_usd": 0.0187381
+      },
+      "candidate_sha256": [
+        "8f47f6b6097e567e67c363ed6f45ee9e353c321f517162c04cea3fc490d1eb08",
+        "0acde2944f35b8fc3fe6de516f9bedd8e4605d69ccfde9b4a83b32b06f86a880"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_line_buffer_0003",
+      "repetition": 2,
+      "condition": "dsh-pro",
+      "first": "compile",
+      "final": "pass",
+      "submissions": 2,
+      "seconds": 40.718,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 4581,
+        "cached_input": 5888,
+        "output": 2871,
+        "peak_price_estimate_usd": 0.01767515
+      },
+      "candidate_sha256": [
+        "3d9868e831bf622f42bc4055cfbdb244e48e1f6c5289aae6774d7e09f2667227",
+        "ff3882235b0c3eb6f722ad63dd527e205985a6cab60acb8b741db94588154d51"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_modified_booth_mul_0002",
+      "repetition": 2,
+      "condition": "dsh-pro",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 10.007,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 95,
+        "cached_input": 2816,
+        "output": 1168,
+        "peak_price_estimate_usd": 0.00487458
+      },
+      "candidate_sha256": [
+        "dabff6ace80928b5f39aac2e5b11d37169b0214eed767bf2dfb6693c7bf5d2fb"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_rgb2ycbcr_0001",
+      "repetition": 2,
+      "condition": "dsh-pro",
+      "first": "pass",
+      "final": "pass",
+      "submissions": 1,
+      "seconds": 8.479,
+      "meter": {
+        "observed_calls": 1,
+        "uncached_input": 73,
+        "cached_input": 1920,
+        "output": 927,
+        "peak_price_estimate_usd": 0.00385176
+      },
+      "candidate_sha256": [
+        "23c027eb3764e84d27dec5333a3d5fe4bd7cbc3a7c767264ddc0d46d6560c9e5"
+      ]
+    },
+    {
+      "task": "cvdp_copilot_swizzler_0014",
+      "repetition": 2,
+      "condition": "dsh-pro",
+      "first": "functional",
+      "final": "functional",
+      "submissions": 2,
+      "seconds": 14.963,
+      "meter": {
+        "observed_calls": 2,
+        "uncached_input": 1939,
+        "cached_input": 2560,
+        "output": 1710,
+        "peak_price_estimate_usd": 0.00944372
+      },
+      "candidate_sha256": [
+        "6dd7f8bddf7b7708f2f0c7f71232c4e41899941b5daebd36a31c57656903290f",
+        "6dd7f8bddf7b7708f2f0c7f71232c4e41899941b5daebd36a31c57656903290f"
+      ]
+    }
+  ],
+  "pre_request_recovery": [
+    {
+      "task": "cvdp_copilot_coffee_machine_0001",
+      "repetition": 1,
+      "condition": "dsh-flash",
+      "original": "input limit stopped run before model request",
+      "recovered_final": "functional"
+    },
+    {
+      "task": "cvdp_copilot_line_buffer_0003",
+      "repetition": 1,
+      "condition": "dsh-flash",
+      "original": "input limit stopped run before model request",
+      "recovered_final": "compile"
+    },
+    {
+      "task": "cvdp_copilot_coffee_machine_0001",
+      "repetition": 2,
+      "condition": "dsh-flash",
+      "original": "input limit stopped run before model request",
+      "recovered_final": "functional"
+    },
+    {
+      "task": "cvdp_copilot_line_buffer_0003",
+      "repetition": 2,
+      "condition": "dsh-flash",
+      "original": "input limit stopped run before model request",
+      "recovered_final": "functional"
+    }
+  ],
+  "batching": {
+    "original": [
+      "ace-flash",
+      "ace-pro",
+      "dsh-flash"
+    ],
+    "follow_up": [
+      "dsh-pro"
+    ]
+  },
+  "descriptive_interaction": {
+    "first_pass": {
+      "ace_pro_minus_flash": -2,
+      "dsh_pro_minus_flash": 3,
+      "difference_of_gains": 5,
+      "allocated_per_condition": 24
+    },
+    "pass_by_two_observed_calls": {
+      "ace_pro_minus_flash": -2,
+      "dsh_pro_minus_flash": 2,
+      "difference_of_gains": 4,
+      "allocated_per_condition": 24
+    },
+    "final_pass": {
+      "ace_pro_minus_flash": -1,
+      "dsh_pro_minus_flash": 2,
+      "difference_of_gains": 3,
+      "allocated_per_condition": 24
+    }
+  }
+}

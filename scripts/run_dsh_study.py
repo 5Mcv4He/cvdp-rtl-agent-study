@@ -9,11 +9,8 @@ import tempfile
 import time
 from unittest.mock import patch
 
-from model_budget import record
+from model_budget import MODELS, record
 from study_common import FEEDBACK, LOCAL, PILOT_ID, score, task_row
-
-MODEL = "deepseek-flash"
-
 
 def rtl_from_response(response):
     text = response.strip()
@@ -27,7 +24,7 @@ def rtl_from_response(response):
     return text + "\n"
 
 
-def run_dsh(task, rounds):
+def run_dsh(task, rounds, model="deepseek-flash"):
     from deepseek_harness import DeepSeekHarness
 
     row = task_row(task)
@@ -64,7 +61,7 @@ def run_dsh(task, rounds):
     with patch.dict(os.environ, env, clear=True):
         with DeepSeekHarness(
             cwd=str(work), dsh_home=str(work / ".dsh"), profile="sdk-minimal",
-            model=MODEL, reasoning_effort="off", max_tokens=4096, patches=(str(settings),),
+            model=model, reasoning_effort="off", max_tokens=4096, patches=(str(settings),),
             request_timeout_seconds=95,
         ) as harness:
             session = harness.start_session()
@@ -87,7 +84,7 @@ def run_dsh(task, rounds):
                     break
                 prompt = FEEDBACK[verdict["verdict"]] + " " + output_contract
     result = {
-        "task_id": task, "agent": "dsh", "model": MODEL, "compact_feedback": True,
+        "task_id": task, "agent": "dsh", "model": model, "compact_feedback": True,
         "seconds": round(time.monotonic() - start, 3), "scores": scores, "usage": usage,
     }
     record(run / "result.json", result)
@@ -99,6 +96,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--task", default=PILOT_ID)
     parser.add_argument("--rounds", choices=(1, 2), type=int, default=2)
+    parser.add_argument("--model", choices=sorted(MODELS), default="deepseek-flash")
     args = parser.parse_args()
     os.umask(0o077)
-    run_dsh(args.task, args.rounds)
+    run_dsh(args.task, args.rounds, args.model)
