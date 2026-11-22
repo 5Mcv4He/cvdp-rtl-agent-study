@@ -1,0 +1,39 @@
+# Project-local downloads, virtual environments, credentials, and run data
+.local/
+.venv*/
+venv/
+.env
+.env.*
+.envrc
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets.json
+credentials/
+secrets/
+*.local.json
+
+# Raw datasets, model traffic, and tool outputs
+data/
+datasets/
+output/
+outputs/
+raw/
+runs/
+logs/
+sim_build/
+*.jsonl
+*.log
+*.vcd
+*.fst
+*.fsdb
+*.vvp
+
+# Local tooling
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+node_modules/

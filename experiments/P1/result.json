@@ -1,0 +1,52 @@
+{
+  "phase": "P1",
+  "run_id": "p1-kema_5bp",
+  "started_at_local": "2026-11-22T14:51:19+08:00",
+  "task_id": "cvdp_copilot_32_bit_Brent_Kung_PP_adder_0001",
+  "dataset_lock": "../P0/lock.json",
+  "runner": "ACE-RTL native runner with project-local adapter patch on macOS arm64",
+  "provider": "DeepSeek official",
+  "model_requested": "deepseek-flash",
+  "model_returned": "deepseek-flash",
+  "thinking_mode": "disabled",
+  "temperature": 0.2,
+  "top_p": 0.95,
+  "max_output_tokens": 4096,
+  "api_calls": 1,
+  "attempts": 1,
+  "iterations": 1,
+  "roles_with_paid_calls": ["generator"],
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 2840,
+    "completion_tokens": 1328,
+    "total_tokens": 4168,
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 2840,
+    "reasoning_tokens_reported": null
+  },
+  "api_seconds": 3.917,
+  "simulation_service_seconds": 3.873,
+  "estimated_cost_usd": 0.0012228,
+  "candidate_sha256": "f7de4b799a284907db2a7cfa8e8093768bc8b4da3f5d7c580532b986e6ed6871",
+  "checker_sha256": "bf0f6f095569f1a2cf32983ec9afb014e83d9504e1d4ed8bf2a75073a89b6b03",
+  "compile": "passed",
+  "ace_verdict": "CANDIDATE_FUNCTIONAL",
+  "failed_vector": {
+    "index_1based": 2,
+    "expected_carry_out": 0,
+    "actual_carry_out": 1
+  },
+  "independent_local_import": {
+    "candidate_bytes_equal": true,
+    "cocotb_tests_run": 1,
+    "verdict": "fail",
+    "same_fixed_vector": true
+  },
+  "controls": {
+    "lfsr_upstream_golden": "pass (3 cocotb tests)",
+    "unmodified_buggy_rtl": "fail (same carry-out mismatch)",
+    "behavioral_33bit_adder": "pass",
+    "local_index_diagnostic": "pass"
+  }
+}

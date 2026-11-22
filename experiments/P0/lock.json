@@ -1,0 +1,47 @@
+{
+  "as_of": "2026-11-22 Asia/Shanghai",
+  "repositories": {
+    "ACE-RTL": {
+      "url": "https://github.com/NVlabs/ACE-RTL",
+      "commit": "94754d796350d42502c9a32639a20d86f50e9678"
+    },
+    "cvdp_benchmark": {
+      "url": "https://github.com/NVlabs/cvdp_benchmark",
+      "commit": "8e894cf74414ab1eaea1e2b4e80a02f123df07b6"
+    },
+    "deepseek-harness": {
+      "url": "https://github.com/deepseek-ai/deepseek-harness",
+      "commit": "d98f5d68519215da48f3002da2cb9c9d2068d81d"
+    }
+  },
+  "dataset": {
+    "repo": "nvidia/cvdp-benchmark-dataset",
+    "revision": "5b807d945f6a99aa645f7e43a64a2115e281b4bf",
+    "file": "cvdp_v1.1.0_nonagentic_code_generation_no_commercial.jsonl",
+    "sha256": "cbcd81295561ebb16e4d857e096f4d9908d042c33aff3b58abf236e868411857",
+    "rows": 302,
+    "cid016_rows": 35,
+    "cid016_nonempty_reference_rows": 0
+  },
+  "first_task": {
+    "id": "cvdp_copilot_32_bit_Brent_Kung_PP_adder_0001",
+    "line_1based": 3,
+    "row_sha256_without_newline": "25ca9421fd6d7bf92c01cd5d8d6f953af87a696cfd417e72a06d980847489a52",
+    "categories": [
+      "cid016",
+      "medium"
+    ],
+    "input_paths": [
+      "rtl/brent_kung_adder.sv"
+    ],
+    "target_paths": [
+      "rtl/brent_kung_adder.sv"
+    ],
+    "harness_paths": [
+      "docker-compose.yml",
+      "src/.env",
+      "src/test_brent_kung_adder.py",
+      "src/test_runner.py"
+    ]
+  }
+}

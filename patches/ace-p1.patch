@@ -1,0 +1,82 @@
+--- a/skills/ace-rtl/scripts/ace_rtl_agent/llm_backend.py
++++ b/skills/ace-rtl/scripts/ace_rtl_agent/llm_backend.py
+@@ -514,6 +514,11 @@
+
+     def __init__(self, model: str = DEFAULT_MODEL_ALIAS, provider: str = "auto"):
+         self.model = resolve_model_name(model)
++        self.adapter_script = os.environ.get("ACE_RTL_LLM_SCRIPT")
++        self.component = None
++        if self.adapter_script and not is_nvidia_inference_model(self.model):
++            self.provider = "adapter"
++            return
+         self.provider = self._resolve_provider(provider, self.model)
+         self.endpoint, self.headers = self._provider_config(self.provider)
+         logger.info("Initialized LLM backend provider=%s model=%s", self.provider, self.model)
+@@ -583,6 +588,19 @@
+         if max_tokens is None:
+             max_tokens = get_model_max_output_tokens(self.model)
+
++        if self.provider == "adapter":
++            # Import lazily because llm_call also imports this module.
++            from llm_call import call_adapter_script
++
++            return call_adapter_script(
++                script_path=self.adapter_script,
++                model=self.model,
++                messages=messages,
++                temperature=temperature,
++                max_tokens=max_tokens,
++                timeout=self._request_timeout(),
++                component=self.component,
++            )["raw"]
+         body = self._request_body_from_messages(messages, temperature, max_tokens)
+         timeout = self._request_timeout()
+         if streaming_enabled():
+--- a/skills/ace-rtl/scripts/llm_call.py
++++ b/skills/ace-rtl/scripts/llm_call.py
+@@ -190,6 +190,7 @@
+     temperature: float,
+     max_tokens: int,
+     timeout: int,
++    component: Optional[str] = None,
+ ) -> Dict[str, object]:
+     request = {
+         "model": model,
+@@ -212,6 +213,7 @@
+     proc = subprocess.run(
+         adapter_command(script_path),
+         input=json.dumps(request),
++        env={**os.environ, "ACE_RTL_COMPONENT": component or os.environ.get("ACE_RTL_COMPONENT", "unknown")},
+         stdout=subprocess.PIPE,
+         stderr=subprocess.PIPE,
+         text=True,
+@@ -309,6 +311,7 @@
+ def main() -> int:
+     args = parse_args()
+     model = resolve_model(args.model)
++    os.environ["ACE_RTL_COMPONENT"] = args.component
+     provider = choose_provider(args.provider, model)
+     if provider == "nvidia":
+         os.environ.setdefault("NEMOTRON_TIMEOUT", str(args.timeout))
+--- a/skills/ace-rtl/scripts/ace_cvdp_native/cli.py
++++ b/skills/ace-rtl/scripts/ace_cvdp_native/cli.py
+@@ -120,6 +120,8 @@
+         initial_backoff=5.0,
+     )
+     fresh_start_coordinator.focused_debugger = focused_debugger
++    focused_debugger.llm_client.client.component = "reflector"
++    fresh_start_coordinator.client.client.component = "coordinator"
+
+     previous_candidates: Dict[str, str] = {}
+     reflection = "Initial generation. No evaluator feedback is available yet."
+--- a/skills/ace-rtl/scripts/ace_cvdp_native/harness.py
++++ b/skills/ace-rtl/scripts/ace_cvdp_native/harness.py
+@@ -74,7 +74,7 @@
+
+
+ def compose_env(service_env: Any, service_env_file: Any, issue_path: Path) -> Dict[str, str]:
+-    env = os.environ.copy()
++    env = {key: os.environ[key] for key in ("PATH", "LANG", "LC_ALL", "TMPDIR") if key in os.environ}
+     env["HOME"] = str(issue_path / "rundir")
+     env["XDG_CACHE_HOME"] = str(issue_path / "rundir" / ".cache")
+     env["PYTHONNOUSERSITE"] = "1"
