@@ -6,4 +6,4 @@
 
 首批任务来自 CVDP v1.1.0 的 Non-Agentic Code Generation / No Commercial 分区，优先选 `cid016` RTL 调试题。这里的 Non-Agentic 描述题目和交付格式，两种 Agent 都可以多轮求解。每次运行固定题目、源码版本和评分条件，记录具体的候选、诊断与判定。
 
-目前已完成环境调查和一次端到端运行。后续用更多任务确认失败模式，再从这些证据中提出可检验的训练任务和评分方法。 [当前进度](STATUS.md) · [首题实测](experiments/P1/log.md) · [实验协议](docs/protocol.md)
+已完成单题诊断、五题试跑和 12 题的两组配对分析。真实轨迹用于提出可检验的训练任务和评分方法。 [当前进度](STATUS.md) · [首题实测](experiments/P1/log.md) · [配对报告](experiments/suite/report.md) · [实验协议](docs/protocol.md)

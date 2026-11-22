@@ -41,7 +41,7 @@ Flash 在 ACE-RTL 中两轮输出了字节相同的 RTL，第二轮之前还发�
 | 阶段 | 状态 |
 |---|---|
 | P0 · 环境与接口调查 | 完成。已锁定三个上游源码提交、数据集 revision 和首题指纹 |
-| P1 · 首次端到端运行 | 完成原生运行与独立重放。Linux Compose 正反对照另行校准 |
+| P1 · 首次端到端运行 | 完成原生运行与独立重放。Linux Compose 三项控制全部复现 |
 | 多轮反馈 | 已观测 ACE 的 4 次调用、两轮提交和精简反馈。DSH 已完成受控单题 |
 | 模型对照 | 已完成 Flash／Pro 的加法器试跑。已完成 12 题 × 两次，详见实验报告 |
 | Agent 对照 | 已完成同模型的 ACE／DSH 单题试跑。已完成 12 题 × 两次，详见实验报告 |
@@ -63,6 +63,6 @@ python3 scripts/run_pilot.py
 
 `run_pilot.py` 会打印运行目录。候选文件保存在该目录下的 `candidate/rtl/brent_kung_adder.sv` 子目录中。把找到的文件路径传给 `python3 scripts/replay_pilot.py <候选RTL路径>`，即可在新目录运行 CVDP 评分并核对受测字节。重放只执行仿真。新一轮模型输出可能有变化，已测结果见上表。仓库提供脚本、版本锁和结构化结果，原始模型请求与响应保存在各自本地的运行目录。
 
-[版本锁](experiments/P0/lock.json) · [源码与接口说明](docs/interfaces.md) · [部署与环境](docs/environment.md) · [项目状态](STATUS.md) · [训练任务方向](docs/training-directions.md)
+[版本锁](experiments/P0/lock.json) · [源码与接口说明](docs/interfaces.md) · [部署与环境](docs/environment.md) · [Linux Compose 校准](experiments/suite/compose-calibration.json) · [项目状态](STATUS.md) · [训练任务方向](docs/training-directions.md)
 
 ACE-RTL 补丁包含来自 NVIDIA ACE-RTL 的 Apache-2.0 源码片段，许可证文本随仓库附带。 [上游许可证](THIRD_PARTY_LICENSE_ACE_RTL)

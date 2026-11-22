@@ -1,0 +1,138 @@
+[
+  {
+    "task": "cvdp_copilot_coffee_machine_0001",
+    "condition": "ace-pro",
+    "repetition": 1,
+    "request_bytes": 60929,
+    "independent_replay": "functional",
+    "usage": {
+      "prompt_tokens": 16789,
+      "completion_tokens": 2279,
+      "total_tokens": 19068,
+      "prompt_tokens_details": {
+        "cached_tokens": 5632
+      },
+      "prompt_cache_hit_tokens": 5632,
+      "prompt_cache_miss_tokens": 11157
+    }
+  },
+  {
+    "task": "cvdp_copilot_coffee_machine_0001",
+    "condition": "ace-flash",
+    "repetition": 1,
+    "request_bytes": 58998,
+    "independent_replay": "functional",
+    "usage": {
+      "prompt_tokens": 16251,
+      "completion_tokens": 1941,
+      "total_tokens": 18192,
+      "prompt_tokens_details": {
+        "cached_tokens": 5632
+      },
+      "prompt_cache_hit_tokens": 5632,
+      "prompt_cache_miss_tokens": 10619
+    }
+  },
+  {
+    "task": "cvdp_copilot_line_buffer_0003",
+    "condition": "ace-flash",
+    "repetition": 1,
+    "request_bytes": 55158,
+    "independent_replay": "functional",
+    "usage": {
+      "prompt_tokens": 14310,
+      "completion_tokens": 1770,
+      "total_tokens": 16080,
+      "prompt_tokens_details": {
+        "cached_tokens": 4992
+      },
+      "prompt_cache_hit_tokens": 4992,
+      "prompt_cache_miss_tokens": 9318
+    }
+  },
+  {
+    "task": "cvdp_copilot_line_buffer_0003",
+    "condition": "ace-pro",
+    "repetition": 1,
+    "request_bytes": 57681,
+    "independent_replay": "functional",
+    "usage": {
+      "prompt_tokens": 14916,
+      "completion_tokens": 1922,
+      "total_tokens": 16838,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 14916
+    }
+  },
+  {
+    "task": "cvdp_copilot_coffee_machine_0001",
+    "condition": "ace-flash",
+    "repetition": 2,
+    "request_bytes": 57172,
+    "independent_replay": "functional",
+    "usage": {
+      "prompt_tokens": 15989,
+      "completion_tokens": 1906,
+      "total_tokens": 17895,
+      "prompt_tokens_details": {
+        "cached_tokens": 5632
+      },
+      "prompt_cache_hit_tokens": 5632,
+      "prompt_cache_miss_tokens": 10357
+    }
+  },
+  {
+    "task": "cvdp_copilot_coffee_machine_0001",
+    "condition": "ace-pro",
+    "repetition": 2,
+    "request_bytes": 61818,
+    "independent_replay": "functional",
+    "usage": {
+      "prompt_tokens": 17123,
+      "completion_tokens": 2550,
+      "total_tokens": 19673,
+      "prompt_tokens_details": {
+        "cached_tokens": 5632
+      },
+      "prompt_cache_hit_tokens": 5632,
+      "prompt_cache_miss_tokens": 11491
+    }
+  },
+  {
+    "task": "cvdp_copilot_line_buffer_0003",
+    "condition": "ace-flash",
+    "repetition": 2,
+    "request_bytes": 53912,
+    "independent_replay": "functional",
+    "usage": {
+      "prompt_tokens": 14197,
+      "completion_tokens": 1566,
+      "total_tokens": 15763,
+      "prompt_tokens_details": {
+        "cached_tokens": 5120
+      },
+      "prompt_cache_hit_tokens": 5120,
+      "prompt_cache_miss_tokens": 9077
+    }
+  },
+  {
+    "task": "cvdp_copilot_line_buffer_0003",
+    "condition": "ace-pro",
+    "repetition": 2,
+    "request_bytes": 57246,
+    "independent_replay": "functional",
+    "usage": {
+      "prompt_tokens": 14754,
+      "completion_tokens": 1920,
+      "total_tokens": 16674,
+      "prompt_tokens_details": {
+        "cached_tokens": 5120
+      },
+      "prompt_cache_hit_tokens": 5120,
+      "prompt_cache_miss_tokens": 9634
+    }
+  }
+]

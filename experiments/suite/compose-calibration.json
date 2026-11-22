@@ -1,0 +1,13 @@
+{
+  "run_url": "https://github.com/5Mcv4He/cvdp-rtl-agent-study/actions/runs/45004559177",
+  "repository_commit": "08adcd9958ffafd0fa30592832995fb03ccb7f83",
+  "cvdp_commit": "8e894cf74414ab1eaea1e2b4e80a02f123df07b6",
+  "runner": "GitHub-hosted ubuntu-24.04 x64",
+  "official_dockerfile": "docker/Dockerfile.sim",
+  "local_image_id": "sha256:a66ea58b625bf0273728c7ab562e7d611cd078846e541f26d6869608e087c617",
+  "controls": [
+    {"case": "golden", "verdict": "pass", "tests": 3, "failed": 0},
+    {"case": "original", "verdict": "functional", "tests": 1, "failed": 1, "same_carry_assertion": true},
+    {"case": "behavior", "verdict": "pass", "tests": 1, "failed": 0}
+  ]
+}

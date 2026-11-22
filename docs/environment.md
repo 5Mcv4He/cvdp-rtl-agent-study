@@ -1,4 +1,6 @@
 # 环境调查 · 2026-11-22
+
+下表记录 P0 开始时的状态。后续使用项目内的原生 Icarus 13.0 和 cocotb 完成了 72 次配对，用 GitHub Actions 的 Linux runner 复现三项控制。 [当前结果](../experiments/suite/report.md) · [容器校准](../experiments/suite/compose-calibration.json)
 | 位置 | 实测 | 对研究的影响 |
 |---|---|---|
 | Mac mini | macOS 26.6.2 arm64，10 核，16 GiB 内存；内部可用 15 GiB，外接 SSD 可用 11 GiB | 适合单题串行、远端推理。镜像构建峰值与轨迹增长需实测，不能据空闲量承诺全量运行 |
