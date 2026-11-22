@@ -8,3 +8,4 @@
 - 长输入补充诊断复现了 8 次原先未发送的第二轮请求。8 份候选均在功能测试失败，补发结果与主实验分别保留。
 - 已补齐 DSH＋V4 Pro。24 次首轮中有 10 次通过，最终通过 12 次。见 [四组对照报告](experiments/suite/factorial-report.md)。
 - ACE-RTL 已完成 Claude Opus 5.5 与 GPT-6.2 Astra 的两组单题验证和 48 次配对运行。Claude 通过 24/24，GPT 通过 22/24，后者的两次失败均出现在等差数列题。 [跨模型报告](experiments/suite/cross-provider-report.md)
+- 已为 DSH 新增开启工具的单题配对（Brent–Kung，Flash、关闭思考）。隔离用模拟响应验收 12 项断言，真实运行前强制通过验收门。两侧均一次提交通过：关闭工具 1 次请求，开启工具 7 次请求（含自建测试台验证）。见 [配对结果](experiments/suite/tools-pilot.json) 与 [报告章节](experiments/suite/report.md)。

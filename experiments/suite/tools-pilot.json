@@ -1,0 +1,134 @@
+{
+ "pair": "Brent–Kung adder, tool-free DSH vs tool-enabled DSH, same CVDP task/RTL/final tests",
+ "as_of": "2026-11-22",
+ "task_id": "cvdp_copilot_32_bit_Brent_Kung_PP_adder_0001",
+ "model": "deepseek-flash",
+ "reasoning": "off",
+ "final_scoring": "CVDP local_import replay, macOS arm64 Icarus 13.0 + cocotb 2.0.1, seed 20261122 (identical for both arms)",
+ "initial_rtl_sha256": "ad363d57942f81250f264736f336e213bfa4743d340178c132a5f349c8163799",
+ "conditions": {
+  "dsh-flash-tool-free": {
+   "requests_cap": "2 model rounds, 1 request each",
+   "external_feedback": "category-only after each submission (identical text to the tools arm)",
+   "verdicts": [
+    "pass"
+   ],
+   "submissions": 1,
+   "seconds": 6.812,
+   "candidate_sha256": [
+    "f7b1bc46f7df3e4e71aaf2eebafa07719b6617aa68ad0476ff78fe58d25147c7"
+   ],
+   "semantic_fixes": [
+    "second-stage generate indices G2/P2",
+    "sum assign | -> ^ (xor)"
+   ],
+   "changed_lines_normalized": 46,
+   "meter_source": "DeepSeek Harness SDK usage events",
+   "meter": {
+    "requests": 1,
+    "input_tokens": 255,
+    "cached_input_tokens": 1792,
+    "output_tokens": 1375,
+    "peak_price_estimate_usd": 0.00173725
+   }
+  },
+  "dsh-flash-tools": {
+   "requests_cap": "8 model requests per run, enforced by the loopback relay (4096 output tokens and 48000 request bytes per request)",
+   "external_feedback": "category-only after each submission (identical text to the tool-free arm)",
+   "verdicts": [
+    "pass"
+   ],
+   "submissions": 1,
+   "seconds": 42.052,
+   "candidate_sha256": [
+    "7fc75a87a7d53014922589def4cad6bd0717e8bb9e3aae489db2bcfd845f1077"
+   ],
+   "semantic_fixes": [
+    "second-stage generate indices G2/P2",
+    "sum assign | -> ^ (xor)"
+   ],
+   "changed_lines_normalized": 6,
+   "tool_calls": {
+    "count": 9,
+    "local_check_calls": 3,
+    "target_touches": 7
+   },
+   "trajectory": [
+    {
+     "tool": "read",
+     "read_target": "brent_kung_adder.sv"
+    },
+    {
+     "tool": "bash",
+     "description": "List workspace files",
+     "used_local_check": false
+    },
+    {
+     "tool": "edit",
+     "edit_target": "brent_kung_adder.sv",
+     "old": "assign G2[i/2] = G1[0] | P1[0];              assign P2[i/2] = P1[0] & P1[0];",
+     "new": "assign G2[i/2] = G1[i+1] | (P1[i+1] & G1[i]);             assign P2[i/2] = P1[i+"
+    },
+    {
+     "tool": "edit",
+     "edit_target": "brent_kung_adder.sv",
+     "old": "assign sum = P1 | {C[31:1], carry_in};",
+     "new": "assign sum = P1 ^ {C[31:1], carry_in};"
+    },
+    {
+     "tool": "bash",
+     "description": "Compile and run testbench",
+     "used_local_check": true
+    },
+    {
+     "tool": "bash",
+     "description": "Rerun testbench with fixed message",
+     "used_local_check": true
+    },
+    {
+     "tool": "bash",
+     "description": "Patch testbench and rerun",
+     "used_local_check": true
+    },
+    {
+     "tool": "bash",
+     "description": "Remove temporary test artifacts",
+     "used_local_check": true
+    },
+    {
+     "tool": "read",
+     "read_target": "brent_kung_adder.sv"
+    }
+   ],
+   "workspace_evidence": "model wrote and ran its own iverilog testbench (ALL PASS) before submitting; removed test artifacts afterwards",
+   "meter_source": "loopback relay provider-level ledger (actual API requests); SDK usage events match one-to-one",
+   "meter": {
+    "requests": 7,
+    "input_tokens": 7026,
+    "cached_input_tokens": 40064,
+    "output_tokens": 2405,
+    "peak_price_estimate_usd": 0.00523418
+   },
+   "isolation": {
+    "accepted_at": "2026-11-22 18:02:39",
+    "checks": {
+     "bash_workspace_write": true,
+     "fs_write_and_edit": true,
+     "workspace_read": true,
+     "fs_escape_denied": true,
+     "work_tree_write_denied": true,
+     "sentinel_reads_denied": true,
+     "dataset_denied": true,
+     "tool_env_no_credentials": true,
+     "process_env_inspection_blocked": true,
+     "network_denied": true,
+     "iverilog_reachable": true,
+     "model_reachable_scan_clean": true
+    },
+    "layout_version": 4,
+    "fingerprint": "fd2a72a463a5c7d802536f7a9faa90a0e47d6e11cd88120a9aa2cbfe7e994c10"
+   }
+  }
+ },
+ "evidence_scope": "One task, one repetition per arm, macOS arm64 native replay. Requests/tokens differ in counting source between arms (SDK events vs relay ledger); verdicts use the identical official test replay."
+}
