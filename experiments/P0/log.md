@@ -1,4 +1,4 @@
-# P0 调查记录 · 2026-11-22（上海）
+# P0 调查记录 · 2026-11-22
 1. 用 uname、sw_vers、sysctl、df、command -v、uv python list --only-installed 和 utmctl list 盘点本机；按既有 SSH 配置尝试连接，端口拒绝，UTM 确认虚拟机关机。上次来宾实测与本次主机结果分别列在 environment.md。系统软件安装 0。
 2. 用浅克隆读取三个上游的默认分支 HEAD，以 git rev-parse HEAD 获取 SHA；用 git ls-tree、官方 GitHub 文件接口和定向读取核查运行循环、provider、评分和 SDK。调研用临时源码目录不作为项目依赖。workspace 的 check-existing.sh 搜到 NVIDIA 的 ACE-RTL（当时 50 stars）；本项目复用它，独立仓库用于对照协议和轨迹证据。
 3. 获取 HF 数据集元数据、固定 revision 的 JSONL；按行解析，得到 lock.json 的条数、分类、文件路径、文件和首题原始行 SHA256。原始 JSONL 放在 .local/data/，Git 忽略，可按下面的命令重取。example_dataset 的 v1.1.0 非商业有解样例只有一行 cid003 LFSR。检查首题 pytest/cocotb 代码，识别有断言的固定向量及无数值断言的随机循环。此步骤没有运行仿真。

@@ -1,4 +1,4 @@
-# P1 单题运行 · 2026-11-22（上海）
+# P1 单题运行 · 2026-11-22
 
 完成一题一轮的 ACE 原生闭环。Icarus 13.0 使用已验 SHA-256 的 macOS arm64 Homebrew bottle 解包到项目目录。ACE 使用 Python 3.11.15、pytest 9.1.1，独立评分使用 Python 3.12.13、pytest 8.3.2，两者均用 cocotb 2.0.1。同版本模拟器、本地两套 Python 环境，以 ACE 原生执行器调度固定的 CVDP 测试。官方 Compose 镜像验证尚缺。
 
