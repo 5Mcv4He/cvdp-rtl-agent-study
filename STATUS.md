@@ -10,3 +10,4 @@
 - ACE-RTL 已完成 Claude Opus 5.5 与 GPT-6.2 Astra 的两组单题验证和 48 次配对运行。Claude 通过 24/24，GPT 通过 22/24，后者的两次失败均出现在等差数列题。 [跨模型报告](experiments/suite/cross-provider-report.md)
 - 已补齐关闭工具的 DSH＋Claude 和 DSH＋GPT，共新增 48 次正式运行。最终分别通过 21/24 和 20/24。两类 Agent 配置和四款模型共 192 次运行。 [八组对照报告](experiments/suite/harness-matrix-report.md)
 - 已为 DSH 新增开启工具的单题配对（Brent–Kung，Flash、关闭思考）。隔离用模拟响应验收 12 项断言，真实运行前强制通过验收门。两侧均一次提交通过：关闭工具 1 次请求，开启工具 7 次请求（含自建测试台验证）。见 [配对结果](experiments/suite/tools-pilot.json) 与 [报告章节](experiments/suite/report.md)。
+- 工具运行器已通过 12 道正式题的输入预检。已修复离线隔离验收的刷新问题，并实跑状态机题的开关对照和八次请求的工具探索。 [状态机题数据](experiments/suite/tools-fsm-pilot.json)

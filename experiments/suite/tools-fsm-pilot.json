@@ -1,0 +1,79 @@
+{
+  "task_id": "cvdp_copilot_fsm_seq_detector_0023",
+  "as_of": "2026-11-22",
+  "model": "deepseek-flash",
+  "reasoning": "off",
+  "initial_rtl_sha256": "a13adf3beee3694e00d19fedbdffa6502173d51bbc49f65e8ded6c4f22f41c7d",
+  "final_scoring": "CVDP local_import",
+  "offline_isolation_checks_passed": 12,
+  "conditions": [
+    {
+      "id": "tools-off-2",
+      "tools_enabled": false,
+      "max_requests": 2,
+      "observed_requests": 2,
+      "request_counter": "sdk usage events",
+      "scored_candidates": [
+        {
+          "verdict": "functional",
+          "sha256": "8f05e22add0ff16dacad25a617685da5c09ee609a26dd6d12cd0512debcff728"
+        },
+        {
+          "verdict": "functional",
+          "sha256": "1df1c4cf0885978415888e6d886ef4c57cc35aac5289fd6abdc1ae52b23a0efd"
+        }
+      ],
+      "candidate_origin": "text replies",
+      "seconds": 12.045
+    },
+    {
+      "id": "tools-on-2",
+      "tools_enabled": true,
+      "max_requests": 2,
+      "observed_requests": 2,
+      "request_counter": "relay upstream responses",
+      "scored_candidates": [
+        {
+          "verdict": "functional",
+          "sha256": "bc23d771ca85cf0d097992949f74a8f006e5f917cd4325c5b6945c2c43dc7a16"
+        }
+      ],
+      "candidate_origin": "workspace snapshot at budget exhaustion",
+      "locally_refused_requests": 1,
+      "outcome": "budget_exhausted",
+      "tool_calls": {
+        "count": 2,
+        "local_check_calls": 0,
+        "target_touches": 2
+      },
+      "seconds": 5.27,
+      "relay_matches_sdk": true,
+      "post_run_scan_clean": true
+    },
+    {
+      "id": "tools-on-8",
+      "tools_enabled": true,
+      "max_requests": 8,
+      "observed_requests": 8,
+      "request_counter": "relay upstream responses",
+      "scored_candidates": [
+        {
+          "verdict": "compile",
+          "sha256": "15f825f74ee41601e65d76cea986aab6388f4d69a9b59da9257a3cce442be2ef"
+        }
+      ],
+      "candidate_origin": "workspace snapshot at budget exhaustion",
+      "locally_refused_requests": 1,
+      "outcome": "budget_exhausted",
+      "tool_calls": {
+        "count": 8,
+        "local_check_calls": 5,
+        "target_touches": 7
+      },
+      "seconds": 18.569,
+      "relay_matches_sdk": true,
+      "post_run_scan_clean": true
+    }
+  ],
+  "scope": "A prospective matched-ceiling pilot plus one exploratory eight-request run. One run per condition."
+}

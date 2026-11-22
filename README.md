@@ -13,6 +13,8 @@
 
 **新增：开启工具的 DSH（2026-11-22）**　此前 DSH 成绩全部关闭工具。在 Brent–Kung 加法器单题上，为关闭思考的 DSH＋Flash 新增开启工具的配置：模型在隔离工作区里用 bash 和文件读写编辑工具自查自改，允许的验证命令是 `iverilog`/`vvp`，最终评分仍走同一条 CVDP `local_import` 重放。配对结果：两侧都通过——关闭工具 1 次请求，开启工具 7 次请求（模型自建测试台并在提交前看到 `ALL PASS`）。隔离先用模拟响应验收（12 项断言：哨兵文件不可读、工作区外不可写、外网不可达、真实凭据只在回环中转层），真实运行前必须通过。 [单题配对](experiments/suite/tools-pilot.json) · [报告章节](experiments/suite/report.md)
 
+**状态机题工具试跑**　工具运行器已进入正式题集的一道状态机调试题。两次请求的开关对照均未通过。开启工具的两次运行均触及各自请求上限，评分器重放了当时的工作区快照。 [结果与预算口径](experiments/suite/report.md#工具试跑扩展到正式题)
+
 一次实验由三部分组成。CVDP 提供题目、已有 RTL 和评分测试，Agent 组织生成代码与仿真反馈，底层模型给出修改。项目也对比了 ACE-RTL 和关闭工具的 DeepSeek Harness 在同题、同模型下的表现。 [CVDP](https://github.com/NVlabs/cvdp_benchmark) · [ACE-RTL](https://github.com/NVlabs/ACE-RTL) · [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)
 
 ## 如何读这些结果

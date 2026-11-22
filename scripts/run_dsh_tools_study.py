@@ -461,6 +461,7 @@ def run_session_flow(run, solve, meta, relay, row, target, initial_prompt, round
 
 def probe():
     """Offline acceptance: drive the isolation probes through the real tool stack."""
+    accepted_fingerprint = fingerprint()
     row = task_row(PILOT_ID)
     RUNS.mkdir(parents=True, exist_ok=True)
     run = Path(tempfile.mkdtemp(prefix="probe-", dir=RUNS))
@@ -485,18 +486,28 @@ def probe():
                                 "Run the environment probes and finish.", rounds=1)
         acceptance = evaluate_acceptance(run, solve, sentinel_paths, canaries,
                                          escape_path, work_write_probe, scan_key, dataset_path)
-        acceptance["fingerprint"] = fingerprint()
+        acceptance["fingerprint"] = accepted_fingerprint
         acceptance["relay_served"] = relay.served
         acceptance["sdk_requests"] = len(flow["usage"])
         acceptance["relay_matches_sdk"] = relay.served == len(flow["usage"])
         acceptance["pipeline_scores"] = flow["scores"]
         acceptance["probe_run"] = str(run.relative_to(LOCAL))
+        acceptance["fingerprint_stable"] = fingerprint() == accepted_fingerprint
+        acceptance["passed"] = acceptance["passed"] and acceptance["fingerprint_stable"]
         record(meta / "acceptance.json", acceptance)
-        if acceptance["passed"] and acceptance["relay_matches_sdk"]:
-            gate = {k: acceptance[k] for k in
-                    ("passed", "checks", "fingerprint", "layout_version", "probe_run")}
-            gate["as_of"] = time.strftime("%Y-%m-%d %H:%M:%S")
-            record(GATE_FILE, gate)
+        gate = {k: acceptance[k] for k in ("checks", "fingerprint", "layout_version", "probe_run")}
+        gate["passed"] = acceptance["passed"] and acceptance["relay_matches_sdk"]
+        gate["as_of"] = time.strftime("%Y-%m-%d %H:%M:%S")
+        # Keep each acceptance report and atomically refresh the gate for real runs.
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=GATE_FILE.parent,
+                                         prefix=".dsh-tools-gate-", delete=False) as file:
+            pending = Path(file.name)
+            try:
+                json.dump(gate, file, ensure_ascii=False, indent=2)
+                file.flush()
+                pending.replace(GATE_FILE)
+            finally:
+                pending.unlink(missing_ok=True)
         return run, acceptance
     finally:
         relay.shutdown()
