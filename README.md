@@ -4,6 +4,8 @@
 
 **当前结果（2026-11-22）**　12 道 CVDP 调试题覆盖两个 Agent 和两个模型的全部四组组合，各重复两次，共 **96 次运行**。最终通过数为 ACE＋Flash 12/24、ACE＋Pro 11/24、DSH＋Flash 10/24、DSH＋Pro 12/24。DSH 两组均关闭工具。 [四组对照报告](experiments/suite/factorial-report.md) · [逐题数据](experiments/suite/factorial-results.json)
 
+**跨模型对照**　固定 ACE-RTL 后，Claude Opus 5.5 与 GPT-6.2 Astra 均在首轮修好加法器，并通过额外 4,128 组算术输入。两组的完整 12 题对照正在采集。 [跨模型实验与单题结果](experiments/suite/cross-provider-report.md)
+
 一次实验由三部分组成。CVDP 提供题目、已有 RTL 和评分测试，ACE-RTL 组织模型生成代码和接收仿真反馈，DeepSeek Flash 是本次生成代码的模型。后续会换入通用 Agent DeepSeek Harness，在同题、同模型下比较求解过程。 [CVDP](https://github.com/NVlabs/cvdp_benchmark) · [ACE-RTL](https://github.com/NVlabs/ACE-RTL) · [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)
 
 ## 如何读这些结果

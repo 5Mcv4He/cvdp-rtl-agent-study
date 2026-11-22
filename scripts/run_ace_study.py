@@ -8,13 +8,16 @@ import subprocess
 import tempfile
 import time
 
-from model_budget import MODELS
+from micu_api import KEY_VARIABLES, TIMEOUT
+from model_budget import ACE_MODELS
 from study_common import ACE, LOCK, ROOT, SIM, PILOT_ID, SEED, score, task_row
 
 
 def run_ace(task, model, rounds, calls, compact):
     row = task_row(task)
-    key = os.environ["DEEPSEEK_API_KEY"]
+    key_variable = KEY_VARIABLES.get(model, "DEEPSEEK_API_KEY")
+    key = os.environ[key_variable]
+    llm_timeout = TIMEOUT + 10 if model in KEY_VARIABLES else 60
     bin_dir = ACE / ".cvdp-native/bin"
     dataset = ACE / "datasets" / LOCK["dataset"]["file"]
     if hashlib.sha256(dataset.read_bytes()).hexdigest() != LOCK["dataset"]["sha256"]:
@@ -26,12 +29,12 @@ def run_ace(task, model, rounds, calls, compact):
     env = {
         "PATH": os.pathsep.join(map(str, (bin_dir, SIM, "/usr/bin", "/bin"))),
         "HOME": str(run), "LANG": "en_US.UTF-8",
-        "DEEPSEEK_API_KEY": key,
+        key_variable: key,
         "ACE_RTL_LLM_SCRIPT": str(ROOT / "scripts/ace_adapter.py"),
         "STUDY_TRACE": str(run / "api"), "STUDY_MODEL": model, "STUDY_MAX_CALLS": str(calls),
         "ACE_RTL_DISABLE_EDA_SETUP": "1", "CVDP_NATIVE_HARNESS": "1",
         "ACE_RTL_STREAM": "0", "ACE_RTL_ENABLE_REASONING": "0",
-        "ACE_RTL_MAX_TOKENS": "4096", "ACE_RTL_LLM_TIMEOUT": "60",
+        "ACE_RTL_MAX_TOKENS": "4096", "ACE_RTL_LLM_TIMEOUT": str(llm_timeout),
         "COCOTB_RANDOM_SEED": SEED,
         "CVDP_COMPACT_FEEDBACK": "1" if compact else "",
     }
@@ -41,12 +44,13 @@ def run_ace(task, model, rounds, calls, compact):
         "--dataset", str(dataset), "--cid", "cid016", "--id", task, "--outputs-root", str(run),
         "--generator-model", model, "--reflector-model", model, "--coordinator-model", model,
         "--attempts", "1", "--datapoint-workers", "1", "--max-iterations", str(rounds),
-        "--llm-timeout", "65", "--evaluator-timeout", "45",
+        "--llm-timeout", str(llm_timeout + 5), "--evaluator-timeout", "45",
     ]
     (run / "command.json").write_text(json.dumps(cmd, indent=2))
     start = time.monotonic()
     with (run / "console.log").open("w") as log:
-        subprocess.run(cmd, cwd=ACE, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=360, check=True)
+        subprocess.run(cmd, cwd=ACE, env=env, stdout=log, stderr=subprocess.STDOUT,
+                       timeout=max(360, calls * (llm_timeout + 5) + 100), check=True)
     candidates = sorted(run.glob("*/datapoints/*/attempt_1/iter_*/candidate/" + next(iter(row["output"]["context"]))))
     result = {
         "task_id": task, "agent": "ace", "model": model, "compact_feedback": compact,
@@ -61,7 +65,7 @@ def run_ace(task, model, rounds, calls, compact):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--task", default=PILOT_ID)
-    parser.add_argument("--model", choices=sorted(MODELS), default="deepseek-flash")
+    parser.add_argument("--model", choices=sorted(ACE_MODELS), default="deepseek-flash")
     parser.add_argument("--rounds", choices=(1, 2), type=int, default=2)
     parser.add_argument("--calls", choices=(1, 2, 3, 4, 5), type=int, default=3)
     parser.add_argument("--compact", action="store_true")

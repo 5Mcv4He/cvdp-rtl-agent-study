@@ -50,7 +50,7 @@ def apply_recovery(rows, corrected):
     return merged, audit
 
 
-def summarize(private_rows):
+def summarize(private_rows, conditions=None, comparisons=COMPARISONS):
     fields = ("task", "repetition", "condition", "first", "final", "submissions", "seconds",
               "meter", "status", "error_type", "candidate_sha256")
     rows = [{key: row[key] for key in fields if key in row} for row in private_rows]
@@ -61,7 +61,8 @@ def summarize(private_rows):
             meter and meter["observed_calls"] <= 2 and row.get("final") == "pass"
         )
 
-    conditions = CONDITIONS if any(r["condition"] == "dsh-pro" for r in rows) else CONDITIONS[:3]
+    if conditions is None:
+        conditions = CONDITIONS if any(r["condition"] == "dsh-pro" for r in rows) else CONDITIONS[:3]
     metrics = {}
     for condition in conditions:
         group = [r for r in rows if r["condition"] == condition]
@@ -70,7 +71,8 @@ def summarize(private_rows):
         observed = [r["meter"] for r in group if r.get("meter")]
         first_pass = sum(r.get("first") == "pass" for r in group)
         final_pass = sum(r.get("final") == "pass" for r in group)
-        cost = sum(r["peak_price_estimate_usd"] for r in observed)
+        prices = [r["peak_price_estimate_usd"] for r in observed]
+        cost = sum(prices) if all(price is not None for price in prices) else None
         times = [r["seconds"] for r in group if "seconds" in r]
         metrics[condition] = {
             "allocated": len(group),
@@ -84,12 +86,13 @@ def summarize(private_rows):
             "uncached_input": sum(r["uncached_input"] for r in observed),
             "cached_input": sum(r["cached_input"] for r in observed),
             "output": sum(r["output"] for r in observed),
-            "peak_price_estimate_usd": round(cost, 8),
-            "peak_cost_per_success_usd": round(cost / final_pass, 8) if final_pass and len(observed) == len(group) else None,
+            "peak_price_estimate_usd": round(cost, 8) if cost is not None else None,
+            "peak_cost_per_success_usd": round(cost / final_pass, 8)
+            if cost is not None and final_pass and len(observed) == len(group) else None,
         }
     pairs = {}
     for outcome in ("first", "by_two_calls", "final"):
-        for left, right in COMPARISONS:
+        for left, right in comparisons:
             if left not in metrics or right not in metrics:
                 continue
             by_key = {}
@@ -135,16 +138,38 @@ def summarize_completion(baseline, extra):
     return result
 
 
+def summarize_cross_provider(baseline, added):
+    """Pair each new ACE run with both frozen ACE baselines."""
+    baseline_ids = ("ace-flash", "ace-pro")
+    added_ids = ("ace-claude", "ace-gpt")
+    base_rows = [r for r in baseline["trials"] if r["condition"] in baseline_ids]
+    expected = {(r["task"], r["repetition"]) for r in base_rows if r["condition"] == baseline_ids[0]}
+    for condition in added_ids:
+        trials = [r for r in added if r["condition"] == condition]
+        if {(r["task"], r["repetition"]) for r in trials} != expected or len(trials) != len(expected):
+            raise ValueError(f"cross-provider follow-up does not match baseline trial IDs for {condition}")
+    if len(added) != len(added_ids) * len(expected):
+        raise ValueError("unexpected follow-up trials")
+    conditions = baseline_ids + added_ids
+    comparisons = tuple((left, right) for index, left in enumerate(conditions) for right in conditions[index + 1:])
+    result = summarize(base_rows + added, conditions, comparisons)
+    result["batching"] = {"frozen_baselines": list(baseline_ids), "follow_up": list(added_ids)}
+    return result
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("results", type=Path)
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--recover-expanded-inputs", type=Path)
     modes.add_argument("--complete-factorial-with", type=Path)
+    modes.add_argument("--cross-provider-with", type=Path)
     args = parser.parse_args()
     rows = json.loads(args.results.read_text())
     if args.complete_factorial_with:
         result = summarize_completion(rows, json.loads(args.complete_factorial_with.read_text()))
+    elif args.cross_provider_with:
+        result = summarize_cross_provider(rows, json.loads(args.cross_provider_with.read_text()))
     else:
         audit = None
         if args.recover_expanded_inputs:

@@ -16,8 +16,8 @@ PLAN = json.loads((ROOT / "experiments/suite/design.json").read_text())
 RATES = PLAN["pricing"]["peak_usd_per_million"]
 
 
-def reservation(condition):
-    prices = RATES[condition["model"]]
+def reservation(condition, rates):
+    prices = rates[condition["model"]]
     return condition["max_calls"] * (
         PLAN["pricing"]["reservation_input_tokens_per_call"] * prices["miss"]
         + PLAN["pricing"]["max_output_tokens_per_call"] * prices["output"]
@@ -25,17 +25,31 @@ def reservation(condition):
 
 
 def meter(condition, run, result):
-    rates = RATES[condition["model"]]
+    rates = RATES.get(condition["model"])
+    extra = {}
     if condition["agent"] == "ace":
         billed = []
+        summaries = []
         for path in sorted((run / "api").glob("*/request.json")):
             summary = path.with_name("summary.json")
             if not summary.exists():
                 return None
-            u = json.loads(summary.read_text())["usage"]
+            reply = json.loads(summary.read_text())
+            u = reply["usage"]
             if u is None:
                 return None
             billed.append((u["prompt_cache_miss_tokens"], u["prompt_cache_hit_tokens"], u["completion_tokens"]))
+            summaries.append(reply)
+        if rates is None:
+            if not summaries:
+                return None
+            reasoning = [s["usage"].get("reasoning_tokens") for s in summaries]
+            extra = {
+                "model_reported": condition["model"],
+                "cache_write": sum(s["usage"]["prompt_cache_write_tokens"] for s in summaries),
+                "reasoning": sum(reasoning) if all(n is not None for n in reasoning) else None,
+                "truncated_requests": sum(s["finish_reason"] == "length" for s in summaries),
+            }
     else:
         if not result.get("usage") or any(u is None for u in result["usage"]):
             return None
@@ -46,7 +60,8 @@ def meter(condition, run, result):
         "uncached_input": sum(x for x, _, _ in billed), "cached_input": sum(y for _, y, _ in billed),
         "output": sum(z for _, _, z in billed),
         "peak_price_estimate_usd": round(sum(x*rates["miss"] + y*rates["hit"] + z*rates["output"]
-                                            for x, y, z in billed) / 1e6, 8),
+                                            for x, y, z in billed) / 1e6, 8) if rates else None,
+        **extra,
     }
 
 
@@ -88,7 +103,8 @@ def main():
     repetitions = design.get("repetitions", 1)
     if len(set(tasks)) != len(tasks) or repetitions not in (1, 2, 3):
         raise SystemExit("Expected unique tasks and one to three repetitions.")
-    total = len(tasks) * repetitions * sum(reservation(c) for c in conditions)
+    rates = {**RATES, **design.get("reservation_rates_usd_per_million", {})}
+    total = len(tasks) * repetitions * sum(reservation(c, rates) for c in conditions)
     if not total <= args.confirmed_budget_usd:
         raise SystemExit(f"Full-plan reservation: ${total:.2f}; budget is insufficient.")
     for task in tasks:

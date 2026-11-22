@@ -1,0 +1,56 @@
+{
+  "purpose": "Compare four model configurations within ACE-RTL on identical tasks, including two MiCu external APIs.",
+  "baseline": "factorial-design.json",
+  "task_ids": [
+    "cvdp_copilot_64b66b_encoder_0005",
+    "cvdp_copilot_cdc_pulse_synchronizer_0004",
+    "cvdp_copilot_filo_0033",
+    "cvdp_copilot_fsm_seq_detector_0023",
+    "cvdp_copilot_generic_nbit_counter_0036",
+    "cvdp_copilot_arithmetic_progression_generator_0015",
+    "cvdp_copilot_cache_lru_0022",
+    "cvdp_copilot_coffee_machine_0001",
+    "cvdp_copilot_line_buffer_0003",
+    "cvdp_copilot_modified_booth_mul_0002",
+    "cvdp_copilot_rgb2ycbcr_0001",
+    "cvdp_copilot_swizzler_0014"
+  ],
+  "repetitions": 2,
+  "conditions": [
+    {
+      "id": "ace-claude",
+      "agent": "ace",
+      "provider": "micu",
+      "protocol": "anthropic-messages",
+      "model": "claude-opus-5-5",
+      "reasoning_effort": "low",
+      "rounds": 2,
+      "max_calls": 4
+    },
+    {
+      "id": "ace-gpt",
+      "agent": "ace",
+      "provider": "micu",
+      "protocol": "openai-responses",
+      "model": "gpt-6.2-astra",
+      "reasoning_effort": "low",
+      "rounds": 2,
+      "max_calls": 4
+    }
+  ],
+  "reservation_rates_usd_per_million": {
+    "claude-opus-5-5": {
+      "miss": 8,
+      "output": 20
+    },
+    "gpt-6.2-astra": {
+      "miss": 20,
+      "output": 40
+    }
+  },
+  "reservation_scope": "Uses official list prices for long-TTL cache writes and standard output as a planning proxy. MiCu uses its own balance and rates.",
+  "transport_timeout_seconds": 110,
+  "max_request_bytes": 48000,
+  "max_output_tokens": 4096,
+  "feedback": "Same compact CVDP feedback and ACE role prompts as the frozen ACE baselines."
+}
